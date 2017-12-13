@@ -90,16 +90,9 @@ Functions</h2></td></tr>
 <li><code>channel_type</code> </li>
 <li><code>channel_endpoint</code> </li>
 </ul>
+<p><code>service_method</code> should be the name of the service method/operation, <code>service_name</code> the name of the service class/type and <code>service_endpoint</code> a string identifying the "instance" of that service class/type. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>SDK TODO: Insert link to high level documentation.</dd></dl>
 <p>The <code>channel_</code> parameters are described in <a class="el" href="group__channels.html">Channel Types and Endpoints</a>.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>SDK TODO: General description of what we mean by <code>service_method</code>, <code>service_name</code> and especially <code>service_endpoint</code>.</dd></dl>
-<p>Further there is the optional <code>protocol_name</code> property that you can set.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>SDK TODO: Document what exactly we mean by "remoting protocol". E.g. for RMI over GIOP/CORBA this could be...<ul>
-<li><code>RMI</code>, which is not a protocol but an API which can use many different transports and wire protocols</li>
-<li><code>CORBA</code>, which is not a protocol but a standard defining a number of protocols and data formats</li>
-<li><code>GIOP</code>, which is the "message protocol" defined by CORBA</li>
-<li><code>IIOP/SSLIOP/HTIOP</code> which are different GIOP "flavors" that use different underlying protocols (TCP/IP, SSL, HTTP)</li>
-</ul>
-</dd></dl>
+<p>Further there is the optional <code>protocol_name</code> property that you can set to specify the used "wire protocol". </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>SDK TODO: Insert link to high level documentation.</dd></dl>
 <dl class="section user"><dt>Example 1:</dt><dd><ul>
 <li>You're tracing an outgoing remote call to some web service <code>org.example.services.Repository</code>.</li>
 <li>There are multiple repositories (multiple instances of <code>org.example.services.Repository</code>), but the one that you're using (calling) is located at <code><a href="http://art-department.example.org:12345/services/assets/repo">http://art-department.example.org:12345/services/assets/repo</a></code>.</li>
