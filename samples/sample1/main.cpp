@@ -47,8 +47,8 @@ int main(int argc, char** argv)
     // TODO: Process remaining arguments.
 
     // Try to initialize ONESDK.
-    onesdk_result_t const onsdk_init_result = onesdk_initialize();
-    printf("ONESDK initialized:   %s\n", (onsdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
+    onesdk_result_t const onesdk_init_result = onesdk_initialize();
+    printf("ONESDK initialized:   %s\n", (onesdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
     printf("ONESDK agent version: '%" ONESDK_STR_PRI_XSTR "'\n", onesdk_agent_get_version_string());
     printf("ONESDK agent state:   %s\n", agent_state_to_string(onesdk_agent_get_current_state()));
 
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     run_service_loop();
 
     // Shut down ONESDK.
-    if (onsdk_init_result == ONESDK_SUCCESS)
+    if (onesdk_init_result == ONESDK_SUCCESS)
         onesdk_shutdown();
 
     return 0;
