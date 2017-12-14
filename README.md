@@ -22,24 +22,25 @@ The most recent version of the reference documentation is also available online 
 
 ## Initializing the Dynatrace OneAgent SDK 
 
-    #include <onesdk/onesdk.h>
+```C
+#include <onesdk/onesdk.h>
 
-    int main(int argc, char** argv) {
-        onesdk_stub_process_cmdline_args(argc, argv, 1);  /* Optional: Let the SDK process command line arguments   */
-        onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  /* Optional: Remove SDK command line arguments from argv  */
+int main(int argc, char** argv) {
+    onesdk_stub_process_cmdline_args(argc, argv, 1);  /* Optional: Let the SDK process command line arguments   */
+    onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  /* Optional: Remove SDK command line arguments from argv  */
 
-        /* Initialize SDK */
-        onesdk_result_t const onesdk_init_result = onesdk_initialize();
+    /* Initialize SDK */
+    onesdk_result_t const onesdk_init_result = onesdk_initialize();
 
-        /* ... use SDK ... */
+    /* ... use SDK ... */
 
-        /* Shut down SDK */
-        if (onesdk_init_result == ONESDK_SUCCESS)
-            onesdk_shutdown();
+    /* Shut down SDK */
+    if (onesdk_init_result == ONESDK_SUCCESS)
+        onesdk_shutdown();
 
-        return 0;
-    }
-
+    return 0;
+}
+```
 
 ## Building and linking against the Dynatrace OneAgent SDK 
 
@@ -49,8 +50,10 @@ The SDK doesn't have to be compiled, you only need to link your application to t
 
 If you use CMake to generate build files for your application, you should be able to use the provided `onesdk-config.cmake` script ala
 
-    include("path/to/sdk-package/onesdk-config.cmake")
-    target_link_libraries(your_application onesdk_static)
+```CMake
+include("path/to/sdk-package/onesdk-config.cmake")
+target_link_libraries(your_application onesdk_static)
+```
 
 ### Auto-linking with Visual Studio
 
@@ -77,117 +80,122 @@ PurePath and Smartscape topology for remoting technologies that Dynatrace is not
 
 Instrumenting an outbound remote call:
 
-        /* create tracer */
-        onesdk_tracer_handle_t const tracer = onesdk_outgoingremotecalltracer_create(
-            onesdk_asciistr("service method"),
-            onesdk_asciistr("service name"),
-            onesdk_asciistr("service endpoint"),
-            ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
-            onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_outgoingremotecalltracer_create(
+        onesdk_asciistr("service method"),
+        onesdk_asciistr("service name"),
+        onesdk_asciistr("service endpoint"),
+        ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
+        onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
 
-        /* start tracer */
-        onesdk_tracer_start(tracer);
+    /* start tracer */
+    onesdk_tracer_start(tracer);
 
-        /* get byte representation of tag */
-        onesdk_size_t byte_tag_size = 0;
-        onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, NULL, 0, &byte_tag_size);
-        void* byte_tag = NULL;
-        if (byte_tag_size != 0) {
-            byte_tag = malloc(byte_tag_size);
-            if (byte_tag != NULL)
-                onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size, NULL);
-        }
+    /* get byte representation of tag */
+    onesdk_size_t byte_tag_size = 0;
+    onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, NULL, 0, &byte_tag_size);
+    void* byte_tag = NULL;
+    if (byte_tag_size != 0) {
+        byte_tag = malloc(byte_tag_size);
+        if (byte_tag != NULL)
+            onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size, NULL);
+    }
 
-        /* ... do the actual remote call (send along `byte_tag` so the other side can continue tracing) ... */
+    /* ... do the actual remote call (send along `byte_tag` so the other side can continue tracing) ... */
 
-        /* release tag memory */
-        free(byte_tag);
+    /* release tag memory */
+    free(byte_tag);
 
-        /* set error information */
-        if (something_went_wrong)
-            onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
 
-        /* end and release tracer */
-        onesdk_tracer_end(tracer);
-
+    /* end and release tracer */
+    onesdk_tracer_end(tracer);
+```
 
 Instrumenting an incoming remote call:
 
-        /* create tracer */
-        onesdk_tracer_handle_t const tracer = onesdk_incomingremotecalltracer_create(
-            onesdk_asciistr("service method"),
-            onesdk_asciistr("service name"),
-            onesdk_asciistr("service endpoint"));
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_incomingremotecalltracer_create(
+        onesdk_asciistr("service method"),
+        onesdk_asciistr("service name"),
+        onesdk_asciistr("service endpoint"));
 
-        /* set the tag that we got from the caller */
-        if (byte_tag_size != 0)
-            onesdk_tracer_set_incoming_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size);
+    /* set the tag that we got from the caller */
+    if (byte_tag_size != 0)
+        onesdk_tracer_set_incoming_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size);
 
-        /* start tracer */
-        onesdk_tracer_start(tracer);
+    /* start tracer */
+    onesdk_tracer_start(tracer);
 
-        /* ... do the actual work ... */
+    /* ... do the actual work ... */
 
-        /* set error information */
-        if (something_went_wrong)
-            onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
 
-        /* end & release tracer */
-        onesdk_tracer_end(tracer);
-
+    /* end & release tracer */
+    onesdk_tracer_end(tracer);
+```
 
 ## Using the Dynatrace OneAgent SDK to trace SQL based database calls.
 
 To trace database requests you need a database info object which stores the information about your database which does not change between
 individual requests. This will typically be created somewhere in your initialization code (after initializing the SDK):
 
-    onesdk_databaseinfo_handle_t db_info_handle = ONESDK_INVALID_HANDLE;
+```C
+onesdk_databaseinfo_handle_t db_info_handle = ONESDK_INVALID_HANDLE;
 
-    /* ... */
+/* ... */
 
-        db_info_handle = onesdk_databaseinfo_create(
-            onesdk_asciistr("database name"),
-            onesdk_asciistr("database type"),
-            ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
-            onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
-
+    db_info_handle = onesdk_databaseinfo_create(
+        onesdk_asciistr("database name"),
+        onesdk_asciistr("database type"),
+        ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
+        onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
+```
 
 Then you can trace the SQL database requests:
 
-        /* create tracer */
-        onesdk_tracer_handle_t const tracer = onesdk_databaserequesttracer_create_sql(
-            db_info_handle,
-            onesdk_asciistr("SELECT 42;"));
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_databaserequesttracer_create_sql(
+        db_info_handle,
+        onesdk_asciistr("SELECT 42;"));
 
-        /* start tracer */
-        onesdk_tracer_start(tracer);
+    /* start tracer */
+    onesdk_tracer_start(tracer);
 
-        /* ... perform the database request ... */
+    /* ... perform the database request ... */
 
-        /* set error information */
-        if (something_went_wrong)
-            onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
 
-        /* end & release tracer */
-        onesdk_tracer_end(tracer);
-
+    /* end & release tracer */
+    onesdk_tracer_end(tracer);
+```
 
 Finally, release the database info object in your cleanup code (before shutting down the SDK):
 
-        onesdk_databaseinfo_delete(db_info_handle);
-        db_info_handle = ONESDK_INVALID_HANDLE;
-
+```C
+    onesdk_databaseinfo_delete(db_info_handle);
+    db_info_handle = ONESDK_INVALID_HANDLE;
+```
 
 ## Troubleshooting
 
 As long as the SDK can't connect to the agent (see output of sample), you might set the following system property to print debug information
 to standard out:
-	
-	-Dcom.dynatrace.oneagent.adk.debug=true
+
+    -Dcom.dynatrace.oneagent.adk.debug=true
 
 As soon as the SDK is active, but no paths are shown in the UI or AppMon Client, enable the agent debug flag:
-	
-	debugTaggingAdkJava=true
+
+    debugTaggingAdkJava=true
 
 This will provide additional debug information in agent log.
 
