@@ -18,6 +18,8 @@ cmake_policy(PUSH)
 cmake_policy(VERSION 2.8.12)
 cmake_minimum_required(VERSION 2.8.12)
 
+project(onesdk)
+
 get_filename_component(onesdk_path "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 # determine CPU architecture

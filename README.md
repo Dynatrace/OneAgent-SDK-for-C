@@ -83,11 +83,11 @@ Instrumenting an outbound remote call:
 ```C
     /* create tracer */
     onesdk_tracer_handle_t const tracer = onesdk_outgoingremotecalltracer_create(
-        onesdk_asciistr("service method"),
-        onesdk_asciistr("service name"),
-        onesdk_asciistr("service endpoint"),
+        onesdk_asciistr("remote service method"),
+        onesdk_asciistr("logical service name"),
+        onesdk_asciistr("deployed service endpoint"),
         ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
-        onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
+        onesdk_asciistr("localhost:12345")    /* channel endpoint, host/ip:port in case of TCP_IP */ );
 
     /* start tracer */
     onesdk_tracer_start(tracer);
@@ -120,9 +120,9 @@ Instrumenting an incoming remote call:
 ```C
     /* create tracer */
     onesdk_tracer_handle_t const tracer = onesdk_incomingremotecalltracer_create(
-        onesdk_asciistr("service method"),
-        onesdk_asciistr("service name"),
-        onesdk_asciistr("service endpoint"));
+        onesdk_asciistr("remote service method"),
+        onesdk_asciistr("logical service name"),
+        onesdk_asciistr("deployed service endpoint"));
 
     /* set the tag that we got from the caller */
     if (byte_tag_size != 0)
@@ -152,8 +152,8 @@ onesdk_databaseinfo_handle_t db_info_handle = ONESDK_INVALID_HANDLE;
 /* ... */
 
     db_info_handle = onesdk_databaseinfo_create(
-        onesdk_asciistr("database name"),
-        onesdk_asciistr("database type"),
+        onesdk_asciistr("database name"),     /* the name of the database that you connect to */
+        onesdk_asciistr("database type"),     /* the type of the database (e.g. "SQLite", "MySQL", "Oracle", "DB2") */
         ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
         onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
 ```
