@@ -236,8 +236,8 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 ## Compatibility Dynatrace OneAgent SDK for C releases with OneAgent releases
 
 |OneAgent SDK for C|Dynatrace OneAgent|
-|:------|:--------|:------------|
-|1.0.0  |>=1.133  |
+|:-----------------|:-----------------|
+|1.0.0             |>=1.133           |
 
 
 ## Release Notes
