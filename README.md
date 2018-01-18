@@ -63,21 +63,6 @@ include("path/to/sdk-package/onesdk-config.cmake")
 target_link_libraries(your_application onesdk_static)
 ```
 
-### Using CMake to build the samples
-
-Assuming that you have a C++11 compiler and suitable build system installed (e.g. Visual Studio or g++ & make), which are supported and correctly detected by CMake, creating build files for the samples can be as easy as
-```
-C:\onesdk\samples>mkdir build
-C:\onesdk\samples>cd build
-C:\onesdk\samples\build>cmake ..
-  *snip* a lot of CMake output
--- Build files have been written to: C:/onesdk/samples/build
-C:\onesdk\samples\build>
-```
-
-Then simply use your build system to build the samples (e.g. "make" or open & build the generated solution in Visual Studio).
-
-
 ### Auto-linking with Visual Studio
 
 If you use Visual Studio to build a Windows application, you can use the SDK's auto-linking feature. To do this, simply define the
@@ -94,6 +79,20 @@ The SDK contains code that dynamically loads the agent library (`.dll`/`.so`/...
 additional libraries (e.g. under Linux you would typically add `-ldl` to the linker command line).
 
 On Windows, when using Visual Studio 2015 or later, you also have to link `legacy_stdio_definitions.lib`.
+
+### Using CMake to build the samples
+
+Assuming that you have a C++11 compiler and suitable build system installed (e.g. Visual Studio or g++ & make), which are supported and correctly detected by CMake, creating build files for the samples can be as easy as
+```
+C:\onesdk\samples>mkdir build
+C:\onesdk\samples>cd build
+C:\onesdk\samples\build>cmake ..
+  *snip* a lot of CMake output
+-- Build files have been written to: C:/onesdk/samples/build
+C:\onesdk\samples\build>
+```
+
+Then simply use your build system to build the samples (e.g. "make" or open & build the generated solution in Visual Studio).
 
 
 ## Using the Dynatrace OneAgent SDK to trace remote calls
