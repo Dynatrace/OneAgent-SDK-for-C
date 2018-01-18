@@ -25,6 +25,9 @@ var searchData=
   ['onesdk_5flogging_5flevel_5fnone',['ONESDK_LOGGING_LEVEL_NONE',['../onesdk__common_8h.html#a63fc22d31a6380026cf00bfd8e292a56',1,'onesdk_common.h']]],
   ['onesdk_5flogging_5flevel_5fsevere',['ONESDK_LOGGING_LEVEL_SEVERE',['../onesdk__common_8h.html#a7f787a61e8b3f283825b22378a85cc47',1,'onesdk_common.h']]],
   ['onesdk_5fstr_5fpri_5fxstr',['ONESDK_STR_PRI_XSTR',['../onesdk__config_8h.html#ad68b1faada4072c2468d66b2ea724fa5',1,'onesdk_config.h']]],
+  ['onesdk_5fstub_5fversion_5fmajor',['ONESDK_STUB_VERSION_MAJOR',['../onesdk__common_8h.html#aaa5a8fa8b6272750f4037e4c91a05b62',1,'onesdk_common.h']]],
+  ['onesdk_5fstub_5fversion_5fminor',['ONESDK_STUB_VERSION_MINOR',['../onesdk__common_8h.html#a304fbdff56a3a587db91d47c18513c4e',1,'onesdk_common.h']]],
+  ['onesdk_5fstub_5fversion_5frevision',['ONESDK_STUB_VERSION_REVISION',['../onesdk__common_8h.html#ace05b948298c214ce95c822e2c27ab9c',1,'onesdk_common.h']]],
   ['onesdk_5fsuccess',['ONESDK_SUCCESS',['../onesdk__common_8h.html#af3f7d04ad8caca4f729971defbfdf555',1,'onesdk_common.h']]],
   ['onesdk_5fxstr',['ONESDK_XSTR',['../onesdk__config_8h.html#abaf8256486edfab8273532de644920db',1,'onesdk_config.h']]],
   ['onesdk_5fxstr_5fpri_5fstr',['ONESDK_XSTR_PRI_STR',['../onesdk__config_8h.html#aa118c9fcf5b71e77cf7846bb3b640edd',1,'onesdk_config.h']]]

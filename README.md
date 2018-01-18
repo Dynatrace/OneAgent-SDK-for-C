@@ -1,6 +1,9 @@
+**Disclaimer: This SDK is currently in early access and still work in progress.**
+
 # Dynatrace OneAgent SDK for C/C++
 
-This SDK allows Dynatrace customers to instrument native applications.
+This SDK enables Dynatrace customers to extend request level visibility into any native process. The SDK is C based and thus can be used in any C or C++ application. It can also be used in other languages via language bindings.
+In order to use the the development kit you need to have access to the source code of the application in question. 
 
 
 ## Package contents
@@ -10,8 +13,6 @@ The SDK package includes
 - A simple sample application
 - Reference documentation
 
-The most recent version of the reference documentation is also available online at https://dynatrace.github.io/OneAgent-SDK-for-C/
-
 
 ## Features
 
@@ -20,14 +21,20 @@ The most recent version of the reference documentation is also available online 
 - Trace any SQL based database call.
 
 
+## Documentation
+
+The reference documentation is included in this package. The most recent version is also available online at https://dynatrace.github.io/OneAgent-SDK-for-C/
+A high level documentation/description of SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/
+
+
 ## Initializing the Dynatrace OneAgent SDK 
 
 ```C
 #include <onesdk/onesdk.h>
 
 int main(int argc, char** argv) {
-    onesdk_stub_process_cmdline_args(argc, argv, 1);  /* Optional: Let the SDK process command line arguments   */
-    onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  /* Optional: Remove SDK command line arguments from argv  */
+    onesdk_stub_process_cmdline_args(argc, argv, 1);  /* optional: let the SDK process command line arguments   */
+    onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  /* optional: remove SDK command line arguments from argv  */
 
     /* Initialize SDK */
     onesdk_result_t const onesdk_init_result = onesdk_initialize();
@@ -42,6 +49,7 @@ int main(int argc, char** argv) {
 }
 ```
 
+
 ## Building and linking against the Dynatrace OneAgent SDK 
 
 The SDK doesn't have to be compiled, you only need to link your application to the SDK libraries.
@@ -54,6 +62,21 @@ If you use CMake to generate build files for your application, you should be abl
 include("path/to/sdk-package/onesdk-config.cmake")
 target_link_libraries(your_application onesdk_static)
 ```
+
+### Using CMake to build the samples
+
+Assuming that you have a C++11 compiler and suitable build system installed (e.g. Visual Studio or g++ & make), which are supported and correctly detected by CMake, creating build files for the samples can be as easy as
+```
+C:\onesdk\samples>mkdir build
+C:\onesdk\samples>cd build
+C:\onesdk\samples\build>cmake ..
+  *snip* a lot of CMake output
+-- Build files have been written to: C:/onesdk/samples/build
+C:\onesdk\samples\build>
+```
+
+Then simply use your build system to build the samples (e.g. "make" or open & build the generated solution in Visual Studio).
+
 
 ### Auto-linking with Visual Studio
 
@@ -141,7 +164,8 @@ Instrumenting an incoming remote call:
     onesdk_tracer_end(tracer);
 ```
 
-## Using the Dynatrace OneAgent SDK to trace SQL based database calls.
+
+## Using the Dynatrace OneAgent SDK to trace SQL based database calls
 
 To trace database requests you need a database info object which stores the information about your database which does not change between
 individual requests. This will typically be created somewhere in your initialization code (after initializing the SDK):
@@ -153,7 +177,7 @@ onesdk_databaseinfo_handle_t db_info_handle = ONESDK_INVALID_HANDLE;
 
     db_info_handle = onesdk_databaseinfo_create(
         onesdk_asciistr("database name"),     /* the name of the database that you connect to */
-        onesdk_asciistr("database type"),     /* the type of the database (e.g. "SQLite", "MySQL", "Oracle", "DB2") */
+        onesdk_asciistr("database type"),     /* the type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2") */
         ONESDK_CHANNEL_TYPE_TCP_IP,           /* channel type     */
         onesdk_asciistr("localhost:12345")    /* channel endpoint */ );
 ```
@@ -186,37 +210,39 @@ Finally, release the database info object in your cleanup code (before shutting 
     db_info_handle = ONESDK_INVALID_HANDLE;
 ```
 
+
 ## Troubleshooting
 
-As long as the SDK can't connect to the agent (see output of sample), you might set the following system property to print debug information
-to standard out:
+If the SDK cannot load or initialize the agent module (see output of sample1), you can increase the SDK stub's logging level by either
+- calling `onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`
+- setting the environment variable `DT_LOGLEVELSDK={level}`
+- if your program passes command line arguments to the SDK (see `onesdk_stub_process_cmdline_args`), you can use the command line argument `--dt_loglevelsdk={level}`
 
-    -Dcom.dynatrace.oneagent.adk.debug=true
+Log output of the stub will be written to `stderr` by default (see documentation for `onesdk_stub_set_logging_callback`).
 
-As soon as the SDK is active, but no paths are shown in the UI or AppMon Client, enable the agent debug flag:
+If the SDK agent is active, but no paths are shown in the UI, check the agent log files.
+You can increase the agent log level by setting the environment variable `DT_LOGLEVELFILE={level}` or passing the command line argument `--dt_loglevelfile={level}` to the SDK.
+This will provide additional debug information in agent log file.
 
-    debugTaggingAdkJava=true
-
-This will provide additional debug information in agent log.
-
-Additionally ensure, that you have set an `LoggingCallback` in your application. For usage see class `StdErrLoggingCallback` in
-`remotecall-server` module.
+To troubleshoot SDK issues you can also use the SDK's agent logging callback - see `onesdk_agent_set_logging_callback` in the reference documentation.
 
 
 ## OneAgent SDK Requirements
 
-- OneAgent (supported versions see below; AppMon classic agent isn't supported)
+- Dynatrace OneAgent needs to be installed on the system that is to be monitored (supported versions see below) 
+- Supported environments include all Windows or Linux x86 environments
+- musl libc is currently not suppported
 
 
 ## Compatibility Dynatrace OneAgent SDK for C releases with OneAgent releases
 
-|OneAgent SDK for C|Dynatrace OneAgent|AppMon Agent|
+|OneAgent SDK for C|Dynatrace OneAgent|
 |:------|:--------|:------------|
-|1.0.0  |>=1.133  |not supported|
+|1.0.0  |>=1.133  |
 
 
-## Release Notes (OneAgent SDK sample applications)
+## Release Notes
 
 |Version|Date|Description|
 |:------|:----------|:--------------|
-|1.0.0  |09.2017    |Initial version|
+|1.0.0  |01.2018    |Initial version|

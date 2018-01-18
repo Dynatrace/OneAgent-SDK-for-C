@@ -94,7 +94,7 @@ Functions</h2></td></tr>
 <p>Tracers are created by different factory functions, depending on the type of the tracer, and destroyed/released by <a class="el" href="group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f">onesdk_tracer_end</a>.</p>
 <p>Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread, processes or on another system you have to use the tagging functions.</p>
 <dl class="section attention"><dt>Attention</dt><dd>All tracers in this SDK have strict thread affinity - they are bound to the thread by which they were created. Calling <em>any</em> tracer function with a tracer handle that was created by a different thread is an error and will not produce any effect. Note that this includes <a class="el" href="group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f">onesdk_tracer_end</a>. Thus trying to destroy/release a tracer from a different thread will result in a memory leak.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>SDK TODO: Insert link to high level documentation.</dd></dl>
+<p>For further information, see the high level SDK documentation available at <a href="https://github.com/Dynatrace/OneAgent-SDK/">https://github.com/Dynatrace/OneAgent-SDK/</a> </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga0c17143ce1e5f49b2a365e02223a6d1f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0c17143ce1e5f49b2a365e02223a6d1f">&#9670;&nbsp;</a></span>onesdk_tracer_end()</h2>
