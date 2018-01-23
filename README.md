@@ -3,7 +3,7 @@
 # Dynatrace OneAgent SDK for C/C++
 
 This SDK enables Dynatrace customers to extend request level visibility into any native process. The SDK is C based and thus can be used in any C or C++ application. It can also be used in other languages via language bindings.
-In order to use the the development kit you need to have access to the source code of the application in question. 
+In order to use the development kit you need to have access to the source code of the application in question. 
 
 
 ## Package contents
@@ -16,9 +16,9 @@ The SDK package includes
 
 ## Features
 
-- Trace any remote call end to end across processes and different programming languages.
-  The SDK is compatible with the respective Java and Node.js SDK.
-- Trace any SQL based database call.
+- Trace any remote call end-to-end across processes and different programming languages.
+  The SDK is compatible with other OneAgent SDKs and OneAgents in general.
+- Trace any SQL-based database call.
 
 
 ## Documentation
@@ -101,7 +101,7 @@ Then simply use your build system to build the samples (e.g. "make" or open & bu
 You can use the SDK to trace proprietary IPC communication from one process to the other. This will enable you to see full Service Flow,
 PurePath and Smartscape topology for remoting technologies that Dynatrace is not aware of.
 
-Instrumenting an outbound remote call:
+Instrumenting an outgoing remote call:
 
 ```C
     /* create tracer */
@@ -231,7 +231,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 - Dynatrace OneAgent needs to be installed on the system that is to be monitored (supported versions see below) 
 - Supported environments include all Windows or Linux x86 environments
-- musl libc is currently not suppported
+- musl libc is currently not supported
 
 
 ## Compatibility Dynatrace OneAgent SDK for C releases with OneAgent releases
