@@ -21,6 +21,15 @@
     @brief Main include file for the SDK - includes everything.
 */
 
+/** @mainpage
+
+    See @ref init for information about initializing the SDK.
+
+    See @ref onesdk_agent.h and the various <a href="modules.html">modules</a> for information about how to instrument an application.
+
+    A high level documentation/description of SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/
+*/
+
 /*========================================================================================================================================*/
 
 #include "onesdk_init.h"

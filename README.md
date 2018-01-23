@@ -24,6 +24,7 @@ The SDK package includes
 ## Documentation
 
 The reference documentation is included in this package. The most recent version is also available online at https://dynatrace.github.io/OneAgent-SDK-for-C/
+
 A high level documentation/description of SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/
 
 
@@ -212,16 +213,16 @@ Finally, release the database info object in your cleanup code (before shutting 
 
 ## Troubleshooting
 
-If the SDK cannot load or initialize the agent module (see output of sample1), you can increase the SDK stub's logging level by either
+If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate logging by either
 - calling `onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`
 - setting the environment variable `DT_LOGLEVELSDK={level}`
 - if your program passes command line arguments to the SDK (see `onesdk_stub_process_cmdline_args`), you can use the command line argument `--dt_loglevelsdk={level}`
 
-Log output of the stub will be written to `stderr` by default (see documentation for `onesdk_stub_set_logging_callback`).
+Once you have enabled logging, log output of the stub will be written to `stderr` by default. See documentation for `onesdk_stub_set_logging_callback` if you need to process stub log messages in another way.
 
 If the SDK agent is active, but no paths are shown in the UI, check the agent log files.
 You can increase the agent log level by setting the environment variable `DT_LOGLEVELFILE={level}` or passing the command line argument `--dt_loglevelfile={level}` to the SDK.
-This will provide additional debug information in agent log file.
+This will provide additional debug information in agent log file. (Alternatively you can use `DT_LOGLEVELCON={level}` or `--dt_loglevelcon={level}` if you want to receive agent log output via `stdout`.)
 
 To troubleshoot SDK issues you can also use the SDK's agent logging callback - see `onesdk_agent_set_logging_callback` in the reference documentation.
 

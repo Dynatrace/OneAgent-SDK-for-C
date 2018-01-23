@@ -159,7 +159,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_stub_default_logging_function(onesdk_loggin
 /** @brief Sets the SDK stub logging level.
     @param level        The new SDK stub logging level.
 
-    The default SDK stub logging level is @ref ONESDK_LOGGING_LEVEL_INFO.
+    The default SDK stub logging level is @ref ONESDK_LOGGING_LEVEL_NONE which means no messages will be logged.
     Messages with a level < the current SDK stub logging level will be suppressed (=not sent to the logging function).
 
     @note This only affects log messages generated in the SDK stub itself. The actual agent uses a different logging mechanism.

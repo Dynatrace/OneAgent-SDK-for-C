@@ -35,6 +35,8 @@
 
 /** @addtogroup strings Strings
     @{
+
+    See @ref onesdk_string_t for more information about SDK strings.
 */
 
 /*========================================================================================================================================*/
@@ -63,9 +65,9 @@ typedef struct {
 
 /*========================================================================================================================================*/
 
-/** @anchor ccsid_constants
-    @name CCSID Constants
+/** @name CCSID Constants
     @{
+    @anchor ccsid_constants
 */
 
 /** @brief Special "NULL" CCSID value.

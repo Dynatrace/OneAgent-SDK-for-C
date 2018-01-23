@@ -27,9 +27,15 @@
 
 /*========================================================================================================================================*/
 
-/** @anchor error_code_constants
-    @name Error Code Constants
+#define ONESDK_STUB_VERSION_MAJOR		1       /**< @brief Major version number of the SDK stub. */
+#define ONESDK_STUB_VERSION_MINOR		0       /**< @brief Minor version number of the SDK stub. */
+#define ONESDK_STUB_VERSION_REVISION	0       /**< @brief Revision of the SDK stub. */
+
+/*========================================================================================================================================*/
+
+/** @name Error Code Constants
     @{
+    @anchor error_code_constants
 */
 
 /** @hideinitializer @brief The operation failed, no further detail is available. */
@@ -81,20 +87,20 @@ typedef void ONESDK_CALL onesdk_agent_logging_callback_t(char const* message);
 
 /*========================================================================================================================================*/
 
-/** @anchor logging_level_constants
-    @name Logging Level Constants
+/** @name Logging Level Constants
     @{
+    @anchor logging_level_constants
 */
 
 #define ONESDK_LOGGING_LEVEL_FINEST		0   /**< @brief Most verbose logging level. */
 #define ONESDK_LOGGING_LEVEL_FINER		1
 #define ONESDK_LOGGING_LEVEL_FINE		2
 #define ONESDK_LOGGING_LEVEL_CONFIG		3
-#define ONESDK_LOGGING_LEVEL_INFO		4   /**< @brief Default SDK stub logging level. */
+#define ONESDK_LOGGING_LEVEL_INFO		4
 #define ONESDK_LOGGING_LEVEL_WARNING	5
 #define ONESDK_LOGGING_LEVEL_SEVERE		6   /**< @brief Least verbose regular logging level. */
 #define ONESDK_LOGGING_LEVEL_DEBUG		7   /**< @brief Only used for debug messages which are not enabled by default. */
-#define ONESDK_LOGGING_LEVEL_NONE       8   /**< @brief Setting this log level deactivates all logging. */
+#define ONESDK_LOGGING_LEVEL_NONE       8   /**< @brief Default SDK stub logging level. Setting this log level deactivates all logging. */
 
 /** @} */
 
@@ -105,9 +111,9 @@ typedef onesdk_int32_t onesdk_logging_level_t;
 
 /*========================================================================================================================================*/
 
-/** @anchor handle_types
-    @name Handle Types
+/** @name Handle Types
     @{
+    @anchor handle_types
 */
 
 /** @brief Type for all SDK handles.
@@ -131,9 +137,9 @@ typedef onesdk_handle_t onesdk_databaseinfo_handle_t;   /**< @brief A handle tha
 
 /*========================================================================================================================================*/
 
-/** @anchor agent_state_constants
-    @name Agent State Constants
+/** @name Agent State Constants
     @{
+    @anchor agent_state_constants
 */
 
 /** @brief The SDK stub is connected to the agent, which is currently active.
@@ -207,10 +213,10 @@ typedef onesdk_handle_t onesdk_databaseinfo_handle_t;   /**< @brief A handle tha
     @{
 */
 
-/** @anchor channel_type_constants
-    @name Channel Type Constants
+/** @name Channel Type Constants
     @see @ref channels
     @{
+    @anchor channel_type_constants
 */
 
 /** @brief Some other channel type or unknown channel type.
@@ -244,6 +250,61 @@ typedef onesdk_handle_t onesdk_databaseinfo_handle_t;   /**< @brief A handle tha
     serviced by an in-process database like SQLite.
 */
 #define ONESDK_CHANNEL_TYPE_IN_PROCESS			4
+
+/** @} */
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup database_requests
+    @{
+
+    @name Database Vendor Strings
+    @see @ref database_requests, https://github.com/Dynatrace/OneAgent-SDK
+    @{
+    @anchor database_vendor_strings
+*/
+
+#define ONESDK_DATABASE_VENDOR_APACHE_HIVE      "ApacheHive"        /**< @brief Database vendor string for Apache Hive. */
+#define ONESDK_DATABASE_VENDOR_CLOUDSCAPE       "Cloudscape"        /**< @brief Database vendor string for Apache Derby
+                                                                                (aka. IBM Cloudscape). */
+#define ONESDK_DATABASE_VENDOR_HSQLDB           "HSQLDB"            /**< @brief Database vendor string for HyperSQL DB. */
+#define ONESDK_DATABASE_VENDOR_PROGRESS         "Progress"          /**< @brief Database vendor string for OpenEdge Database
+                                                                                (aka. Progress). */
+#define ONESDK_DATABASE_VENDOR_MAXDB            "MaxDB"             /**< @brief Database vendor string for SAP MaxDB. */
+#define ONESDK_DATABASE_VENDOR_HANADB           "HanaDB"            /**< @brief Database vendor string for SAP HANA DB. */
+#define ONESDK_DATABASE_VENDOR_INGRES           "Ingres"            /**< @brief Database vendor string for Ingres Database. */
+#define ONESDK_DATABASE_VENDOR_FIRST_SQL        "FirstSQL"          /**< @brief Database vendor string for FirstSQL. */
+#define ONESDK_DATABASE_VENDOR_ENTERPRISE_DB    "EnterpriseDB"      /**< @brief Database vendor string for EnterpriseDB. */
+#define ONESDK_DATABASE_VENDOR_CACHE            "Cache"             /**< @brief Database vendor string for InterSystems Cache. */
+#define ONESDK_DATABASE_VENDOR_ADABAS           "Adabas"            /**< @brief Database vendor string for ADABAS. */
+#define ONESDK_DATABASE_VENDOR_FIREBIRD         "Firebird"          /**< @brief Database vendor string for Firebird Database. */
+#define ONESDK_DATABASE_VENDOR_DB2              "DB2"               /**< @brief Database vendor string for IBM Db2. */
+#define ONESDK_DATABASE_VENDOR_DERBY_CLIENT     "Derby Client"      /**< @brief Database vendor string for JDBC connections to Apache Derby
+                                                                                (aka. IBM Cloudscape). */
+#define ONESDK_DATABASE_VENDOR_DERBY_EMBEDDED   "Derby Embedded"    /**< @brief Database vendor string for Derby Embedded. */
+#define ONESDK_DATABASE_VENDOR_FILEMAKER        "Filemaker"         /**< @brief Database vendor string for FileMaker Pro. */
+#define ONESDK_DATABASE_VENDOR_INFORMIX         "Informix"          /**< @brief Database vendor string for IBM Informix. */
+#define ONESDK_DATABASE_VENDOR_INSTANT_DB       "InstantDb"         /**< @brief Database vendor string for InstantDB. */
+#define ONESDK_DATABASE_VENDOR_INTERBASE        "Interbase"         /**< @brief Database vendor string for Embarcadero InterBase. */
+#define ONESDK_DATABASE_VENDOR_MYSQL            "MySQL"             /**< @brief Database vendor string for MySQL. */
+#define ONESDK_DATABASE_VENDOR_MARIADB          "MariaDB"           /**< @brief Database vendor string for MariaDB. */
+#define ONESDK_DATABASE_VENDOR_NETEZZA          "Netezza"           /**< @brief Database vendor string for IBM Netezza. */
+#define ONESDK_DATABASE_VENDOR_ORACLE           "Oracle"            /**< @brief Database vendor string for Oracle Database. */
+#define ONESDK_DATABASE_VENDOR_PERVASIVE        "Pervasive"         /**< @brief Database vendor string for Pervasive PSQL. */
+#define ONESDK_DATABASE_VENDOR_POINTBASE        "Pointbase"         /**< @brief Database vendor string for PointBase. */
+#define ONESDK_DATABASE_VENDOR_POSTGRESQL       "PostgreSQL"        /**< @brief Database vendor string for PostgreSQL. */
+#define ONESDK_DATABASE_VENDOR_SQLSERVER        "SQL Server"        /**< @brief Database vendor string for Microsoft SQL Server. */
+#define ONESDK_DATABASE_VENDOR_SQLITE           "sqlite"            /**< @brief Database vendor string for SQLite. */
+#define ONESDK_DATABASE_VENDOR_SYBASE           "Sybase"            /**< @brief Database vendor string for SAP ASE
+                                                                                (aka. Sybase SQL Server, Sybase DB, Sybase ASE). */
+#define ONESDK_DATABASE_VENDOR_TERADATA         "Teradata"          /**< @brief Database vendor string for Teradata Database. */
+#define ONESDK_DATABASE_VENDOR_VERTICA          "Vertica"           /**< @brief Database vendor string for Vertica. */
+#define ONESDK_DATABASE_VENDOR_CASSANDRA        "Cassandra"         /**< @brief Database vendor string for Cassandra. */
+#define ONESDK_DATABASE_VENDOR_H2               "H2"                /**< @brief Database vendor string for H2 Database Engine. */
+#define ONESDK_DATABASE_VENDOR_COLDFUSION_IMQ   "ColdFusion IMQ"    /**< @brief Database vendor string for ColdFusion In-Memory Query
+                                                                                (aka. Query of Queries). */
+#define ONESDK_DATABASE_VENDOR_REDSHIFT         "Amazon Redshift"   /**< @brief Database vendor string for Amazon Redshift. */
 
 /** @} */
 /** @} */

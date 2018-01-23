@@ -28,6 +28,12 @@
 
 /*========================================================================================================================================*/
 
+/** @addtogroup misc Miscellaneous
+    @{
+*/
+
+/*========================================================================================================================================*/
+
 /** @brief Returns the version string of the loaded SDK agent module.
 
     @return
@@ -65,6 +71,33 @@ ONESDK_DECLARE_FUNCTION(onesdk_int32_t) onesdk_agent_get_current_state(void);
     @see @ref onesdk_agent_logging_callback_t
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup tracers Common Tracer Functions
+
+    Tracers are the objects used to capture information about "operations" (e.g. remote calls or database requests) that your application
+    performs.
+
+    Tracers are created by different factory functions, depending on the type of the tracer, and destroyed/released by
+    @ref onesdk_tracer_end.
+
+    Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread,
+    processes or on another system you have to use the tagging functions.
+
+    @attention
+    All tracers in this SDK have strict thread affinity - they are bound to the thread by which they were created. Calling _any_ tracer
+    function with a tracer handle that was created by a different thread is an error and will not produce any effect. Note that this
+    includes @ref onesdk_tracer_end. Thus trying to destroy/release a tracer from a different thread will result in a memory leak.
+
+    For further information, see the high level SDK documentation available at https://github.com/Dynatrace/OneAgent-SDK/
+
+    @{
+*/
 
 /*========================================================================================================================================*/
 
@@ -211,6 +244,10 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_byte_tag(ones
 
 /*========================================================================================================================================*/
 
+/** @} */
+
+/*========================================================================================================================================*/
+
 /** @addtogroup remote_calls Remote Call Tracers
 
     When tracing remote calls, we use the following parameters
@@ -222,18 +259,14 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_byte_tag(ones
     - @p channel_type
     - @p channel_endpoint
 
+    @p service_method should be the name of the service method/operation, @p service_name the name of the service class/type and
+    @p service_endpoint a string identifying the "instance" of that service class/type.
+
     The @p channel_ parameters are described in @ref channels.
 
-    @todo SDK TODO: General description of what we mean by @p service_method, @p service_name and especially @p service_endpoint.
+    Further there is the optional `protocol_name` property that you can set to specify the used "wire protocol".
 
-    Further there is the optional `protocol_name` property that you can set.
-
-    @todo SDK TODO: Document what exactly we mean by "remoting protocol".
-    E.g. for RMI over GIOP/CORBA this could be...
-        - `RMI`, which is not a protocol but an API which can use many different transports and wire protocols
-        - `CORBA`, which is not a protocol but a standard defining a number of protocols and data formats
-        - `GIOP`, which is the "message protocol" defined by CORBA
-        - `IIOP/SSLIOP/HTIOP` which are different GIOP "flavors" that use different underlying protocols (TCP/IP, SSL, HTTP)
+    For further information, see the high level SDK documentation available at https://github.com/Dynatrace/OneAgent-SDK/
 
     @par Example 1:
     - You're tracing an outgoing remote call to some web service `org.example.services.Repository`.
@@ -361,7 +394,7 @@ ONESDK_DECLARE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create
 
 /** @brief Creates a database info object.
     @param database_name        The name of the database.
-    @param database_vendor      The type of the database (e.g. "SQLite", "MySQL", "Oracle", "DB2")
+    @param database_vendor      The type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2" - see @ref database_vendor_strings).
     @param channel_type         The type of the channel used to communicate with the database.
     @param channel_endpoint     [optional] The endpoint of the channel used to communicate with the database.
 

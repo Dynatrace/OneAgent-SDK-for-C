@@ -199,9 +199,9 @@ typedef int32_t onesdk_result_t;
 
 /*========================================================================================================================================*/
 
-/** @anchor integer_types
-    @name Integer Types
+/** @name Integer Types
     @{
+    @anchor integer_types
 */
 
 typedef int32_t onesdk_bool_t;      /**< @brief Type for boolean values. Zero means `false`, any non-zero value means `true`. */
@@ -253,3 +253,4 @@ typedef char onesdk_xchar_t;
 /*========================================================================================================================================*/
 
 #endif /* ONESDK_CONFIG_H_INCLUDED */
+
