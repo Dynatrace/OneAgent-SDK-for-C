@@ -241,6 +241,11 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 |1.0.0             |>=1.133           |
 
 
+## Support
+
+The Dynatrace OneAgent SDK is currently in early access. Please report tickets via the [GitHub issue tracker](https://github.com/Dynatrace/OneAgent-SDK-for-C/issues).
+
+
 ## Release Notes
 
 |Version|Date|Description|
