@@ -62,10 +62,10 @@ private:
             {
                 // Call once to get required buffer size (including space for the terminating NULL character).
                 onesdk_size_t required_buffer_size = 0;
-                onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, 0, 0, &required_buffer_size);
+                onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, nullptr, 0, &required_buffer_size);
                 // Call again to fetch data.
                 tag.resize(required_buffer_size);
-                onesdk_size_t const tag_size = onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, &tag[0], tag.size(), 0);
+                onesdk_size_t const tag_size = onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, &tag[0], tag.size(), nullptr);
                 // Use return value to resize string (the return value does NOT include the terminating NULL character).
                 tag.resize(tag_size);
             }
