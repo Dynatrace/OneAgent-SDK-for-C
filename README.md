@@ -327,5 +327,5 @@ The Dynatrace OneAgent SDK is currently in early access. Please report tickets v
 
 |Version|Date     |Description                                                                                                             |
 |:------|:--------|:-----------------------------------------------------------------------------------------------------------------------|
-|1.1.0  |03.2018  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
+|1.1.0  |04.2018  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
 |1.0.0  |01.2018  |Initial version                                                                                                         |
