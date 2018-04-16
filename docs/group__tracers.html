@@ -298,12 +298,11 @@ Functions</h2></td></tr>
 <p>If <code>buffer</code> is not <code>NULL</code> and <code>buffer_size</code> is big enough, this function will copy the string representation into the provided buffer.</p>
 <p>This function will always make sure that, if the application provides a non-<code>NULL</code> <code>buffer</code> with a <code>buffer_size</code> &gt;= 1, <code>buffer</code> will always be null-terminated. I.e. if the string representation cannot be stored because <code>buffer_size</code> is too small, a null character will be written into <code>buffer</code>[0].</p>
 <p>The string copied into <code>buffer</code> uses ASCII encoding.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>If called with invalid arguments, the retrieved string will be an empty string.</li>
-<li>Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.</li>
-<li>Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.</li>
-</ul>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If called with invalid arguments, the retrieved string will be an empty string. </dd>
+<dd>
+Calling this function multiple times for the same tracer is explicitly supported and will yield the same result. </dd>
+<dd>
+Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__tracers.html#ga7ae547cfdab36ab9464f82708fe9d414">onesdk_tracer_get_outgoing_dynatrace_byte_tag</a> </dd></dl>
 
 </div>

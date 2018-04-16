@@ -1,5 +1,5 @@
 #
-# Copyright 2017 Dynatrace LLC
+# Copyright 2017-2018 Dynatrace LLC
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,14 @@ cmake_policy(PUSH)
 cmake_policy(VERSION 2.8.12)
 cmake_minimum_required(VERSION 2.8.12)
 
-project(onesdk)
+include("${CMAKE_CURRENT_LIST_DIR}/onesdk-version.cmake")
+
+if (CMAKE_VERSION VERSION_LESS "3.0")
+    project(onesdk)
+else ()
+    cmake_policy(SET CMP0048 NEW)
+    project(onesdk VERSION ${onesdk_VERSION_MAJOR}.${onesdk_VERSION_MINOR}.${onesdk_VERSION_PATCH})
+endif ()
 
 get_filename_component(onesdk_path "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
@@ -78,6 +85,7 @@ set(onesdk_lib_path "${onesdk_path}/lib/${onesdk_cfg_name}")
 # TARGET onesdk_static
 
 add_library(onesdk_static STATIC IMPORTED)
+set_property(TARGET onesdk_static PROPERTY VERSION "${onesdk_VERSION}")
 set_property(TARGET onesdk_static PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${onesdk_path}/include")
 set_property(TARGET onesdk_static PROPERTY IMPORTED_LOCATION "${onesdk_lib_path}/${onesdk_lib_prefix}onesdk_static${onesdk_linklib_suffix}")
 if (MSVC_VERSION AND NOT MSVC_VERSION LESS 1900)
@@ -90,6 +98,7 @@ endif ()
 # TARGET onesdk_shared
 
 add_library(onesdk_shared SHARED IMPORTED)
+set_property(TARGET onesdk_shared PROPERTY VERSION "${onesdk_VERSION}")
 set_property(TARGET onesdk_shared PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${onesdk_path}/include")
 set_property(TARGET onesdk_shared PROPERTY IMPORTED_LOCATION "${onesdk_lib_path}/${onesdk_lib_prefix}onesdk_shared${onesdk_shlib_suffix}")
 set_property(TARGET onesdk_shared APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS "ONESDK_SHARED")

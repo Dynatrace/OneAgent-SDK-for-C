@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -167,10 +167,9 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_tracer_error(onesdk_tracer_handle_t t
 
     The string copied into @p buffer uses ASCII encoding.
 
-    @note
-    - If called with invalid arguments, the retrieved string will be an empty string.
-    - Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.
-    - Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.
+    @note If called with invalid arguments, the retrieved string will be an empty string.
+    @note Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.
+    @note Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.
 
     @see @ref onesdk_tracer_get_outgoing_dynatrace_byte_tag
 */
@@ -390,11 +389,11 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingremotecalltracer_set_protocol
 */
 
 /** @internal */
-ONESDK_DECLARE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create_p(onesdk_string_t const* database_name, onesdk_string_t const* database_vendor, onesdk_int32_t channel_type, onesdk_string_t const* channel_endpoint);
+ONESDK_DECLARE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create_p(onesdk_string_t const* name, onesdk_string_t const* vendor, onesdk_int32_t channel_type, onesdk_string_t const* channel_endpoint);
 
 /** @brief Creates a database info object.
-    @param database_name        The name of the database.
-    @param database_vendor      The type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2" - see @ref database_vendor_strings).
+    @param name                 The name of the database.
+    @param vendor               The type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2" - see @ref database_vendor_strings).
     @param channel_type         The type of the channel used to communicate with the database.
     @param channel_endpoint     [optional] The endpoint of the channel used to communicate with the database.
 
@@ -405,8 +404,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create
 
     For information about @p channel_type and @p channel_endpoint see @ref channels.
 */
-ONESDK_DEFINE_INLINE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create(onesdk_string_t database_name, onesdk_string_t database_vendor, onesdk_int32_t channel_type, onesdk_string_t channel_endpoint) {
-    return onesdk_databaseinfo_create_p(&database_name, &database_vendor, channel_type, &channel_endpoint);
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_create(onesdk_string_t name, onesdk_string_t vendor, onesdk_int32_t channel_type, onesdk_string_t channel_endpoint) {
+    return onesdk_databaseinfo_create_p(&name, &vendor, channel_type, &channel_endpoint);
 }
 
 /** @brief Releases a database info object.
@@ -423,19 +422,201 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_
 ONESDK_DECLARE_FUNCTION(void) onesdk_databaseinfo_delete(onesdk_databaseinfo_handle_t databaseinfo_handle);
 
 /** @internal */
-ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_databaserequesttracer_create_sql_p(onesdk_databaseinfo_handle_t databaseinfo_handle, onesdk_string_t const* database_statement);
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_databaserequesttracer_create_sql_p(onesdk_databaseinfo_handle_t databaseinfo_handle, onesdk_string_t const* statement);
 
 /** @brief Creates a tracer for tracing SQL database requests.
     @param databaseinfo_handle      A valid database info handle.
-    @param database_statement       The database statement (SQL).
+    @param statement                The database statement (SQL).
 
     @return A handle for the newly created database request tracer or @ref ONESDK_INVALID_HANDLE.
 
     @see @ref onesdk_databaseinfo_create
 */
-ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_databaserequesttracer_create_sql(onesdk_databaseinfo_handle_t databaseinfo_handle, onesdk_string_t database_statement) {
-    return onesdk_databaserequesttracer_create_sql_p(databaseinfo_handle, &database_statement);
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_databaserequesttracer_create_sql(onesdk_databaseinfo_handle_t databaseinfo_handle, onesdk_string_t statement) {
+    return onesdk_databaserequesttracer_create_sql_p(databaseinfo_handle, &statement);
 }
+
+/** @brief Sets the number of returned rows for a database request.
+    @param tracer_handle            A valid database request tracer handle.
+    @param returned_row_count       The number of returned rows. Must be >= 0.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_databaserequesttracer_set_returned_row_count(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t returned_row_count);
+
+/** @brief Sets the number of round trips for a database request.
+    @param tracer_handle            A valid database request tracer handle.
+    @param round_trip_count         The number of round trips between the client and the database. Must be >= 0.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_databaserequesttracer_set_round_trip_count(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t round_trip_count);
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup incoming_web_requests Incoming Web Request Tracers
+
+    Incoming web request tracers are used to capture information about HTTP requests that the application services (processes, answers).
+
+    To create an incoming web request tracer an application must first create a web application info object which describes the web
+    application - see @ref onesdk_webapplicationinfo_create.
+
+    @since Incoming web request tracers were added in version 1.1.0.
+
+    @{
+*/
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(onesdk_webapplicationinfo_handle_t) onesdk_webapplicationinfo_create_p(onesdk_string_t const* web_server_name, onesdk_string_t const* application_id, onesdk_string_t const* context_root);
+
+/** @brief Creates a web application info object.
+    @param web_server_name          The logical name of the web server that hosts the application.
+                                    In case of a cluster, every node in the cluster must use the same @p web_server_name.
+    @param application_id           A unique ID for the web application. This will also be used as the display name.
+    @param context_root             The context root of the web application. This is the common path prefix for requests which will be
+                                    routed to the web application.
+
+    @return A handle for the newly created web application info object or @ref ONESDK_INVALID_HANDLE.
+
+    This function creates a web application info object which is required for tracing incoming web requests
+    (see @ref onesdk_incomingwebrequesttracer_create).
+
+    The provided information determines the identity and name of the resulting web request service in Dynatrace.
+
+    See https://www.dynatrace.com/support/help/server-side-services/introduction/how-does-dynatrace-detect-and-name-services/#web-request-services
+    for more information about the meaning of the parameters.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_webapplicationinfo_handle_t) onesdk_webapplicationinfo_create(onesdk_string_t web_server_name, onesdk_string_t application_id, onesdk_string_t context_root) {
+    return onesdk_webapplicationinfo_create_p(&web_server_name, &application_id, &context_root);
+}
+
+/** @brief Releases a web application info object.
+    @param webapplicationinfo_handle    A valid web application info handle.
+
+    This function releases the specified web application info object. Allocated resources are freed and the handle is invalidated.
+
+    An application should call @ref onesdk_webapplicationinfo_delete exactly once for each web application info object that it has created.
+
+    @note Calling @ref onesdk_webapplicationinfo_delete with a handle to a web application info object which is still referenced by existing
+    tracers is supported. In that case the lifetime of the web application info object is extended as necessary. The handle will always
+    become invalid immediately though.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_webapplicationinfo_delete(onesdk_webapplicationinfo_handle_t webapplicationinfo_handle);
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_incomingwebrequesttracer_create_p(onesdk_webapplicationinfo_handle_t webapplicationinfo_handle, onesdk_string_t const* url, onesdk_string_t const* method);
+
+/** @brief Creates a tracer for tracing an incoming web request.
+    @param webapplicationinfo_handle    A valid web application info handle.
+    @param url                          The requested URL. Will be parsed into scheme, hostname/port, path & query.
+    @param method                       The HTTP method of the request.
+
+    @return A handle for the newly created incoming web request tracer or @ref ONESDK_INVALID_HANDLE.
+
+    @note @p url does not have to contain a scheme or host. You can use the URL as it was sent in the HTTP request.
+    @note If @p url contains a hostname it will be resolved by the agent (asynchronously) after @ref onesdk_tracer_start was called.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_incomingwebrequesttracer_create(onesdk_webapplicationinfo_handle_t webapplicationinfo_handle, onesdk_string_t url, onesdk_string_t method) {
+    return onesdk_incomingwebrequesttracer_create_p(webapplicationinfo_handle, &url, &method);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_remote_address_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* remote_address);
+
+/** @brief Sets the remote address of an incoming web request.
+    @param tracer_handle            A valid incoming web request tracer handle.
+    @param remote_address           The remote IP address.
+
+    The remote address is very useful to gain information about load balancers, proxies and ultimately the end user that is sending the
+    request.
+
+    @note The remote address is the peer address of the socket connection via which the request was received. In case one or more proxies
+          are used, this will be the address of the last proxy in the proxy chain. To enable the agent to determine the client IP address
+          (=the address where the request originated), an application should also call
+          @ref onesdk_incomingwebrequesttracer_add_request_header to add any HTTP request headers.
+    @note Calling this function with @p remote_address = @ref onesdk_nullstr() will reset/clear any value that was set previously.
+    @note This function can not be used after the tracer was started.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_remote_address(onesdk_tracer_handle_t tracer_handle, onesdk_string_t remote_address) {
+    onesdk_incomingwebrequesttracer_set_remote_address_p(tracer_handle, &remote_address);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_request_headers_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* names, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds an HTTP request header of an incoming web request.
+    @param tracer_handle            A valid incoming web request tracer handle.
+    @param name                     The name of the HTTP request header.
+    @param value                    The value of the HTTP request header.
+
+    To allow the agent to determine various bits of useful information, an application should add all HTTP request headers.
+
+    @note The native SDK agent will currently capture all provided headers.
+    @note If an HTTP request contains multiple header lines with the same header name, an application should call this function once per
+          line. Alternatively, depending on the header, the application can call this function once per header name, with an appropriately
+          concatenated header value.
+    @note This function can not be used after the tracer was started.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_request_header(onesdk_tracer_handle_t tracer_handle, onesdk_string_t name, onesdk_string_t value) {
+    onesdk_incomingwebrequesttracer_add_request_headers_p(tracer_handle, &name, &value, 1);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_parameters_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* names, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds an HTTP POST parameter of an incoming web request.
+    @param tracer_handle            A valid incoming web request tracer handle.
+    @param name                     The name of the HTTP POST parameter.
+    @param value                    The value of the HTTP POST parameter.
+
+    @note The native SDK agent will currently capture all provided parameters.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_parameter(onesdk_tracer_handle_t tracer_handle, onesdk_string_t name, onesdk_string_t value) {
+    onesdk_incomingwebrequesttracer_add_parameters_p(tracer_handle, &name, &value, 1);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_response_headers_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* names, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds an HTTP response header for an incoming web request.
+    @param tracer_handle            A valid incoming web request tracer handle.
+    @param name                     The name of the HTTP response header.
+    @param value                    The value of the HTTP response header.
+
+    @note The native SDK agent will currently capture all provided headers.
+    @note If the HTTP response contains multiple header lines with the same header name, an application should call this function once per
+          line. Alternatively, depending on the header, the application can call this function once per header name, with an appropriately
+          concatenated header value.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_response_header(onesdk_tracer_handle_t tracer_handle, onesdk_string_t name, onesdk_string_t value) {
+    onesdk_incomingwebrequesttracer_add_response_headers_p(tracer_handle, &name, &value, 1);
+}
+
+/** @brief Sets the HTTP status code for an incoming web request.
+    @param tracer_handle            A valid incoming web request tracer handle.
+    @param status_code              The HTTP status code of the response sent to the client.
+
+    @since This function was added in version 1.1.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_status_code(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t status_code);
 
 /*========================================================================================================================================*/
 

@@ -198,12 +198,17 @@ Then you can trace the SQL database requests:
     /* create tracer */
     onesdk_tracer_handle_t const tracer = onesdk_databaserequesttracer_create_sql(
         db_info_handle,
-        onesdk_asciistr("SELECT 42;"));
+        onesdk_asciistr("SELECT foo FROM bar;"));
 
     /* start tracer */
     onesdk_tracer_start(tracer);
 
-    /* ... perform the database request ... */
+    /* ... perform the database request, consume results ... */
+
+    /* optional: set number of returned rows */
+    onesdk_databaserequesttracer_set_returned_row_count(tracer, 42);
+    /* optional: set number of round trips between client and database */
+    onesdk_databaserequesttracer_set_round_trip_count(tracer, 3);
 
     /* set error information */
     if (something_went_wrong)
@@ -218,6 +223,67 @@ Finally, release the database info object in your cleanup code (before shutting 
 ```C
     onesdk_databaseinfo_delete(db_info_handle);
     db_info_handle = ONESDK_INVALID_HANDLE;
+```
+
+
+## Using the Dynatrace OneAgent SDK to trace incoming web requests
+
+To trace incoming web requests you first need to create a web application info object which describes your web application:
+
+```C
+onesdk_webapplicationinfo_handle_t web_application_info_handle = ONESDK_INVALID_HANDLE;
+
+/* ... */
+
+    web_application_info_handle = onesdk_webapplicationinfo_create(
+        onesdk_asciistr("example.com"),         /* name of the web server that hosts your application */
+        onesdk_asciistr("MyWebApplication"),    /* unique name for your web application               */
+        onesdk_asciistr("/my-web-app/")         /* context root of your web application               */ );
+```
+
+Then you can trace incoming web requests:
+
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_incomingwebrequesttracer_create(
+        web_application_info_handle,
+        onesdk_asciistr("/my-web-app/content.html?q1=1&q2=2#frag"),
+        onesdk_asciistr("GET"));
+
+    /* add information about the incoming request */
+    onesdk_incomingwebrequesttracer_set_remote_address(tracer, onesdk_asciistr("1.2.3.4:56789"));
+    onesdk_incomingwebrequesttracer_add_request_header(tracer,
+        onesdk_asciistr("Connection"), onesdk_asciistr("keep-alive"));
+    onesdk_incomingwebrequesttracer_add_request_header(tracer,
+        onesdk_asciistr("Pragma"), onesdk_asciistr("no-cache"));
+    /* ... */
+
+    /* start tracer */
+    onesdk_tracer_start(tracer);
+
+    /* ... service the web request ... */
+
+    /* add information about the response */
+    onesdk_incomingwebrequesttracer_add_response_header(tracer,
+        onesdk_asciistr("Transfer-Encoding"), onesdk_asciistr("chunked"));
+    onesdk_incomingwebrequesttracer_add_response_header(tracer,
+        onesdk_asciistr("Content-Length"), onesdk_asciistr("1234"));
+    onesdk_incomingwebrequesttracer_set_status_code(tracer, 200);
+    /* ... */
+
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+
+    /* end & release tracer */
+    onesdk_tracer_end(tracer);
+```
+
+And release the web application info object before shutting down the SDK:
+
+```C
+    onesdk_webapplicationinfo_delete(web_application_info_handle);
+    web_application_info_handle = ONESDK_INVALID_HANDLE;
 ```
 
 
@@ -237,18 +303,19 @@ This will provide additional debug information in agent log file. (Alternatively
 To troubleshoot SDK issues you can also use the SDK's agent logging callback - see `onesdk_agent_set_logging_callback` in the reference documentation.
 
 
-## Dynatrace OneAgent SDK for C Requirements
+## Dynatrace OneAgent SDK for C/C++ Requirements
 
 - Dynatrace OneAgent needs to be installed on the system that is to be monitored (supported versions see below)
 - Supported environments include all Windows or Linux x86 environments
-- musl libc is currently not supported
+- musl libc is currently not supported (e.g. used in Alpine Linux)
 
 
-## Compatibility Dynatrace OneAgent SDK for C releases with OneAgent releases
+## Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
 
-|OneAgent SDK for C|Dynatrace OneAgent|
-|:-----------------|:-----------------|
-|1.0.0             |>=1.133           |
+|OneAgent SDK for C/C++|Dynatrace OneAgent|
+|:---------------------|:-----------------|
+|1.1.0                 |>=1.141           |
+|1.0.0                 |>=1.133           |
 
 
 ## Support
@@ -258,6 +325,7 @@ The Dynatrace OneAgent SDK is currently in early access. Please report tickets v
 
 ## Release Notes
 
-|Version|Date|Description|
-|:------|:----------|:--------------|
-|1.0.0  |01.2018    |Initial version|
+|Version|Date     |Description                                                                                                             |
+|:------|:--------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.1.0  |03.2018  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
+|1.0.0  |01.2018  |Initial version                                                                                                         |

@@ -1,2 +1,4 @@
 /.vs
 /build
+/build-*
+/CMakeFiles

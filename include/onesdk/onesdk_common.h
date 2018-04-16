@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
 /*========================================================================================================================================*/
 
 #define ONESDK_STUB_VERSION_MAJOR		1       /**< @brief Major version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_MINOR		0       /**< @brief Minor version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_REVISION	0       /**< @brief Revision of the SDK stub. */
+#define ONESDK_STUB_VERSION_MINOR		1       /**< @brief Minor version number of the SDK stub. */
+#define ONESDK_STUB_VERSION_PATCH	    0       /**< @brief Patch version number of the SDK stub. */
 
 /*========================================================================================================================================*/
 
@@ -122,8 +122,9 @@ typedef onesdk_int32_t onesdk_logging_level_t;
 */
 typedef onesdk_uint64_t onesdk_handle_t;
 
-typedef onesdk_handle_t onesdk_tracer_handle_t;         /**< @brief A handle that refers to a tracer object. */
-typedef onesdk_handle_t onesdk_databaseinfo_handle_t;   /**< @brief A handle that refers to a database-info object. */
+typedef onesdk_handle_t onesdk_tracer_handle_t;             /**< @brief A handle that refers to a tracer object. */
+typedef onesdk_handle_t onesdk_databaseinfo_handle_t;       /**< @brief A handle that refers to a database info object. */
+typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle that refers to a web application info object. */
 
 /** @} */
 

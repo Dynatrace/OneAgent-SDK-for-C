@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <string>
 #include <memory>
 #include <thread>
+#include <exception>
 
 #include <onesdk/onesdk_agent.h>
 
@@ -78,11 +79,19 @@ private:
             // Which is not what we want - after all we want to show how to use tagging to connect paths.
             // => Spawn a new thread in which we call the service implementation.
             {
-                std::thread th([&result, this, method_name, arguments, tag] {
-                    result = m_remote_dispatcher->dispatch(method_name, arguments, tag);
+                std::exception_ptr exception;
+                std::thread th([&result, &exception, this, method_name, arguments, tag] {
+                    try {
+                        result = m_remote_dispatcher->dispatch(method_name, arguments, tag);
+                    } catch (...) {
+                        exception = std::current_exception();
+                    }
                 });
                 
                 th.join();
+
+                if (exception)
+                    std::rethrow_exception(exception);
             }
 
         } catch (std::exception const& e) {

@@ -1,5 +1,5 @@
 #
-# Copyright 2017 Dynatrace LLC
+# Copyright 2017-2018 Dynatrace LLC
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,17 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
-include("${CMAKE_CURRENT_LIST_DIR}/../../onesdk-config.cmake")
+find_package(onesdk "1.1" PATHS "${CMAKE_CURRENT_LIST_DIR}/../.." NO_DEFAULT_PATH REQUIRED)
+# alternatively you can also use
+# include("${CMAKE_CURRENT_LIST_DIR}/../../onesdk-config.cmake")
 
-project(sample1)
+if (CMAKE_VERSION VERSION_LESS "3.0") 
+    project(sample1)
+else ()
+    cmake_policy(SET CMP0048 NEW)
+    project(sample1 VERSION "1.1")
+endif ()
+
 add_executable(sample1 main.cpp)
 
 # enable use of C++11

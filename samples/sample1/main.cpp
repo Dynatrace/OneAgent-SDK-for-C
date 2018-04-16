@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-#include "input_processor.h"
+#include "web_service.h"
 
 #include <string>
 #include <iostream>
@@ -65,9 +65,13 @@ int main(int argc, char** argv)
 /*========================================================================================================================================*/
 
 void run_service_loop() {
-    input_processor proc;
+    web_service svc;
 
-    std::cout << "\nEnter data or \"exit\" to stop.\n\n";
+    std::cout <<
+        "\n"
+        "Enter request body data or \"exit\" to stop.\n"
+        "Hint: '!' is an invalid input character and will cause this service to fail.\n"
+        "\n";
 
     while (true) {
         // Read input.
@@ -77,8 +81,24 @@ void run_service_loop() {
         if (input == "exit")
             break;
 
-        // Process input.
-        std::cout << proc.process(input) << "\n";
+        // We don't want this sample to have dependencies on third-party software and we don't want to blow it up by doing any
+        // real network IO, HTTP parsing etc. -> just fake the input data for a web request.
+        http_request request;
+        request.remote_address = "127.0.0.1:12345";
+        request.method = "GET";
+        request.url = "/sample1/web-service/transform";
+        request.headers.emplace_back(std::make_pair("Host", "example.com"));
+        request.headers.emplace_back(std::make_pair("Connection", "close"));
+        request.headers.emplace_back(std::make_pair("Content-Type", "text/html; charset=utf-8"));
+        request.headers.emplace_back(std::make_pair("Pragma", "no-cache"));
+        // GET requests have no parameters -> leave request.parameters empty
+        request.body = input;
+
+        // Let our "web service" process the request.
+        http_response response = svc.process(request);
+
+        // Just print the response body.
+        std::cout << "Response body: " << response.body << "\n";
     }
 
     std::cout << "Shutting down...\n";

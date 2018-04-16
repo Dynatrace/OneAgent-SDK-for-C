@@ -14,5 +14,6 @@ var searchData=
   ['onesdk_5ftracer_5fhandle_5ft',['onesdk_tracer_handle_t',['../onesdk__common_8h.html#afd307ae54a60c333f87bad4e4cb2cbf3',1,'onesdk_common.h']]],
   ['onesdk_5fuint32_5ft',['onesdk_uint32_t',['../onesdk__config_8h.html#ab3937c4cba8e9f971d8973c06e3089bb',1,'onesdk_config.h']]],
   ['onesdk_5fuint64_5ft',['onesdk_uint64_t',['../onesdk__config_8h.html#aefd8054c3a9df9d1105632a1faad17ef',1,'onesdk_config.h']]],
+  ['onesdk_5fwebapplicationinfo_5fhandle_5ft',['onesdk_webapplicationinfo_handle_t',['../onesdk__common_8h.html#af97b608ba8bd6818808d67ab9f8ba93f',1,'onesdk_common.h']]],
   ['onesdk_5fxchar_5ft',['onesdk_xchar_t',['../onesdk__config_8h.html#aafd6e0c4e49e6d73aba97c28cd748474',1,'onesdk_config.h']]]
 ];

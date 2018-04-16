@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 #include <string>
 #include <cctype>
+#include <stdexcept>
 
 /*========================================================================================================================================*/
 
@@ -30,8 +31,13 @@ public:
     transformer_service() {}
 
     std::string transform(std::string str) {
-        for (std::string::size_type i = 0; i < str.size(); i++)
-            str[i] = std::toupper(static_cast<unsigned char>(str[i]));
+        for (std::string::size_type i = 0; i < str.size(); i++) {
+            char const ch = str[i];
+            // Let's say '!' is an invalid input character so we can simulate processing errors.
+            if (ch == '!')
+                throw std::invalid_argument(std::string("Invalid input character '") + ch + "'");
+            str[i] = std::toupper(static_cast<unsigned char>(ch));
+        }
         return str;
     }
 };

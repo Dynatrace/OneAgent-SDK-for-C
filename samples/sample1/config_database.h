@@ -1,5 +1,5 @@
 /*
-    Copyright 2017 Dynatrace LLC
+    Copyright 2017-2018 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -67,8 +67,13 @@ private:
             // Start tracer (starts time measurement).
             onesdk_tracer_start(tracer);
 
-            // TODO: Actually query the database...
-            result = "foo";
+            // In reality we would of course actually query a database here...
+            result = "sample";
+
+            // Set number of rows returned by the query (we assume one row).
+            onesdk_databaserequesttracer_set_returned_row_count(tracer, 1);
+            // Set number of round trips between client and database (we assume one fetch operation).
+            onesdk_databaserequesttracer_set_round_trip_count(tracer, 1);
 
         } catch (std::exception const& e) {
             // Set error information and end tracer.
