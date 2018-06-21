@@ -35,4 +35,24 @@ std::string sql_escape(std::string const& str) {
 
 /*========================================================================================================================================*/
 
+std::string strip_url_for_http_request(std::string url) {
+    // Quick & dirty implementation. Good enough for this sample though.
+
+    std::string::size_type pos = url.find("://");
+    if (pos != std::string::npos)
+        url = url.substr(pos + 3);
+
+    pos = url.find("/");
+    if (pos != std::string::npos)
+        url = url.substr(pos);
+
+    pos = url.find("#");
+    if (pos != std::string::npos)
+        url = url.substr(0, pos);
+
+    return url;
+}
+
+/*========================================================================================================================================*/
+
 #endif

@@ -19,11 +19,12 @@
 
 #include "transformer_service.h"
 
-#include <string>
+#include <exception>
 #include <stdexcept>
-#include <memory>
+#include <string>
 
-#include <onesdk/onesdk_agent.h>
+#include "onesdk/onesdk_agent.h"
+#include "onesdk/onesdk_string.h"
 
 /*========================================================================================================================================*/
 
@@ -32,9 +33,7 @@ public:
     transformer_service_dispatcher(transformer_service_dispatcher const&) = delete; // We're non-copyable.
     transformer_service_dispatcher& operator =(transformer_service_dispatcher const&) = delete; // We're non-copyable.
 
-    transformer_service_dispatcher() {
-        m_service.reset(new transformer_service());
-    }
+    transformer_service_dispatcher() = default;
 
     std::string dispatch(std::string const& method_name, std::string const& arguments, std::string const& tag) {
         std::string result;
@@ -56,7 +55,7 @@ public:
 
             // Dispatch to our service instance.
             if (method_name == "transform")
-                result = m_service->transform(arguments);
+                result = m_service.transform(arguments);
             else
                 throw std::runtime_error("unknown method '" + method_name + "'");
 
@@ -79,7 +78,7 @@ public:
     }
 
 public:
-    std::unique_ptr<transformer_service> m_service;
+    transformer_service m_service;
 };
 
 /*========================================================================================================================================*/

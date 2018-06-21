@@ -92,9 +92,9 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tracers are the objects used to capture information about "operations" (e.g. remote calls or database requests) that your application performs.</p>
 <p>Tracers are created by different factory functions, depending on the type of the tracer, and destroyed/released by <a class="el" href="group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f">onesdk_tracer_end</a>.</p>
-<p>Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread, processes or on another system you have to use the tagging functions.</p>
+<p>Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread, processes or on another system you have to use the tagging or <a class="el" href="group__in__process__links.html">in-process linking</a> functions.</p>
 <dl class="section attention"><dt>Attention</dt><dd>All tracers in this SDK have strict thread affinity - they are bound to the thread by which they were created. Calling <em>any</em> tracer function with a tracer handle that was created by a different thread is an error and will not produce any effect. Note that this includes <a class="el" href="group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f">onesdk_tracer_end</a>. Thus trying to destroy/release a tracer from a different thread will result in a memory leak.</dd></dl>
-<p>For further information, see the high level SDK documentation available at <a href="https://github.com/Dynatrace/OneAgent-SDK/">https://github.com/Dynatrace/OneAgent-SDK/</a> </p>
+<p>For further information, see the high level SDK documentation at <a href="https://github.com/Dynatrace/OneAgent-SDK/#tracers">https://github.com/Dynatrace/OneAgent-SDK/#tracers</a> </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga0c17143ce1e5f49b2a365e02223a6d1f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0c17143ce1e5f49b2a365e02223a6d1f">&#9670;&nbsp;</a></span>onesdk_tracer_end()</h2>
@@ -121,7 +121,7 @@ Functions</h2></td></tr>
 </dl>
 <p>This function releases the specified tracer. Allocated resources are freed and the handle is invalidated.</p>
 <p>An application should call <a class="el" href="group__tracers.html#ga750068677c6732cf423d4cfdd2e2edf0">onesdk_tracer_start</a> exactly once for each tracer that it has created.</p>
-<p>If the tracer has been started, the time measurement will be stopped and it's exit fields will be captured before releasing the tracer.</p>
+<p>If the tracer has been started, the time measurement will be stopped and its exit fields will be captured before releasing the tracer.</p>
 <dl class="section note"><dt>Note</dt><dd>Just like all other tracer functions, this function must only be called from the thread that was used to create the tracer. This is important because it means that a tracer cannot be released on a different thread. Attempting to do so is an error and will result in memory leaks. </dd></dl>
 
 </div>
@@ -230,12 +230,12 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters copied into <code>buffer</code>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes copied into <code>buffer</code>.</dd></dl>
 <p>An application can call this function to retrieve the binary representation of the outgoing tag for a tracer. The tracer handle must refer to an "outgoing taggable" tracer that has already been started.</p>
 <p>If <code>required_buffer_size</code> is not <code>NULL</code>, the number of bytes required to store the binary representation is stored in <code>*required_buffer_size</code>.</p>
 <p>If <code>buffer</code> is not <code>NULL</code> and <code>buffer_size</code> is big enough, this function will copy the binary representation into the provided buffer.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>If called with invalid arguments this function will do nothing and return zero.</li>
+<li>If called with invalid arguments, the retrieved binary tag will be empty (have zero length).</li>
 <li>Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.</li>
 <li>Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.</li>
 </ul>
@@ -351,7 +351,7 @@ Retrieving both the string representation and the binary representation from the
 <p>An application can call this function to set the incoming tag of an "incoming taggable" tracer using the binary representation. The tracer handle must refer to an "incoming taggable" tracer that has not been started yet.</p>
 <p>If <code>byte_tag_size</code> is zero, the incoming tag will be reset (cleared).</p>
 <dl class="section note"><dt>Note</dt><dd>An "incoming taggable" tracer has <em>one</em> tag. Calling <a class="el" href="group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8">onesdk_tracer_set_incoming_dynatrace_byte_tag</a> will overwrite any tag that was set by either <a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6">onesdk_tracer_set_incoming_dynatrace_string_tag</a> or <a class="el" href="group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8">onesdk_tracer_set_incoming_dynatrace_byte_tag</a>.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>ref <a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6" title="Sets the tag of an &quot;incoming taggable&quot; tracer using the string representation. ">onesdk_tracer_set_incoming_dynatrace_string_tag</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6">onesdk_tracer_set_incoming_dynatrace_string_tag</a> </dd></dl>
 
 </div>
 </div>
@@ -400,9 +400,9 @@ Retrieving both the string representation and the binary representation from the
 <p>An application can call this function to set the incoming tag of an "incoming taggable" tracer using the string representation. The tracer handle must refer to an "incoming taggable" tracer that has not been started yet.</p>
 <p>If <code>string_tag</code> is a "null string" or an empty string, the incoming tag will be reset (cleared).</p>
 <dl class="section note"><dt>Note</dt><dd>An "incoming taggable" tracer has <em>one</em> tag. Calling <a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6">onesdk_tracer_set_incoming_dynatrace_string_tag</a> will overwrite any tag that was set by either <a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6">onesdk_tracer_set_incoming_dynatrace_string_tag</a> or <a class="el" href="group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8">onesdk_tracer_set_incoming_dynatrace_byte_tag</a>.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>ref <a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6" title="Sets the tag of an &quot;incoming taggable&quot; tracer using the string representation. ">onesdk_tracer_set_incoming_dynatrace_string_tag</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__tracers.html#ga332fb9c487786fb521f19d899079d0a6">onesdk_tracer_set_incoming_dynatrace_string_tag</a> </dd>
 <dd>
-ref <a class="el" href="group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8" title="Sets the tag of an &quot;incoming taggable&quot; tracer using the binary representation. ">onesdk_tracer_set_incoming_dynatrace_byte_tag</a> </dd></dl>
+<a class="el" href="group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8">onesdk_tracer_set_incoming_dynatrace_byte_tag</a> </dd></dl>
 
 </div>
 </div>

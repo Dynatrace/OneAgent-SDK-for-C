@@ -17,13 +17,15 @@
 #ifndef ONESDK_MSVC_H_INCLUDED
 #define ONESDK_MSVC_H_INCLUDED
 
+/* IWYU pragma: private */
+
 /** @file
     @brief Workaround for Visual C++ CRT version differences.
 */
 
 #if defined(_MSC_VER)
 
-#include "onesdk_common.h"
+#include "onesdk/onesdk_common.h"
 
 #include <stdio.h>
 

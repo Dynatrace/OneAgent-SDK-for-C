@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-# 1.1.0
+# 1.2.0
 set(onesdk_VERSION_MAJOR 1)
-set(onesdk_VERSION_MINOR 1)
+set(onesdk_VERSION_MINOR 2)
 set(onesdk_VERSION_PATCH 0)
 
 set(onesdk_VERSION_TWEAK 0)

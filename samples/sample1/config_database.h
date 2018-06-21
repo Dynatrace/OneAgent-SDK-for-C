@@ -19,10 +19,13 @@
 
 #include "util.h"
 
-#include <string>
+#include <chrono>
 #include <exception>
+#include <string>
+#include <thread>
 
-#include <onesdk/onesdk_agent.h>
+#include "onesdk/onesdk_agent.h"
+#include "onesdk/onesdk_string.h"
 
 /*========================================================================================================================================*/
 
@@ -68,6 +71,7 @@ private:
             onesdk_tracer_start(tracer);
 
             // In reality we would of course actually query a database here...
+            std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Simulate time spent waiting for DB request.
             result = "sample";
 
             // Set number of rows returned by the query (we assume one row).

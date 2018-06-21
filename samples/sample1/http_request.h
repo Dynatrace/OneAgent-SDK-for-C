@@ -18,8 +18,8 @@
 #define SAMPLE1_HTTP_REQUEST_H_INCLUDED
 
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 /*========================================================================================================================================*/
 

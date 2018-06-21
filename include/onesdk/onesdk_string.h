@@ -23,7 +23,7 @@
 
 /*========================================================================================================================================*/
 
-#include "onesdk_common.h"
+#include "onesdk/onesdk_common.h"
 
 #include <string.h>     /* for strlen */
 
@@ -57,7 +57,7 @@ typedef uint16_t onesdk_ccsid_t;
     When calling a function that takes a @ref onesdk_string_t pointer argument, you can also pass a NULL pointer to specify
     a "null string".
 */
-typedef struct {
+typedef struct onesdk_string {
     void const* data;           /**< @brief Pointer to the beginning of the string data. May be `NULL` if #byte_length is zero. */
     onesdk_size_t byte_length;  /**< @brief The length of the buffer pointed to by #data, in bytes. */
     onesdk_ccsid_t ccsid;       /**< @brief Specifies the encoding of the string data. */
@@ -118,7 +118,7 @@ typedef struct {
     @see @ref onesdk_string_t.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(onesdk_string_t) onesdk_str(void const* data, onesdk_size_t byte_length, onesdk_ccsid_t ccsid) {
-    onesdk_string_t str = { 0 };
+    onesdk_string_t str = { NULL, 0, 0 };
     str.data = data;
     str.byte_length = byte_length;
     str.ccsid = ccsid;

@@ -14,18 +14,23 @@
     limitations under the License.
 */
 
-#include "web_service.h"
+#include "http_request.h"
+#include "http_response.h"
+#include "web_client.h"
 
-#include <string>
 #include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 #include <stdio.h>
 
-#include <onesdk/onesdk.h>
+#include "onesdk/onesdk.h"
 
 /*========================================================================================================================================*/
 
-void run_service_loop();
+void run_main_loop();
 char const* agent_state_to_string(onesdk_int32_t agent_state);
+void ONESDK_CALL onesdk_agent_logging_callback(char const* message);
 
 /*========================================================================================================================================*/
 
@@ -44,16 +49,27 @@ int main(int argc, char** argv)
     // Process and strip out ONESDK command line arguments.
     onesdk_stub_process_cmdline_args(argc, argv, true);
     onesdk_stub_strip_sdk_cmdline_args(&argc, argv);
-    // TODO: Process remaining arguments.
 
     // Try to initialize ONESDK.
     onesdk_result_t const onesdk_init_result = onesdk_initialize();
     printf("ONESDK initialized:   %s\n", (onesdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
     printf("ONESDK agent version: '%" ONESDK_STR_PRI_XSTR "'\n", onesdk_agent_get_version_string());
     printf("ONESDK agent state:   %s\n", agent_state_to_string(onesdk_agent_get_current_state()));
+    // Set logging callback so we get warning/error messages from ONESDK.
+    onesdk_agent_set_logging_callback(&onesdk_agent_logging_callback);
+
+    // Process command line arguments.
+    // (Since we called onesdk_stub_strip_sdk_cmdline_args we won't see ONESDK arguments here anymore.)
+    for (int i = 0; i < argc; i++) {
+#if defined(_WIN32)
+        printf("argv[%d]: '%S'\n", i, argv[i]);
+#else
+        printf("argv[%d]: '%s'\n", i, argv[i]);
+#endif
+    }
 
     // Run the main service loop.
-    run_service_loop();
+	run_main_loop();
 
     // Shut down ONESDK.
     if (onesdk_init_result == ONESDK_SUCCESS)
@@ -64,13 +80,13 @@ int main(int argc, char** argv)
 
 /*========================================================================================================================================*/
 
-void run_service_loop() {
-    web_service svc;
+void run_main_loop() {
+    web_client client;
 
     std::cout <<
         "\n"
         "Enter request body data or \"exit\" to stop.\n"
-        "Hint: '!' is an invalid input character and will cause this service to fail.\n"
+        "Hint: '!' is an invalid input character and will cause the service to fail.\n"
         "\n";
 
     while (true) {
@@ -81,21 +97,18 @@ void run_service_loop() {
         if (input == "exit")
             break;
 
-        // We don't want this sample to have dependencies on third-party software and we don't want to blow it up by doing any
-        // real network IO, HTTP parsing etc. -> just fake the input data for a web request.
         http_request request;
-        request.remote_address = "127.0.0.1:12345";
-        request.method = "GET";
-        request.url = "/sample1/web-service/transform";
+        request.method = "POST";
+        request.url = "http://example.com/sample1/web-service/transform";
         request.headers.emplace_back(std::make_pair("Host", "example.com"));
         request.headers.emplace_back(std::make_pair("Connection", "close"));
         request.headers.emplace_back(std::make_pair("Content-Type", "text/html; charset=utf-8"));
         request.headers.emplace_back(std::make_pair("Pragma", "no-cache"));
-        // GET requests have no parameters -> leave request.parameters empty
+        // We don't have parameters (we're not using application/x-www-form-urlencoded) -> leave request.parameters empty.
         request.body = input;
 
         // Let our "web service" process the request.
-        http_response response = svc.process(request);
+        http_response response = client.send_request(request);
 
         // Just print the response body.
         std::cout << "Response body: " << response.body << "\n";
@@ -122,6 +135,12 @@ char const* agent_state_to_string(onesdk_int32_t agent_state) {
     default:
         return "(unknown state value)";
     }
+}
+
+/*========================================================================================================================================*/
+
+void ONESDK_CALL onesdk_agent_logging_callback(char const* message) {
+    printf("ONESDK log message: %s\n", message);
 }
 
 /*========================================================================================================================================*/

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['strings',['Strings',['../group__strings.html',1,'']]]
+  ['remote_20call_20tracers',['Remote Call Tracers',['../group__remote__calls.html',1,'']]]
 ];

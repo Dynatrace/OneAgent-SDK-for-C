@@ -19,12 +19,13 @@
 
 #include "transformer_service_dispatcher.h"
 
-#include <string>
-#include <memory>
-#include <thread>
+#include <chrono>
 #include <exception>
+#include <string>
+#include <thread>
 
-#include <onesdk/onesdk_agent.h>
+#include "onesdk/onesdk_agent.h"
+#include "onesdk/onesdk_string.h"
 
 /*========================================================================================================================================*/
 
@@ -33,9 +34,7 @@ public:
     transformer_service_client_proxy(transformer_service_client_proxy const&) = delete; // We're non-copyable.
     transformer_service_client_proxy& operator =(transformer_service_client_proxy const&) = delete; // We're non-copyable.
 
-    transformer_service_client_proxy() {
-        m_remote_dispatcher.reset(new transformer_service_dispatcher());
-    }
+    transformer_service_client_proxy() = default;
 
     std::string transform(std::string const& str) {
         return invoke_remote_method("transform", str);
@@ -75,14 +74,18 @@ private:
             //
             // Normally this would involve rather complicated code, but we're a sample and need to keep it simple, so we'll cheat.
             // We can't call the dispatcher directly though, because that would mean executing the service call in "our" thread, which 
-            // again would mean that any tracers created by the service call would automatically attach to "our" path.
-            // Which is not what we want - after all we want to show how to use tagging to connect paths.
+            // again would mean that any tracers created by the service call would automatically attach to "our" trace.
+            // Which is not what we want - after all we want to show how to use tagging to connect traces.
             // => Spawn a new thread in which we call the service implementation.
             {
                 std::exception_ptr exception;
                 std::thread th([&result, &exception, this, method_name, arguments, tag] {
                     try {
-                        result = m_remote_dispatcher->dispatch(method_name, arguments, tag);
+                        std::this_thread::sleep_for(std::chrono::milliseconds(5)); // Simulate network communication delay.
+
+                        result = m_remote_dispatcher.dispatch(method_name, arguments, tag);
+
+                        std::this_thread::sleep_for(std::chrono::milliseconds(5)); // Simulate network communication delay.
                     } catch (...) {
                         exception = std::current_exception();
                     }
@@ -112,7 +115,7 @@ private:
         return result;
     }
 
-    std::unique_ptr<transformer_service_dispatcher> m_remote_dispatcher;
+    transformer_service_dispatcher m_remote_dispatcher;
 };
 
 /*========================================================================================================================================*/

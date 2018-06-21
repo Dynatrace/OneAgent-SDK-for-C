@@ -23,11 +23,21 @@
 
 /*========================================================================================================================================*/
 
-#include "onesdk_common.h"
+#include "onesdk/onesdk_common.h" /* IWYU pragma: export */
 
 /** @addtogroup init Initialization and Shutdown
     @{
 */
+
+/*========================================================================================================================================*/
+
+/** @brief Retrieves the stub version number.
+    @param[out] out_stub_version    Pointer to a @ref onesdk_stub_version_t struct that will be filled with the stub version number.
+
+    An application can use this function to make sure the stub binary matches the header files that were used to compile the application.
+    Especially useful when using the shared stub version (DLL/SO).
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_stub_get_version(onesdk_stub_version_t* out_stub_version);
 
 /*========================================================================================================================================*/
 

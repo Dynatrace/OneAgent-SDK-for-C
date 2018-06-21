@@ -17,8 +17,12 @@ The SDK package includes
 ## Features
 
 - Trace any remote call end-to-end across processes and different programming languages.
-  The SDK is compatible with other OneAgent SDKs and OneAgents in general.
 - Trace any SQL-based database call.
+- Trace incoming and outgoing web requests.
+- Trace asynchronous processing within one process.
+- Add custom request attributes to any currently traced service.
+
+When tracing incoming or outgoing calls or requests, this SDK is compatible with other OneAgent SDKs and OneAgents in general.
 
 
 ## Documentation
@@ -125,11 +129,11 @@ Instrumenting an outgoing remote call:
     /* get byte representation of tag */
     onesdk_size_t byte_tag_size = 0;
     onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, NULL, 0, &byte_tag_size);
-    void* byte_tag = NULL;
+    unsigned char* byte_tag = NULL;
     if (byte_tag_size != 0) {
-        byte_tag = malloc(byte_tag_size);
+        byte_tag = (unsigned char*)malloc(byte_tag_size);
         if (byte_tag != NULL)
-            onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size, NULL);
+            byte_tag_size = onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size, NULL);
     }
 
     /* ... do the actual remote call (send along `byte_tag` so the other side can continue tracing) ... */
@@ -148,8 +152,8 @@ Instrumenting an outgoing remote call:
 Instrumenting an incoming remote call:
 
 ```C
-    void const* byte_tag = ...;         /* pointer to the byte tag that we received from the caller */
-    onesdk_size_t byte_tag_size = ...;  /* size of the byte tag that we received from the caller    */
+    unsigned char const* byte_tag = ...;    /* pointer to the byte tag that we received from the caller */
+    onesdk_size_t byte_tag_size = ...;      /* size of the byte tag that we received from the caller    */
 
     /* create tracer */
     onesdk_tracer_handle_t const tracer = onesdk_incomingremotecalltracer_create(
@@ -287,6 +291,125 @@ And release the web application info object before shutting down the SDK:
 ```
 
 
+## Using the Dynatrace OneAgent SDK to trace outgoing web requests
+
+You can use the SDK to trace web requests sent by your application:
+
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_outgoingwebrequesttracer_create(
+        onesdk_asciistr("http://example.org:1234/my/rest-service/resources?filter=foo"),
+        onesdk_asciistr("GET"));
+
+    /* add information about the request we're about to send */
+    onesdk_outgoingwebrequesttracer_add_request_header(tracer,
+        onesdk_asciistr("Accept-Charset"), onesdk_asciistr("utf-8"));
+    onesdk_outgoingwebrequesttracer_add_request_header(tracer,
+        onesdk_asciistr("Pragma"), onesdk_asciistr("no-cache"));
+    /* ... */
+
+    /* start tracer */
+    onesdk_tracer_start(tracer);
+
+    /* get string representation of tag */
+    onesdk_size_t string_tag_size = 0;
+    onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, NULL, 0, &string_tag_size);
+    char* string_tag = NULL;
+    if (string_tag_size != 0) {
+        string_tag = (char*)malloc(string_tag_size);
+        if (string_tag != NULL)
+            string_tag_size = onesdk_tracer_get_outgoing_dynatrace_string_tag(tracer, string_tag, string_tag_size, NULL);
+    }
+
+    /* ... actually send the HTTP request, sending along `string_tag` as an HTTP header
+           (use the macro `ONESDK_DYNATRACE_HTTP_HEADER_NAME` for the header name),
+           receive the reply and decode it ... */
+
+    /* release tag memory */
+    free(string_tag);
+
+    /* add information about the response */
+    onesdk_outgoingwebrequesttracer_add_response_header(tracer,
+        onesdk_asciistr("Transfer-Encoding"), onesdk_asciistr("chunked"));
+    onesdk_outgoingwebrequesttracer_add_response_header(tracer,
+        onesdk_asciistr("Content-Length"), onesdk_asciistr("1234"));
+    onesdk_outgoingwebrequesttracer_set_status_code(tracer, 200);
+    /* ... */
+
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+
+    /* end and release tracer */
+    onesdk_tracer_end(tracer);
+```
+
+
+## Using the Dynatrace OneAgent SDK to trace asynchronous activities
+
+Many applications schedule work in some asynchronous fashion. Automatic linking of tracers will not work in such scenarios - it can only link to the innermost active tracer on the current thread.
+To link the asynchronous parts to the currently active tracer, you first have to create an in-process link:
+
+```C
+    /* create in-process link */
+    onesdk_size_t in_process_link_size = 0;
+    onesdk_inprocesslink_create(NULL, 0, &in_process_link_size);
+    unsigned char* in_process_link = NULL;
+    if (in_process_link_size != 0) {
+        in_process_link = (unsigned char*)malloc(in_process_link_size);
+        if (in_process_link != NULL)
+            in_process_link_size = onesdk_inprocesslink_create(in_process_link, in_process_link_size, NULL);
+    }
+
+    /* ... start/queue asynchronous work (send along `in_process_link` so the other side can continue tracing) ... */
+
+    /* release in-process link memory */
+    free(in_process_link);
+```
+
+Once you have the in-process link, you can create an in-process link tracer to continue tracing in another thread:
+
+```C
+    unsigned char const* in_process_link = ...;  /* pointer to the in-process link */
+    onesdk_size_t in_process_link_size = ...;    /* size of the in-process link    */
+
+    /* create in-process link tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_inprocesslinktracer_create(
+        in_process_link,
+        in_process_link_size);
+
+    /* start tracer ("activates" the in-process link) */
+    onesdk_tracer_start(tracer);
+
+    /* ... do the work - new tracers started here will be linked to wherever the in-process link was created ... */
+
+    /* end & release tracer ("deactivates" the in-process link) */
+    onesdk_tracer_end(tracer);
+```
+
+Note that you can re-use in-process links to create multiple in-process link tracers.
+
+
+## Using the Dynatrace OneAgent SDK to add custom request attributes
+
+You can add custom request attributes (key value pairs) to the currently traced service. Those attributes can then be used to e.g. search/filter requests in Dynatrace.
+To add a custom request attribute, simply call one of the `onesdk_customrequestattribute_add_{type}` functions:
+
+```C
+    /* add simple values */
+    onesdk_customrequestattribute_add_integer(onesdk_asciistr("account-id"), 42);
+    onesdk_customrequestattribute_add_float(onesdk_asciistr("service-quality"), 0.707106);
+    onesdk_customrequestattribute_add_string(onesdk_asciistr("region"), onesdk_asciistr("emea"));
+
+    /* add multiple values with the same key to create a list */
+    onesdk_customrequestattribute_add_integer(onesdk_asciistr("account-group"), 1);
+    onesdk_customrequestattribute_add_integer(onesdk_asciistr("account-group"), 2);
+    onesdk_customrequestattribute_add_integer(onesdk_asciistr("account-group"), 3);
+```
+
+This will add the custom request attributes to the currently traced service. If no tracer is active, the values will be discarded.
+
+
 ## Troubleshooting
 
 If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate logging by either
@@ -314,6 +437,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|
 |:---------------------|:-----------------|
+|1.2.0                 |>=1.147           |
 |1.1.0                 |>=1.141           |
 |1.0.0                 |>=1.133           |
 
@@ -325,7 +449,8 @@ The Dynatrace OneAgent SDK is currently in early access. Please report tickets v
 
 ## Release Notes
 
-|Version|Date     |Description                                                                                                             |
-|:------|:--------|:-----------------------------------------------------------------------------------------------------------------------|
-|1.1.0  |04.2018  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
-|1.0.0  |01.2018  |Initial version                                                                                                         |
+|Version|Description                                                                                                             |
+|:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.2.0  |Added in-process linking, added custom request attributes, added outgoing web request tracers                           |
+|1.1.0  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
+|1.0.0  |Initial version                                                                                                         |

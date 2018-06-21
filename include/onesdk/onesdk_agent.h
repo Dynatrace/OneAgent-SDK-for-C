@@ -23,8 +23,8 @@
 
 /*========================================================================================================================================*/
 
-#include "onesdk_common.h"
-#include "onesdk_string.h"
+#include "onesdk/onesdk_common.h" /* IWYU pragma: export */
+#include "onesdk/onesdk_string.h"
 
 /*========================================================================================================================================*/
 
@@ -40,7 +40,7 @@
     A pointer to a null-terminated @ref onesdk_xchar_t string constant that indicates the version of the loaded SDK agent module.
     If the agent has not been initialized yet this function will return an empty string.
 
-    Your application should not try to parse the version string or make any assumptions about it's format.
+    Your application should not try to parse the version string or make any assumptions about its format.
 */
 ONESDK_DECLARE_FUNCTION(onesdk_xchar_t const*) onesdk_agent_get_version_string(void);
 
@@ -87,14 +87,14 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_log
     @ref onesdk_tracer_end.
 
     Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread,
-    processes or on another system you have to use the tagging functions.
+    processes or on another system you have to use the tagging or @link in_process_links in-process linking@endlink functions.
 
     @attention
     All tracers in this SDK have strict thread affinity - they are bound to the thread by which they were created. Calling _any_ tracer
     function with a tracer handle that was created by a different thread is an error and will not produce any effect. Note that this
     includes @ref onesdk_tracer_end. Thus trying to destroy/release a tracer from a different thread will result in a memory leak.
 
-    For further information, see the high level SDK documentation available at https://github.com/Dynatrace/OneAgent-SDK/
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#tracers
 
     @{
 */
@@ -115,7 +115,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_start(onesdk_tracer_handle_t tracer_
 
     An application should call @ref onesdk_tracer_start exactly once for each tracer that it has created.
 
-    If the tracer has been started, the time measurement will be stopped and it's exit fields will be captured before releasing the tracer.
+    If the tracer has been started, the time measurement will be stopped and its exit fields will be captured before releasing the tracer.
 
     @note Just like all other tracer functions, this function must only be called from the thread that was used to create the tracer.
     This is important because it means that a tracer cannot be released on a different thread. Attempting to do so is an error and will
@@ -181,7 +181,7 @@ ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_tracer_get_outgoing_dynatrace_stri
     @param buffer_size                  Size of the buffer pointed to by @p buffer in bytes. Must be zero if @p buffer is `NULL`.
     @param[out] required_buffer_size    [optional] Pointer to a @ref onesdk_size_t variable where the required buffer size will be stored.
 
-    @return The number of characters copied into @p buffer.
+    @return The number of bytes copied into @p buffer.
 
     An application can call this function to retrieve the binary representation of the outgoing tag for a tracer. The tracer handle
     must refer to an "outgoing taggable" tracer that has already been started.
@@ -192,7 +192,7 @@ ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_tracer_get_outgoing_dynatrace_stri
     If @p buffer is not `NULL` and @p buffer_size is big enough, this function will copy the binary representation into the provided buffer.
 
     @note
-    - If called with invalid arguments this function will do nothing and return zero.
+    - If called with invalid arguments, the retrieved binary tag will be empty (have zero length).
     - Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.
     - Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.
 
@@ -217,8 +217,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_string_tag_p(
     @note An "incoming taggable" tracer has _one_ tag. Calling @ref onesdk_tracer_set_incoming_dynatrace_string_tag will overwrite any tag
     that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
 
-    @see ref onesdk_tracer_set_incoming_dynatrace_string_tag
-    @see ref onesdk_tracer_set_incoming_dynatrace_byte_tag
+    @see @ref onesdk_tracer_set_incoming_dynatrace_string_tag
+    @see @ref onesdk_tracer_set_incoming_dynatrace_byte_tag
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_string_tag(onesdk_tracer_handle_t tracer_handle, onesdk_string_t string_tag) {
     onesdk_tracer_set_incoming_dynatrace_string_tag_p(tracer_handle, &string_tag);
@@ -237,9 +237,137 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_string_
     @note An "incoming taggable" tracer has _one_ tag. Calling @ref onesdk_tracer_set_incoming_dynatrace_byte_tag will overwrite any tag
     that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
 
-    @see ref onesdk_tracer_set_incoming_dynatrace_string_tag
+    @see @ref onesdk_tracer_set_incoming_dynatrace_string_tag
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_byte_tag(onesdk_tracer_handle_t tracer_handle, unsigned char const* byte_tag, onesdk_size_t byte_tag_size);
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup custom_request_attributes Custom Request Attributes
+
+    Custom request attributes can be used by an application to attach custom key/value pairs to the active tracer.
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#scav
+
+    @since Custom request attributes were added in version 1.2.0.
+
+    @{
+*/
+
+/*========================================================================================================================================*/
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_customrequestattribute_add_integers_p(onesdk_string_t const* keys, onesdk_int64_t const* values, onesdk_size_t count);
+
+/** @brief Adds a custom request attribute integer to the active tracer.
+    @param key      The key (name, ID) of the custom request attribute.
+    @param value    The value of the custom request attribute.
+
+    For more information see @ref custom_request_attributes.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_integer(onesdk_string_t key, onesdk_int64_t value) {
+    onesdk_customrequestattribute_add_integers_p(&key, &value, 1);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_customrequestattribute_add_floats_p(onesdk_string_t const* keys, double const* values, onesdk_size_t count);
+
+/** @brief Adds a custom request attribute floating point value to the active tracer.
+    @param key      The key (name, ID) of the custom request attribute.
+    @param value    The value of the custom request attribute.
+
+    For more information see @ref custom_request_attributes.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_float(onesdk_string_t key, double value) {
+    onesdk_customrequestattribute_add_floats_p(&key, &value, 1);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_customrequestattribute_add_strings_p(onesdk_string_t const* keys, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds a custom request attribute string to the active tracer.
+    @param key      The key (name, ID) of the custom request attribute.
+    @param value    [optional] The value of the custom request attribute.
+
+    For more information see @ref custom_request_attributes.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_string(onesdk_string_t key, onesdk_string_t value) {
+    onesdk_customrequestattribute_add_strings_p(&key, &value, 1);
+}
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup in_process_links In-Process Link Functions
+
+    In-process links allow an application to associate (link) tasks, that will be executed asynchronously in the same process, with the
+    currently running task/operation. The linked tasks may be started and completed at arbitrary times - it's not necessary for them
+    to complete (or even start) before the "parent" operation to which they are linked completes.
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#in-process-linking
+
+    @since In-process links were added in version 1.2.0.
+
+    @{
+*/
+
+/*========================================================================================================================================*/
+
+/** @brief Creates an in-process link.
+    @param[out] buffer                  [optional] Pointer to a buffer into which the in-process link shall be copied.
+    @param buffer_size                  Size of the buffer pointed to by @p buffer in bytes. Must be zero if @p buffer is `NULL`.
+    @param[out] required_buffer_size    [optional] Pointer to a @ref onesdk_size_t variable where the required buffer size will be stored.
+
+    @return The number of bytes copied into @p buffer.
+
+    An application can call this function to retrieve an in-process link, which can then be used to trace related processing at a later
+    time and/or in a different thread.
+
+    If @p required_buffer_size is not `NULL`, the number of bytes required to store the in-process link is stored in
+    @p *required_buffer_size.
+
+    If @p buffer is not `NULL` and @p buffer_size is big enough, this function will copy the in-process link into the provided buffer.
+
+    @note
+    - If no tracer is active on the current thread, the retrieved link will be empty (have zero length).
+    - Links returned by this function are not compatible with dynatrace string or byte tags, they can only be used with
+      @ref onesdk_inprocesslinktracer_create.
+    - Links returned by this function can only be used in the process in which they were created.
+
+    For more information see @ref in_process_links.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_inprocesslink_create(unsigned char* buffer, onesdk_size_t buffer_size, onesdk_size_t* required_buffer_size);
+
+/** @brief Creates a tracer for tracing asynchronous related processing in the same process.
+    @param in_process_link         Pointer to an array that holds the in-process link.
+    @param in_process_link_size    Size of the in-process link.
+
+    @return A handle for the newly created in-process link tracer or @ref ONESDK_INVALID_HANDLE.
+
+	@note
+	- If the provided in-process link is empty or invalid, no tracer will be created and this function will return
+	  @ref ONESDK_INVALID_HANDLE.
+
+    For more information see @ref in_process_links.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_inprocesslinktracer_create(unsigned char const* in_process_link, onesdk_size_t in_process_link_size);
 
 /*========================================================================================================================================*/
 
@@ -265,7 +393,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_byte_tag(ones
 
     Further there is the optional `protocol_name` property that you can set to specify the used "wire protocol".
 
-    For further information, see the high level SDK documentation available at https://github.com/Dynatrace/OneAgent-SDK/
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#remoting
 
     @par Example 1:
     - You're tracing an outgoing remote call to some web service `org.example.services.Repository`.
@@ -382,8 +510,10 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingremotecalltracer_set_protocol
 
     Database request tracers are used to capture information about database requests. They're not taggable.
 
-    To create a database request tracer an application must first create a database info object which describes the database that the
+    To create a database request tracer, an application must first create a database info object which describes the database that the
     application uses - see @ref onesdk_databaseinfo_create.
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#database
 
     @{
 */
@@ -462,8 +592,10 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_databaserequesttracer_set_round_trip_count(
 
     Incoming web request tracers are used to capture information about HTTP requests that the application services (processes, answers).
 
-    To create an incoming web request tracer an application must first create a web application info object which describes the web
+    To create an incoming web request tracer, an application must first create a web application info object which describes the web
     application - see @ref onesdk_webapplicationinfo_create.
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#webrequests
 
     @since Incoming web request tracers were added in version 1.1.0.
 
@@ -516,13 +648,13 @@ ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_incomingwebrequesttracer_
 
 /** @brief Creates a tracer for tracing an incoming web request.
     @param webapplicationinfo_handle    A valid web application info handle.
-    @param url                          The requested URL. Will be parsed into scheme, hostname/port, path & query.
+    @param url                          The requested URL. Will be parsed into `scheme`, `host`/`port`, `path` and `query`.
     @param method                       The HTTP method of the request.
 
     @return A handle for the newly created incoming web request tracer or @ref ONESDK_INVALID_HANDLE.
 
-    @note @p url does not have to contain a scheme or host. You can use the URL as it was sent in the HTTP request.
-    @note If @p url contains a hostname it will be resolved by the agent (asynchronously) after @ref onesdk_tracer_start was called.
+    @note @p url does not have to contain a `scheme` or `host`. You can use the URL as it was sent in the HTTP request.
+    @note If @p url contains a host name it will be resolved by the agent (asynchronously) after @ref onesdk_tracer_start was called.
 
     @since This function was added in version 1.1.0.
 */
@@ -559,7 +691,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_request_header
 /** @brief Adds an HTTP request header of an incoming web request.
     @param tracer_handle            A valid incoming web request tracer handle.
     @param name                     The name of the HTTP request header.
-    @param value                    The value of the HTTP request header.
+    @param value                    [optional] The value of the HTTP request header.
 
     To allow the agent to determine various bits of useful information, an application should add all HTTP request headers.
 
@@ -581,7 +713,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_parameters_p(o
 /** @brief Adds an HTTP POST parameter of an incoming web request.
     @param tracer_handle            A valid incoming web request tracer handle.
     @param name                     The name of the HTTP POST parameter.
-    @param value                    The value of the HTTP POST parameter.
+    @param value                    [optional] The value of the HTTP POST parameter.
 
     @note The native SDK agent will currently capture all provided parameters.
 
@@ -597,7 +729,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_response_heade
 /** @brief Adds an HTTP response header for an incoming web request.
     @param tracer_handle            A valid incoming web request tracer handle.
     @param name                     The name of the HTTP response header.
-    @param value                    The value of the HTTP response header.
+    @param value                    [optional] The value of the HTTP response header.
 
     @note The native SDK agent will currently capture all provided headers.
     @note If the HTTP response contains multiple header lines with the same header name, an application should call this function once per
@@ -614,9 +746,110 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_response
     @param tracer_handle            A valid incoming web request tracer handle.
     @param status_code              The HTTP status code of the response sent to the client.
 
+    @note If an application can not send a response to the client, it should @em not call this function. Instead the application can use
+    @ref onesdk_tracer_error to signal that the request could not be processed successfully.
+
     @since This function was added in version 1.1.0.
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_status_code(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t status_code);
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup outgoing_web_requests Outgoing Web Request Tracers
+
+    Outgoing web request tracers are used to capture information about HTTP requests that the application sends.
+
+    To create an outgoing web request tracer, an application can simply call @ref onesdk_outgoingwebrequesttracer_create. To enable
+    continuing the trace on the server/service side, the application must then retrieve the string tag from the tracer and send it along with
+    the request it in the HTTP request header `"X-dynaTrace"`.
+
+    @see @ref onesdk_tracer_get_outgoing_dynatrace_string_tag
+    @see @ref ONESDK_DYNATRACE_HTTP_HEADER_NAME
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#webrequests
+
+    @since Outgoing web request tracers were added in version 1.2.0.
+
+    @{
+*/
+
+/*========================================================================================================================================*/
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_outgoingwebrequesttracer_create_p(onesdk_string_t const* url, onesdk_string_t const* method);
+
+/** @brief Creates a tracer for tracing an outgoing web request.
+    @param url                      The requested URL. Will be parsed into `scheme`, `host`/`port`, `path` and `query`.
+    @param method                   The HTTP method of the request.
+
+    @return A handle for the newly created outgoing web request tracer or @ref ONESDK_INVALID_HANDLE.
+
+    @note @p url should be a full, absolute URL, i.e. containing the `scheme`, `host`, `port` (unless default), `path` and `query`.
+    Any `fragment` part, if present, will be ignored (fragments are only processed locally and not part of the request URL).
+    @note If @p url contains a host name it will be resolved by the agent (asynchronously) after @ref onesdk_tracer_start was called.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_outgoingwebrequesttracer_create(onesdk_string_t url, onesdk_string_t method) {
+    return onesdk_outgoingwebrequesttracer_create_p(&url, &method);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_request_headers_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* names, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds an HTTP request header of an outgoing web request.
+    @param tracer_handle            A valid outgoing web request tracer handle.
+    @param name                     The name of the HTTP request header.
+    @param value                    [optional] The value of the HTTP request header.
+
+    To allow the agent to determine various bits of useful information, an application should add all HTTP request headers.
+
+    @note The native SDK agent will currently capture all provided headers.
+    @note If an HTTP request contains multiple header lines with the same header name, an application should call this function once per
+          line. Alternatively, depending on the header, the application can call this function once per header name, with an appropriately
+          concatenated header value.
+    @note This function can not be used after the tracer was started.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_request_header(onesdk_tracer_handle_t tracer_handle, onesdk_string_t name, onesdk_string_t value) {
+    onesdk_outgoingwebrequesttracer_add_request_headers_p(tracer_handle, &name, &value, 1);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_response_headers_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* names, onesdk_string_t const* values, onesdk_size_t count);
+
+/** @brief Adds an HTTP response header for an outgoing web request.
+    @param tracer_handle            A valid outgoing web request tracer handle.
+    @param name                     The name of the HTTP response header.
+    @param value                    [optional] The value of the HTTP response header.
+
+    @note The native SDK agent will currently capture all provided headers.
+    @note If the HTTP response contains multiple header lines with the same header name, an application should call this function once per
+          line. Alternatively, depending on the header, the application can call this function once per header name, with an appropriately
+          concatenated header value.
+
+    @since This function was added in version 1.2.0.
+*/
+
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_response_header(onesdk_tracer_handle_t tracer_handle, onesdk_string_t name, onesdk_string_t value) {
+    onesdk_outgoingwebrequesttracer_add_response_headers_p(tracer_handle, &name, &value, 1);
+}
+
+/** @brief Sets the HTTP status code for an outgoing web request.
+    @param tracer_handle            A valid outgoing web request tracer handle.
+    @param status_code              The HTTP status code of the response that was received.
+
+    @note If an application fails to receive or decode the reply, it should @em not call this function. Instead the application can use
+    @ref onesdk_tracer_error to signal that the request was not completed successfully.
+
+    @since This function was added in version 1.2.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingwebrequesttracer_set_status_code(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t status_code);
 
 /*========================================================================================================================================*/
 

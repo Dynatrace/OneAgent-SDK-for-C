@@ -16,7 +16,7 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
-find_package(onesdk "1.1" PATHS "${CMAKE_CURRENT_LIST_DIR}/../.." NO_DEFAULT_PATH REQUIRED)
+find_package(onesdk "1.2" PATHS "${CMAKE_CURRENT_LIST_DIR}/../.." NO_DEFAULT_PATH REQUIRED)
 # alternatively you can also use
 # include("${CMAKE_CURRENT_LIST_DIR}/../../onesdk-config.cmake")
 
@@ -24,10 +24,22 @@ if (CMAKE_VERSION VERSION_LESS "3.0")
     project(sample1)
 else ()
     cmake_policy(SET CMP0048 NEW)
-    project(sample1 VERSION "1.1")
+    project(sample1 VERSION "1.2")
 endif ()
 
-add_executable(sample1 main.cpp)
+add_executable(sample1
+    main.cpp
+    config_database.h
+    http_request.h
+    http_response.h
+    transformer_service.h
+    transformer_service_client_proxy.h
+    transformer_service_dispatcher.h
+    util.h
+    web_client.h
+    web_service.h
+    web_service_impl.h
+)
 
 # enable use of C++11
 if (CMAKE_VERSION VERSION_LESS "3.1")

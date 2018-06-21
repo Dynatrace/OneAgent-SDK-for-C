@@ -23,13 +23,21 @@
 
 /*========================================================================================================================================*/
 
-#include "onesdk_config.h"
+#include "onesdk/onesdk_config.h"
 
 /*========================================================================================================================================*/
 
 #define ONESDK_STUB_VERSION_MAJOR		1       /**< @brief Major version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_MINOR		1       /**< @brief Minor version number of the SDK stub. */
+#define ONESDK_STUB_VERSION_MINOR		2       /**< @brief Minor version number of the SDK stub. */
 #define ONESDK_STUB_VERSION_PATCH	    0       /**< @brief Patch version number of the SDK stub. */
+
+/** @brief Stores the stub version number.
+	@see @ref onesdk_stub_get_version */
+typedef struct onesdk_stub_version {
+    onesdk_uint32_t version_major;      /**< @brief ONESDK_STUB_VERSION_MAJOR */
+    onesdk_uint32_t version_minor;      /**< @brief ONESDK_STUB_VERSION_MINOR */
+    onesdk_uint32_t version_patch;      /**< @brief ONESDK_STUB_VERSION_PATCH */
+} onesdk_stub_version_t;
 
 /*========================================================================================================================================*/
 
@@ -211,6 +219,8 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
     @note Although the channel endpoint is optional, it's highly advised to include it for all channel types that specify a format for the
     channel endpoint string. Having the channel endpoint allows us to better map which hosts/services/processes are talking to each other.
 
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#endpoints
+
     @{
 */
 
@@ -261,7 +271,7 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
     @{
 
     @name Database Vendor Strings
-    @see @ref database_requests, https://github.com/Dynatrace/OneAgent-SDK
+    @see @ref database_requests, https://github.com/Dynatrace/OneAgent-SDK/#database
     @{
     @anchor database_vendor_strings
 */
@@ -306,14 +316,25 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
 #define ONESDK_DATABASE_VENDOR_COLDFUSION_IMQ   "ColdFusion IMQ"    /**< @brief Database vendor string for ColdFusion In-Memory Query
                                                                                 (aka. Query of Queries). */
 #define ONESDK_DATABASE_VENDOR_REDSHIFT         "Amazon Redshift"   /**< @brief Database vendor string for Amazon Redshift. */
+#define ONESDK_DATABASE_VENDOR_COUCHBASE        "Couchbase"         /**< @brief Database vendor string for Couchbase. */
 
 /** @} */
 /** @} */
 
 /*========================================================================================================================================*/
 
+/** @ingroup outgoing_web_requests
+    @brief HTTP header name for the Dynatrace string tag.
+
+    Sending an `"X-dynaTrace"` request header with a Dynatrace string tag along with an HTTP request enables any Dynatrace OneAgent on the
+    server side to continue tracing (connect the server side trace to the traced operation from which the tag was obtained).
+*/
+#define ONESDK_DYNATRACE_HTTP_HEADER_NAME       "X-dynaTrace"
+
+/*========================================================================================================================================*/
+
 #if defined(_MSC_VER)
-#include "onesdk_msvc.h"
+#include "onesdk/onesdk_msvc.h"
 #endif
 
 /*========================================================================================================================================*/

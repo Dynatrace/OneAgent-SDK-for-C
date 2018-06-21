@@ -32,8 +32,10 @@
 
 /*========================================================================================================================================*/
 
-#include "onesdk_init.h"
-#include "onesdk_agent.h"
-#include "onesdk_string.h"
+/* IWYU pragma: begin_exports */
+#include "onesdk/onesdk_init.h"
+#include "onesdk/onesdk_agent.h"
+#include "onesdk/onesdk_string.h"
+/* IWYU pragma: end_exports */
 
 #endif /* ONESDK_H_INCLUDED */

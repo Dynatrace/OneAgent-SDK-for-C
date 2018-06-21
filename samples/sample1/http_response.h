@@ -18,8 +18,8 @@
 #define SAMPLE1_HTTP_RESPONSE_H_INCLUDED
 
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 /*========================================================================================================================================*/
 
@@ -28,7 +28,7 @@ struct http_response {
 
     std::vector<name_value_pair> headers;
     std::string body;
-    int status_code = 200;
+    int status_code = -1;
 };
 
 /*========================================================================================================================================*/

@@ -19,13 +19,15 @@
 
 #include "http_request.h"
 #include "http_response.h"
-#include "config_database.h"
-#include "transformer_service_client_proxy.h"
+#include "web_service_impl.h"
 
-#include <string>
 #include <exception>
+#include <string>
+#include <utility>
+#include <vector>
 
-#include <onesdk/onesdk_agent.h>
+#include "onesdk/onesdk_agent.h"
+#include "onesdk/onesdk_string.h"
 
 /*========================================================================================================================================*/
 
@@ -67,12 +69,8 @@ public:
             // Start tracer (starts time measurement).
             onesdk_tracer_start(tracer);
 
-            // Process the request.
-
-            std::string const output_prefix = m_config_database.get_output_prefix();
-            std::string const transformed_data = m_transformer_service.transform(request.body);
-
-            response.body = output_prefix + ":" + transformed_data;
+            // Process the request, build response.
+            response.body = m_impl.get_response_body(request.body);
             response.headers.emplace_back(std::make_pair("Content-Type", "text/html; charset=utf-8"));
             response.headers.emplace_back(std::make_pair("Cache-Control", "no-cache"));
             response.status_code = 200;
@@ -105,8 +103,7 @@ public:
     }
 
 private:
-    config_database m_config_database;
-    transformer_service_client_proxy m_transformer_service;
+    web_service_impl m_impl;
 
     onesdk_webapplicationinfo_handle_t m_web_application_info_handle = ONESDK_INVALID_HANDLE;
 };

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['remote_20call_20tracers',['Remote Call Tracers',['../group__remote__calls.html',1,'']]]
+  ['outgoing_20web_20request_20tracers',['Outgoing Web Request Tracers',['../group__outgoing__web__requests.html',1,'']]]
 ];

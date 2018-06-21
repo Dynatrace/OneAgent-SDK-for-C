@@ -17,6 +17,8 @@
 #ifndef ONESDK_CONFIG_H_INCLUDED
 #define ONESDK_CONFIG_H_INCLUDED
 
+/* IWYU pragma: private, include "onesdk/onesdk_common.h" */
+
 /** @file
     @brief Defines platform/compiler dependent types/constants/macros. Applications should not include this file directly.
 */

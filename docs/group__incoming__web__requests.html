@@ -94,7 +94,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Incoming web request tracers are used to capture information about HTTP requests that the application services (processes, answers).</p>
-<p>To create an incoming web request tracer an application must first create a web application info object which describes the web application - see <a class="el" href="group__incoming__web__requests.html#gaedcdb6c0b0eae26a84df50d2bdb57323">onesdk_webapplicationinfo_create</a>.</p>
+<p>To create an incoming web request tracer, an application must first create a web application info object which describes the web application - see <a class="el" href="group__incoming__web__requests.html#gaedcdb6c0b0eae26a84df50d2bdb57323">onesdk_webapplicationinfo_create</a>.</p>
+<p>For further information, see the high level SDK documentation at <a href="https://github.com/Dynatrace/OneAgent-SDK/#webrequests">https://github.com/Dynatrace/OneAgent-SDK/#webrequests</a></p>
 <dl class="section since"><dt>Since</dt><dd>Incoming web request tracers were added in version 1.1.0. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga644ac6def849a55aa58df2b2f73ac305"></a>
@@ -142,7 +143,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">tracer_handle</td><td>A valid incoming web request tracer handle. </td></tr>
     <tr><td class="paramname">name</td><td>The name of the HTTP POST parameter. </td></tr>
-    <tr><td class="paramname">value</td><td>The value of the HTTP POST parameter.</td></tr>
+    <tr><td class="paramname">value</td><td>[optional] The value of the HTTP POST parameter.</td></tr>
   </table>
   </dd>
 </dl>
@@ -196,7 +197,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">tracer_handle</td><td>A valid incoming web request tracer handle. </td></tr>
     <tr><td class="paramname">name</td><td>The name of the HTTP request header. </td></tr>
-    <tr><td class="paramname">value</td><td>The value of the HTTP request header.</td></tr>
+    <tr><td class="paramname">value</td><td>[optional] The value of the HTTP request header.</td></tr>
   </table>
   </dd>
 </dl>
@@ -255,7 +256,7 @@ This function can not be used after the tracer was started.</dd></dl>
   <table class="params">
     <tr><td class="paramname">tracer_handle</td><td>A valid incoming web request tracer handle. </td></tr>
     <tr><td class="paramname">name</td><td>The name of the HTTP response header. </td></tr>
-    <tr><td class="paramname">value</td><td>The value of the HTTP response header.</td></tr>
+    <tr><td class="paramname">value</td><td>[optional] The value of the HTTP response header.</td></tr>
   </table>
   </dd>
 </dl>
@@ -310,15 +311,15 @@ If the HTTP response contains multiple header lines with the same header name, a
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">webapplicationinfo_handle</td><td>A valid web application info handle. </td></tr>
-    <tr><td class="paramname">url</td><td>The requested URL. Will be parsed into scheme, hostname/port, path &amp; query. </td></tr>
+    <tr><td class="paramname">url</td><td>The requested URL. Will be parsed into <code>scheme</code>, <code>host</code>/<code>port</code>, <code>path</code> and <code>query</code>. </td></tr>
     <tr><td class="paramname">method</td><td>The HTTP method of the request.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A handle for the newly created incoming web request tracer or <a class="el" href="onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37">ONESDK_INVALID_HANDLE</a>.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd><code>url</code> does not have to contain a scheme or host. You can use the URL as it was sent in the HTTP request. </dd>
+<dl class="section note"><dt>Note</dt><dd><code>url</code> does not have to contain a <code>scheme</code> or <code>host</code>. You can use the URL as it was sent in the HTTP request. </dd>
 <dd>
-If <code>url</code> contains a hostname it will be resolved by the agent (asynchronously) after <a class="el" href="group__tracers.html#ga750068677c6732cf423d4cfdd2e2edf0">onesdk_tracer_start</a> was called.</dd></dl>
+If <code>url</code> contains a host name it will be resolved by the agent (asynchronously) after <a class="el" href="group__tracers.html#ga750068677c6732cf423d4cfdd2e2edf0">onesdk_tracer_start</a> was called.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.1.0. </dd></dl>
 
 </div>
@@ -409,6 +410,7 @@ This function can not be used after the tracer was started.</dd></dl>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>If an application can not send a response to the client, it should <em>not</em> call this function. Instead the application can use <a class="el" href="group__tracers.html#gacffee0c9c4b78bdbbe32b66eb2f32666">onesdk_tracer_error</a> to signal that the request could not be processed successfully.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.1.0. </dd></dl>
 
 </div>
