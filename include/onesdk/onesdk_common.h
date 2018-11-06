@@ -24,12 +24,10 @@
 /*========================================================================================================================================*/
 
 #include "onesdk/onesdk_config.h"
+#include "onesdk/onesdk_version.h"
 
 /*========================================================================================================================================*/
 
-#define ONESDK_STUB_VERSION_MAJOR		1       /**< @brief Major version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_MINOR		2       /**< @brief Minor version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_PATCH	    0       /**< @brief Patch version number of the SDK stub. */
 
 /** @brief Stores the stub version number.
 	@see @ref onesdk_stub_get_version */
@@ -217,7 +215,8 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
     constant for the type of communication channel your application uses, it should use @ref ONESDK_CHANNEL_TYPE_OTHER.
 
     @note Although the channel endpoint is optional, it's highly advised to include it for all channel types that specify a format for the
-    channel endpoint string. Having the channel endpoint allows us to better map which hosts/services/processes are talking to each other.
+          channel endpoint string. Having the channel endpoint allows us to better map which hosts/services/processes are talking to each
+          other.
 
     For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#endpoints
 
@@ -330,6 +329,53 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
     server side to continue tracing (connect the server side trace to the traced operation from which the tag was obtained).
 */
 #define ONESDK_DYNATRACE_HTTP_HEADER_NAME       "X-dynaTrace"
+
+/*========================================================================================================================================*/
+
+/** @name Initialization flag constants
+    @see @ref onesdk_initialize_2
+    @{
+    @anchor init_flags
+
+    @brief Flags to use with @ref onesdk_initialize_2.
+*/
+
+/** @hideinitializer
+    @brief Do not fully initialize the SDK now but instead allow it to be used in forked child processes.
+
+    **EAP/EXPERIMENTAL FEATURE**
+
+    When setting this flag, @ref onesdk_initialize_2 will only partially initialize the SDK agent. In this special _parent-initialized_
+    initialization state, only the following functions can be called:
+
+    - All functions that are valid to call before calling initialize remain valid.
+    - @ref onesdk_agent_get_version_string and @ref onesdk_stub_get_agent_load_info work as expected.
+    - @ref onesdk_agent_get_current_state will return @ref ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE - but see the note below.
+    - @ref onesdk_agent_set_logging_callback works as expected, the callback will be carried over to forked child processes.
+    - It is recommended you call @ref onesdk_shutdown when the original process will not fork any more children that want to use the
+      SDK.
+
+    After you fork, the child becomes _pre-initialized_: the first call to an SDK function that needs a _fully initialized_ agent will
+    automatically complete the initialization.
+
+    You can still fork another child (e.g. in a double-fork scenario) in the _pre-initialized_ state. However if you fork another child
+    in the _fully initialized_ state, it will not be able to use the SDK - not even if it tries to shut down the SDK and initialize it
+    again.
+
+    @note Calling @ref onesdk_agent_get_current_state in the _pre-initialized_ state will cause the agent to become _fully initialized_.
+
+    All children forked from a _parent-initialized_ process will use the same agent. That agent will shut down when all child processes and
+    the original _parent-initialized_ process have terminated or called shutdown. Calling @ref onesdk_shutdown in a _pre-initialized_
+    process is not required otherwise.
+
+    @note If you use POSIX `wait` or similar functions, you might observe an additional child process in the original _parent-initialized_
+          process.
+
+    @since This flag requires at least agent version 1.151.
+*/
+#define ONESDK_INIT_FLAG_FORKABLE ((onesdk_uint32_t) 1)
+
+/** @} */
 
 /*========================================================================================================================================*/
 

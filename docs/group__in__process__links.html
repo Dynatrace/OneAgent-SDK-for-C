@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
+   &#160;<span id="projectnumber">1.3.1.0</span>
    </div>
   </td>
  </tr>
@@ -124,12 +125,11 @@ Functions</h2></td></tr>
 <p>An application can call this function to retrieve an in-process link, which can then be used to trace related processing at a later time and/or in a different thread.</p>
 <p>If <code>required_buffer_size</code> is not <code>NULL</code>, the number of bytes required to store the in-process link is stored in <code>*required_buffer_size</code>.</p>
 <p>If <code>buffer</code> is not <code>NULL</code> and <code>buffer_size</code> is big enough, this function will copy the in-process link into the provided buffer.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>If no tracer is active on the current thread, the retrieved link will be empty (have zero length).</li>
-<li>Links returned by this function are not compatible with dynatrace string or byte tags, they can only be used with <a class="el" href="group__in__process__links.html#ga17c58512df37441b6c4f8f36db13c8b4">onesdk_inprocesslinktracer_create</a>.</li>
-<li>Links returned by this function can only be used in the process in which they were created.</li>
-</ul>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If no tracer is active on the current thread, the retrieved link will be empty (have zero length). </dd>
+<dd>
+Links returned by this function are not compatible with dynatrace string or byte tags, they can only be used with <a class="el" href="group__in__process__links.html#ga17c58512df37441b6c4f8f36db13c8b4">onesdk_inprocesslinktracer_create</a>. </dd>
+<dd>
+Links returned by this function can only be used in the process in which they were created.</dd></dl>
 <p>For more information see <a class="el" href="group__in__process__links.html">In-Process Link Functions</a>.</p>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.2.0. </dd></dl>
 
@@ -170,10 +170,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A handle for the newly created in-process link tracer or <a class="el" href="onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37">ONESDK_INVALID_HANDLE</a>.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>If the provided in-process link is empty or invalid, no tracer will be created and this function will return <a class="el" href="onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37">ONESDK_INVALID_HANDLE</a>.</li>
-</ul>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the provided in-process link is empty or invalid, no tracer will be created and this function will return <a class="el" href="onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37">ONESDK_INVALID_HANDLE</a>.</dd></dl>
 <p>For more information see <a class="el" href="group__in__process__links.html">In-Process Link Functions</a>.</p>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.2.0. </dd></dl>
 

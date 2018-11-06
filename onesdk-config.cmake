@@ -18,51 +18,13 @@ cmake_policy(PUSH)
 cmake_policy(VERSION 2.8.12)
 cmake_minimum_required(VERSION 2.8.12)
 
-include("${CMAKE_CURRENT_LIST_DIR}/onesdk-version.cmake")
+include(CheckLibraryExists)
+include(CheckSymbolExists)
 
-if (CMAKE_VERSION VERSION_LESS "3.0")
-    project(onesdk)
-else ()
-    cmake_policy(SET CMP0048 NEW)
-    project(onesdk VERSION ${onesdk_VERSION_MAJOR}.${onesdk_VERSION_MINOR}.${onesdk_VERSION_PATCH})
-endif ()
+include("${CMAKE_CURRENT_LIST_DIR}/onesdk-version.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/onesdk-platform.cmake")
 
 get_filename_component(onesdk_path "${CMAKE_CURRENT_LIST_FILE}" PATH)
-
-# determine CPU architecture
-if (CMAKE_C_COMPILER_ARCHITECTURE_ID MATCHES "X86" OR CMAKE_C_COMPILER_ARCHITECTURE_ID MATCHES "x64")
-    set(onesdk_arch "x86")
-elseif (CMAKE_CXX_COMPILER_ARCHITECTURE_ID MATCHES "X86" OR CMAKE_CXX_COMPILER_ARCHITECTURE_ID MATCHES "x64")
-    set(onesdk_arch "x86")
-elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "x86" OR CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
-    set(onesdk_arch "x86")
-else ()
-    message(FATAL_ERROR "ONESDK: Unsupported architecture (${CMAKE_C_COMPILER_ARCHITECTURE_ID},${CMAKE_CXX_COMPILER_ARCHITECTURE_ID},${CMAKE_SYSTEM_PROCESSOR})")
-endif ()
-
-# determine bitness
-if (CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
-    set(onesdk_bits 32)
-elseif (CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
-    set(onesdk_bits 64)
-elseif (CMAKE_CXX_SIZEOF_DATA_PTR EQUAL 4)
-    set(onesdk_bits 32)
-elseif (CMAKE_CXX_SIZEOF_DATA_PTR EQUAL 8)
-    set(onesdk_bits 64)
-else ()
-    message(FATAL_ERROR "ONESDK: Unknown/unsupported bitness (${CMAKE_C_SIZEOF_DATA_PTR,CMAKE_CXX_SIZEOF_DATA_PTR})")
-endif ()
-
-# determine platform
-if (WIN32)
-    set(onesdk_platform "windows")
-elseif (CMAKE_C_PLATFORM_ID MATCHES "Linux")
-    set(onesdk_platform "linux")
-elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(onesdk_platform "linux")
-else ()
-    message(FATAL_ERROR "ONESDK: Unsupported platform (${CMAKE_C_PLATFORM_ID},${CMAKE_SYSTEM_NAME})")
-endif ()
 
 # define platform dependent strings
 if (onesdk_platform MATCHES "windows")
@@ -79,8 +41,53 @@ else ()
     message(FATAL_ERROR "ONESDK: Unsupported onesdk_platform (${onesdk_platform})")
 endif ()
 
-set(onesdk_cfg_name "${onesdk_platform}-${onesdk_arch}_${onesdk_bits}")
-set(onesdk_lib_path "${onesdk_path}/lib/${onesdk_cfg_name}")
+set(onesdk_shlib_name "${onesdk_lib_prefix}onesdk_shared${onesdk_shlib_suffix}")
+if (UNIX)
+    set(onesdk_shlib_soname "${onesdk_shlib_name}")
+endif ()
+
+set(onesdk_lib_path "${onesdk_path}/${onesdk_lib_subdir}")
+
+# find out what we need to link for pthreads functions
+
+if (UNIX)
+    set(ONESDK_SAVE_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
+    set(ONESDK_SAVE_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
+    set(ONESDK_SAVE_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
+    set(ONESDK_SAVE_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
+
+    # pthreads can be implemented in libc...
+    if (NOT DEFINED onesdk_thread_libs)
+        CHECK_SYMBOL_EXISTS(pthread_create pthread.h onesdk_libc_has_pthreads)
+        if (onesdk_libc_has_pthreads)
+            set(onesdk_thread_libs "")
+        endif ()
+    endif ()
+    # ... or in (lib)pthreads ...
+    if (NOT DEFINED onesdk_thread_libs)
+        CHECK_LIBRARY_EXISTS(pthreads pthread_create "" onesdk_have_libpthreads)
+        if (onesdk_have_libpthreads)
+            set(onesdk_thread_libs "-lpthreads")
+        endif ()
+    endif ()
+    # ... or in (lib)pthread.
+    if (NOT DEFINED onesdk_thread_libs)
+        CHECK_LIBRARY_EXISTS(pthread pthread_create "" onesdk_have_libpthread)
+        if (onesdk_have_libpthread)
+            set(onesdk_thread_libs "-lpthread")
+        endif ()
+    endif ()
+    # otherwise we give up and leave it to the user to link whatever is required (or set `onesdk_thread_libs` before including this file).
+
+    set(CMAKE_REQUIRED_FLAGS ${ONESDK_SAVE_CMAKE_REQUIRED_FLAGS})
+    set(CMAKE_REQUIRED_DEFINITIONS ${ONESDK_SAVE_CMAKE_REQUIRED_DEFINITIONS})
+    set(CMAKE_REQUIRED_INCLUDES ${ONESDK_SAVE_CMAKE_REQUIRED_INCLUDES})
+    set(CMAKE_REQUIRED_LIBRARIES ${ONESDK_SAVE_CMAKE_REQUIRED_LIBRARIES})
+    unset(ONESDK_SAVE_CMAKE_REQUIRED_FLAGS)
+    unset(ONESDK_SAVE_CMAKE_REQUIRED_DEFINITIONS)
+    unset(ONESDK_SAVE_CMAKE_REQUIRED_INCLUDES)
+    unset(ONESDK_SAVE_CMAKE_REQUIRED_LIBRARIES)
+endif ()
 
 # TARGET onesdk_static
 
@@ -88,11 +95,15 @@ add_library(onesdk_static STATIC IMPORTED)
 set_property(TARGET onesdk_static PROPERTY VERSION "${onesdk_VERSION}")
 set_property(TARGET onesdk_static PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${onesdk_path}/include")
 set_property(TARGET onesdk_static PROPERTY IMPORTED_LOCATION "${onesdk_lib_path}/${onesdk_lib_prefix}onesdk_static${onesdk_linklib_suffix}")
-if (MSVC_VERSION AND NOT MSVC_VERSION LESS 1900)
-    set_property(TARGET onesdk_static APPEND PROPERTY INTERFACE_LINK_LIBRARIES "legacy_stdio_definitions.lib")
+if (onesdk_static_extra_libs)
+    set_property(TARGET onesdk_static APPEND PROPERTY INTERFACE_LINK_LIBRARIES
+        ${onesdk_static_extra_libs})
 endif ()
 if (CMAKE_DL_LIBS)
     set_property(TARGET onesdk_static APPEND PROPERTY INTERFACE_LINK_LIBRARIES "${CMAKE_DL_LIBS}")
+endif ()
+if (onesdk_thread_libs)
+    set_property(TARGET onesdk_static APPEND PROPERTY INTERFACE_LINK_LIBRARIES "${onesdk_thread_libs}")
 endif ()
 
 # TARGET onesdk_shared
@@ -100,7 +111,10 @@ endif ()
 add_library(onesdk_shared SHARED IMPORTED)
 set_property(TARGET onesdk_shared PROPERTY VERSION "${onesdk_VERSION}")
 set_property(TARGET onesdk_shared PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${onesdk_path}/include")
-set_property(TARGET onesdk_shared PROPERTY IMPORTED_LOCATION "${onesdk_lib_path}/${onesdk_lib_prefix}onesdk_shared${onesdk_shlib_suffix}")
+set_property(TARGET onesdk_shared PROPERTY IMPORTED_LOCATION "${onesdk_lib_path}/${onesdk_shlib_name}")
+if (onesdk_shlib_soname)
+    set_property(TARGET onesdk_shared PROPERTY IMPORTED_SONAME "${onesdk_shlib_soname}")
+endif()
 set_property(TARGET onesdk_shared APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS "ONESDK_SHARED")
 if (onesdk_implib_suffix)
     set_property(TARGET onesdk_shared APPEND PROPERTY IMPORTED_IMPLIB "${onesdk_lib_path}/${onesdk_lib_prefix}onesdk_shared${onesdk_implib_suffix}")

@@ -1,0 +1,6 @@
+*.a     binary
+*.so    binary
+*.dbg   binary
+*.lib   binary
+*.dll   binary
+*.pdb   binary

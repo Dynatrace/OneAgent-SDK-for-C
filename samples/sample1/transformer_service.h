@@ -51,7 +51,7 @@ public:
             // Let's say '!' is an invalid input character so we can simulate processing errors.
             if (ch == '!')
                 throw std::invalid_argument(std::string("Invalid input character '") + ch + "'");
-            str[i] = std::toupper(static_cast<unsigned char>(ch));
+            str[i] = static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
 
             if (str[i] != ch)
                 changed_count++;

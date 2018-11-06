@@ -16,4 +16,10 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
+if (POLICY CMP0048) # project() command manages VERSION variables.
+    cmake_policy(SET CMP0048 NEW)
+endif ()
+
+project(onesdk_samples)
+
 add_subdirectory(sample1)

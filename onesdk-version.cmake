@@ -14,11 +14,14 @@
 # limitations under the License.
 #
 
-# 1.2.0
-set(onesdk_VERSION_MAJOR 1)
-set(onesdk_VERSION_MINOR 2)
-set(onesdk_VERSION_PATCH 0)
+# DO NOT EDIT onesdk-version.cmake! It is a GENERATED file.
 
-set(onesdk_VERSION_TWEAK 0)
+# FULL VERSION: 1.3.1.7 (2018.11.06 11:11:14)
+
+set(onesdk_VERSION_MAJOR 1)
+set(onesdk_VERSION_MINOR 3)
+set(onesdk_VERSION_PATCH 1)
+
 set(onesdk_VERSION_COUNT 3)
+
 set(onesdk_VERSION ${onesdk_VERSION_MAJOR}.${onesdk_VERSION_MINOR}.${onesdk_VERSION_PATCH})
