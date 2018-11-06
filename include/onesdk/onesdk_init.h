@@ -138,7 +138,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_stub_free_variables(void);
     @param message      The undecorated log message.
 
     @note Messages which do not pass the logging level test (see @ref onesdk_stub_set_logging_level) will not be forwarded to the logging
-    function.
+          function.
 
     @note The message string will not contain any decoration as described in @ref onesdk_stub_default_logging_function.
 */
@@ -193,6 +193,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_stub_set_logging_level(onesdk_logging_level
 
     @see @ref onesdk_stub_logging_callback_t
     @see @ref onesdk_stub_default_logging_function
+    @see @ref onesdk_agent_set_logging_callback
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_stub_set_logging_callback(onesdk_stub_logging_callback_t* stub_logging_callback);
 
@@ -205,8 +206,38 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_stub_set_logging_callback(onesdk_stub_loggi
     This function tries to locate, load and initialize the SDK agent. See @ref onesdk_shutdown for shutting down and unloading
     the agent. If this function is called after the agent has already been initialized, an internal reference count will be incremented.
     In that case the application must call @ref onesdk_shutdown once for each successful call to @ref onesdk_initialize.
+
+    This function behaves just as `onesdk_initialize_2(0)`.
+
+    @note If your application forks while executing @ref onesdk_initialize, @ref onesdk_initialize_2 or @ref onesdk_shutdown on another
+          thread, it is not safe to call SDK functions in the forked child process without calling `exec` first. Doing so may result in a
+          deadlock.
+
+    @see @ref onesdk_initialize_2
+    @see @ref onesdk_stub_get_agent_load_info can give more information about initialization failures.
 */
 ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_initialize(void);
+
+/** @brief Load and initialize the SDK agent, with additional flags.
+    @param init_flags   A bitwise combination of flags from @ref init_flags or zero.
+
+    @return @ref ONESDK_SUCCESS if successful, an SDK stub error code otherwise.
+
+    This function tries to locate, load and initialize the SDK agent. See @ref onesdk_shutdown for shutting down and unloading
+    the agent. If this function is called after the agent has already been initialized, an internal reference count will be incremented.
+    In that case the application must call @ref onesdk_shutdown once for each successful call to @ref onesdk_initialize.
+
+    @note If your application forks while executing @ref onesdk_initialize, @ref onesdk_initialize_2 or @ref onesdk_shutdown on another
+          thread, it is not safe to call SDK functions in the forked child process without calling `exec` first. Doing so may result in a
+          deadlock. (This restriction also applies when using @ref ONESDK_INIT_FLAG_FORKABLE.)
+
+    @since This function was added in version 1.3.0.
+
+    @see @ref init_flags
+    @see @ref onesdk_initialize
+    @see @ref onesdk_stub_get_agent_load_info can give more information about initialization failures.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_initialize_2(onesdk_uint32_t init_flags);
 
 /** @brief Shut down and unload the SDK agent.
 
@@ -214,9 +245,31 @@ ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_initialize(void);
 
     This function will shut down and unload the SDK agent.
 
+    @note If your application forks while executing @ref onesdk_initialize, @ref onesdk_initialize_2 or @ref onesdk_shutdown on another
+          thread, it is not safe to call SDK functions in the forked child process without calling `exec` first. Doing so may result in a
+          deadlock.
     @note Unloading the actual SDK agent module (DLL/SO/...) may not be possible on all platforms.
 */
 ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_shutdown(void);
+
+/*========================================================================================================================================*/
+
+/** @brief Retrieves debug information about the currently used agent.
+    @param[out] agent_found      [optional] Pointer to a bool indicating whether the agent was found or not.
+    @param[out] agent_compatible [optional] Pointer to a bool indicating whether the agent was both found and compatible or not.
+
+    This function only yields meaningful results between calling @ref onesdk_initialize (or @ref onesdk_initialize_2) and
+    @ref onesdk_shutdown. It is useful to get more information about why initialization failed. Sucessful initialization always implies
+    that both @p *agent_found and @p *agent_compatible are true.
+
+    Note that @p *agent_found is also false if initialization failed before even trying to find the agent and
+    @p *agent_compatible is also false if the agent was found but its compatibility could not be checked.
+    @see @ref onesdk_agent_get_version_string may have the version of the agent, which is interesting if
+         @p *agent_found is true but @p *agent_compatible is not.
+
+    @since This function was added in version 1.3.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_stub_get_agent_load_info(onesdk_bool_t* agent_found, onesdk_bool_t* agent_compatible);
 
 /*========================================================================================================================================*/
 

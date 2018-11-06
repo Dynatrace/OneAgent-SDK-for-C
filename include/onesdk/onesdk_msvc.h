@@ -67,14 +67,14 @@ extern "C"
 #else
 extern
 #endif
-FILE* (ONESDK_CALL* const onesdk_get_stderr)();
+FILE* (ONESDK_CALL* const onesdk_get_stderr)(void);
 
 #else
 
 /* Define the pointer to our helper function in the consuming application. */
 
 /** @internal */
-static FILE* ONESDK_CALL onesdk_get_stderr_impl() {
+static FILE* ONESDK_CALL onesdk_get_stderr_impl(void) {
     return stderr;
 }
 
@@ -84,7 +84,7 @@ extern "C"
 #else
 extern
 #endif
-__declspec(selectany) FILE* (ONESDK_CALL* const onesdk_get_stderr)() = onesdk_get_stderr_impl;
+__declspec(selectany) FILE* (ONESDK_CALL* const onesdk_get_stderr)(void) = onesdk_get_stderr_impl;
 
 #endif
 #endif

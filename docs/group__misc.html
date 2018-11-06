@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
+   &#160;<span id="projectnumber">1.3.1.0</span>
    </div>
   </td>
  </tr>
@@ -118,8 +119,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the version string of the loaded SDK agent module. </p>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a null-terminated <a class="el" href="onesdk__config_8h.html#aafd6e0c4e49e6d73aba97c28cd748474">onesdk_xchar_t</a> string constant that indicates the version of the loaded SDK agent module. If the agent has not been initialized yet this function will return an empty string.</dd></dl>
-<p>Your application should not try to parse the version string or make any assumptions about its format. </p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to a null-terminated <a class="el" href="onesdk__config_8h.html#aafd6e0c4e49e6d73aba97c28cd748474">onesdk_xchar_t</a> string constant that indicates the version of the loaded SDK agent module. May also contain the version of the module that was last attempted to load if the last SDK initialization failed but the agent version could still be determined. If the agent has not been initialized yet or its version could not be determined, this function will return an empty string.</dd></dl>
+<p>Your application should not try to parse the version string or make any assumptions about its format.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#ga8c1b37a28163bb7f790ac56091f86466">onesdk_stub_get_agent_load_info</a> can be used to query if a compatible agent was found. </dd></dl>
 
 </div>
 </div>
@@ -153,7 +155,9 @@ Functions</h2></td></tr>
 <p>The agent logging callback is only ever called while executing an SDK function, in the context of the application thread that is calling the SDK function. The application must not call any SDK functions while executing the callback.</p>
 <p>This mechanism is provided primarily as a development and debugging aid.</p>
 <p>There is no default logging function.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="onesdk__common_8h.html#a124401b9c44ba32cc2e450f11564a258">onesdk_agent_logging_callback_t</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="onesdk__common_8h.html#a124401b9c44ba32cc2e450f11564a258">onesdk_agent_logging_callback_t</a> </dd>
+<dd>
+<a class="el" href="group__init.html#ga68fd905f95b1fdc05b7d45e5a419934d">onesdk_stub_set_logging_callback</a> </dd></dl>
 
 </div>
 </div>

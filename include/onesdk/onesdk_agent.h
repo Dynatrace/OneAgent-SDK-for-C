@@ -38,9 +38,13 @@
 
     @return
     A pointer to a null-terminated @ref onesdk_xchar_t string constant that indicates the version of the loaded SDK agent module.
-    If the agent has not been initialized yet this function will return an empty string.
+    May also contain the version of the module that was last attempted to load if the last SDK initialization failed but the agent
+    version could still be determined.
+    If the agent has not been initialized yet or its version could not be determined, this function will return an empty string.
 
     Your application should not try to parse the version string or make any assumptions about its format.
+
+    @see @ref onesdk_stub_get_agent_load_info can be used to query if a compatible agent was found.
 */
 ONESDK_DECLARE_FUNCTION(onesdk_xchar_t const*) onesdk_agent_get_version_string(void);
 
@@ -69,6 +73,7 @@ ONESDK_DECLARE_FUNCTION(onesdk_int32_t) onesdk_agent_get_current_state(void);
     There is no default logging function.
 
     @see @ref onesdk_agent_logging_callback_t
+    @see @ref onesdk_stub_set_logging_callback
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
 
@@ -118,8 +123,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_start(onesdk_tracer_handle_t tracer_
     If the tracer has been started, the time measurement will be stopped and its exit fields will be captured before releasing the tracer.
 
     @note Just like all other tracer functions, this function must only be called from the thread that was used to create the tracer.
-    This is important because it means that a tracer cannot be released on a different thread. Attempting to do so is an error and will
-    result in memory leaks.
+          This is important because it means that a tracer cannot be released on a different thread. Attempting to do so is an error and
+          will result in memory leaks.
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_end(onesdk_tracer_handle_t tracer_handle);
 
@@ -136,8 +141,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_error_p(onesdk_tracer_handle_t trace
     @note Calling @ref onesdk_tracer_error does not end/release the tracer.
 
     @note @ref onesdk_tracer_error must only be called once. If a traced operation results in multiple errors and the application wants
-    all of them to be captured, it must concatenate/combine them and then call @ref onesdk_tracer_error once before calling
-    @ref onesdk_tracer_end.
+          all of them to be captured, it must concatenate/combine them and then call @ref onesdk_tracer_error once before calling
+          @ref onesdk_tracer_end.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_tracer_error(onesdk_tracer_handle_t tracer_handle, onesdk_string_t error_class, onesdk_string_t error_message) {
     onesdk_tracer_error_p(tracer_handle, &error_class, &error_message);
@@ -191,10 +196,9 @@ ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_tracer_get_outgoing_dynatrace_stri
 
     If @p buffer is not `NULL` and @p buffer_size is big enough, this function will copy the binary representation into the provided buffer.
 
-    @note
-    - If called with invalid arguments, the retrieved binary tag will be empty (have zero length).
-    - Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.
-    - Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.
+    @note If called with invalid arguments, the retrieved binary tag will be empty (have zero length).
+    @note Calling this function multiple times for the same tracer is explicitly supported and will yield the same result.
+    @note Retrieving both the string representation and the binary representation from the same tracer is explicitly supported.
 
     @see @ref onesdk_tracer_get_outgoing_dynatrace_string_tag
 */
@@ -215,7 +219,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_string_tag_p(
     If @p string_tag is a "null string" or an empty string, the incoming tag will be reset (cleared).
 
     @note An "incoming taggable" tracer has _one_ tag. Calling @ref onesdk_tracer_set_incoming_dynatrace_string_tag will overwrite any tag
-    that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
+          that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
 
     @see @ref onesdk_tracer_set_incoming_dynatrace_string_tag
     @see @ref onesdk_tracer_set_incoming_dynatrace_byte_tag
@@ -235,7 +239,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_string_
     If @p byte_tag_size is zero, the incoming tag will be reset (cleared).
 
     @note An "incoming taggable" tracer has _one_ tag. Calling @ref onesdk_tracer_set_incoming_dynatrace_byte_tag will overwrite any tag
-    that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
+          that was set by either @ref onesdk_tracer_set_incoming_dynatrace_string_tag or @ref onesdk_tracer_set_incoming_dynatrace_byte_tag.
 
     @see @ref onesdk_tracer_set_incoming_dynatrace_string_tag
 */
@@ -341,11 +345,10 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_string(one
 
     If @p buffer is not `NULL` and @p buffer_size is big enough, this function will copy the in-process link into the provided buffer.
 
-    @note
-    - If no tracer is active on the current thread, the retrieved link will be empty (have zero length).
-    - Links returned by this function are not compatible with dynatrace string or byte tags, they can only be used with
-      @ref onesdk_inprocesslinktracer_create.
-    - Links returned by this function can only be used in the process in which they were created.
+    @note If no tracer is active on the current thread, the retrieved link will be empty (have zero length).
+    @note Links returned by this function are not compatible with dynatrace string or byte tags, they can only be used with
+          @ref onesdk_inprocesslinktracer_create.
+    @note Links returned by this function can only be used in the process in which they were created.
 
     For more information see @ref in_process_links.
 
@@ -359,9 +362,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_inprocesslink_create(unsigned char
 
     @return A handle for the newly created in-process link tracer or @ref ONESDK_INVALID_HANDLE.
 
-	@note
-	- If the provided in-process link is empty or invalid, no tracer will be created and this function will return
-	  @ref ONESDK_INVALID_HANDLE.
+	@note If the provided in-process link is empty or invalid, no tracer will be created and this function will return
+	      @ref ONESDK_INVALID_HANDLE.
 
     For more information see @ref in_process_links.
 
@@ -546,8 +548,8 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_databaseinfo_handle_t) onesdk_databaseinfo_
     An application should call @ref onesdk_databaseinfo_delete exactly once for each database info object that it has created.
 
     @note Calling @ref onesdk_databaseinfo_delete with a handle to a database info object which is still referenced by existing tracers is
-    supported. In that case the lifetime of the database info object is extended as necessary. The handle will always become invalid
-    immediately though.
+          supported. In that case the lifetime of the database info object is extended as necessary. The handle will always become invalid
+          immediately though.
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_databaseinfo_delete(onesdk_databaseinfo_handle_t databaseinfo_handle);
 
@@ -636,8 +638,8 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_webapplicationinfo_handle_t) onesdk_webappl
     An application should call @ref onesdk_webapplicationinfo_delete exactly once for each web application info object that it has created.
 
     @note Calling @ref onesdk_webapplicationinfo_delete with a handle to a web application info object which is still referenced by existing
-    tracers is supported. In that case the lifetime of the web application info object is extended as necessary. The handle will always
-    become invalid immediately though.
+          tracers is supported. In that case the lifetime of the web application info object is extended as necessary. The handle will
+          always become invalid immediately though.
 
     @since This function was added in version 1.1.0.
 */
@@ -747,7 +749,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingwebrequesttracer_add_response
     @param status_code              The HTTP status code of the response sent to the client.
 
     @note If an application can not send a response to the client, it should @em not call this function. Instead the application can use
-    @ref onesdk_tracer_error to signal that the request could not be processed successfully.
+          @ref onesdk_tracer_error to signal that the request could not be processed successfully.
 
     @since This function was added in version 1.1.0.
 */
@@ -789,7 +791,7 @@ ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_outgoingwebrequesttracer_
     @return A handle for the newly created outgoing web request tracer or @ref ONESDK_INVALID_HANDLE.
 
     @note @p url should be a full, absolute URL, i.e. containing the `scheme`, `host`, `port` (unless default), `path` and `query`.
-    Any `fragment` part, if present, will be ignored (fragments are only processed locally and not part of the request URL).
+          Any `fragment` part, if present, will be ignored (fragments are only processed locally and not part of the request URL).
     @note If @p url contains a host name it will be resolved by the agent (asynchronously) after @ref onesdk_tracer_start was called.
 
     @since This function was added in version 1.2.0.
@@ -845,7 +847,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_response
     @param status_code              The HTTP status code of the response that was received.
 
     @note If an application fails to receive or decode the reply, it should @em not call this function. Instead the application can use
-    @ref onesdk_tracer_error to signal that the request was not completed successfully.
+          @ref onesdk_tracer_error to signal that the request was not completed successfully.
 
     @since This function was added in version 1.2.0.
 */

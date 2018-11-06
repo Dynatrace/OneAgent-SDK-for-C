@@ -410,6 +410,124 @@ To add a custom request attribute, simply call one of the `onesdk_customrequesta
 This will add the custom request attributes to the currently traced service. If no tracer is active, the values will be discarded.
 
 
+## Using the Dynatrace OneAgent SDK with forked child processes (not available on Windows)
+
+Some applications, especially web servers, use a concurrency model that is based on forked child processes. Typically a master process
+is started which is responsible only for creating and managing child processes by means of forking. The child processes do the real work,
+for example handling web requests.
+
+The recommended way to use the SDK in such a scenario is as follows: You initialize the SDK in the master using the `onesdk_initialize_2`
+function passing the `ONESDK_INIT_FLAG_FORKABLE` flag in the flags argument. This way you will not be able to use the SDK in the
+master process (attempts to do so will be ignored, if applicable with an error code), but all forked child processes will share the same
+agent. This has a lower overhead, for example the startup of worker processes is not slowed down, and the per-worker memory overhead is
+reduced.
+
+![Diagram color legend](img/fork-legend.png)
+
+Recommended, simple scenario:
+
+![Diagram showing how to pre-initialize the SDK in the parent/master process](img/fork-simple.png)
+
+Double/daemon forks (i.e., a process forks a single child and then terminates) are also supported, as long as the intermediate child does
+not use the SDK. If possible, it is better to initialize the SDK only in the intermediate child, as illustrated in the diagram below, but
+calling `onesdk_initialize_2(ONESDK_FORKABLE)` in the master's parent process is also supported (take especial care to not use any SDK
+functions in the master then, not even `onesdk_agent_get_current_state`).
+
+![Diagram showing how to pre-initialize the SDK in the parent/master process and double forking](img/double-fork.png)
+
+There are some scenarios where you may not be able to use this feature:
+
+* You have to use an older SDK or agent version which does not support the `onesdk_initialize_2` API, or
+* You have no control over the master process, i.e. are unable to ensure that `onesdk_initialize_2` is called before the first fork in the
+  master process.
+
+In these cases, you can use the following workaround: Instead of initializing the SDK in the master process, you initialize it
+(without the `ONESDK_INIT_FLAG_FORKABLE` flag) in each worker process. This has the consequence that each process is monitored
+separately with its own agent. This is not recommended as each per-worker agent will have to establish and maintain its own
+connection to Dynatrace, which results in higher overhead, especially at startup.
+
+  ![Diagram showing how to initialize the SDK only in the child processes](img/init-child.png)
+
+When you initialize the SDK using `onesdk_initialize` or without passing `ONESDK_INIT_FLAG_FORKABLE` to `onesdk_initialize_2`,
+you may not use the SDK in forked child processes (attempts to do so will simply do nothing and may return the `ONESDK_ERROR_FORK_CHILD`
+error code).
+
+![Diagram showing how to pre-initialize the SDK in the parent/master process and double forking](img/fork-bad.png)
+
+Example for SDK initialization with `ONESDK_INIT_FLAG_FORKABLE`:
+
+```C
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <onesdk/onesdk.h>
+
+onesdk_result_t g_onesdk_init_result = ONESDK_ERROR_NOT_INITIALIZED;
+
+int worker_main();
+
+int main(int argc, char** argv) {
+    onesdk_stub_process_cmdline_args(argc, argv, 1);  /* optional: let the SDK process command line arguments   */
+    onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  /* optional: remove SDK command line arguments from argv  */
+
+    /* Initialize SDK in forkable mode. */
+    g_onesdk_init_result = onesdk_initialize_2(ONESDK_INIT_FLAG_FORKABLE);
+    /* Assuming everything went well, the SDK is now in a _parent-initialized_ state. That means child processes
+       that this process forks will be able to use the SDK with very little initialization overhead.
+       (This process, the master, won't be able to use the SDK though.) */
+
+    /* This process can now proceed and fork some workers, either all at once or on demand ... */
+
+    static size_t const worker_count = 10;
+    for (size_t i = 0; i < worker_count; ++i) {
+        int const worker_pid = fork();
+        if (worker_pid == -1) {
+            perror("fork(2) failed");
+            return 1;
+        } else if (worker_pid == 0) {
+            return worker_main();
+        } else {
+            /* ... remember worker PID/establish communication ... */
+        }
+    }
+
+    /* ... maybe accept connections, dispatch work to the worker processes, wait(2) for them ... */
+
+    /* ... unitl eventualls it's time to shut down. */
+
+    /* Shut down SDK */
+    if (g_onesdk_init_result == ONESDK_SUCCESS)
+        onesdk_shutdown();
+
+    return 0;
+}
+
+int worker_main() {
+    /* Assuming everything went well in the parent process and `g_onesdk_init_result == ONESDK_SUCCESS`,
+       this process has inherited the SDK in a _pre-initialized_ state.
+       (The initialization state changes from _parent-initialized_ to _pre-initialized_ while forking.)
+       That means the SDK initialization will automatically be completed when this process begins to use
+       the SDK, e.g. when the first tracer is created... */
+
+    onesdk_tracer_handle_t const tracer = onesdk_sometracer_create(
+        onesdk_asciistr("some argument"),
+        onesdk_asciistr("some other argument"));
+
+    /* The SDK should now be fully initialized and the tracer should have been created successfully. */
+
+    onesdk_tracer_start(tracer);
+    /* ... do the actual work ... */
+    onesdk_tracer_end(tracer);
+
+    /* Since we inherited a _pre-initialized_ SDK state we have to call `onesdk_shutdown`. */
+    if (g_onesdk_init_result == ONESDK_SUCCESS)
+        onesdk_shutdown();
+    return 0;
+}
+```
+
+
 ## Troubleshooting
 
 If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate logging by either
@@ -437,6 +555,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|
 |:---------------------|:-----------------|
+|1.3.1                 |>=1.151           |
 |1.2.0                 |>=1.147           |
 |1.1.0                 |>=1.141           |
 |1.0.0                 |>=1.133           |
@@ -451,6 +570,7 @@ The Dynatrace OneAgent SDK is currently in early access. Please report tickets v
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.3.1  |Support for monitoring forked child processes                                                                           |
 |1.2.0  |Added in-process linking, added custom request attributes, added outgoing web request tracers                           |
 |1.1.0  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
 |1.0.0  |Initial version                                                                                                         |

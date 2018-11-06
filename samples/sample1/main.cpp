@@ -26,9 +26,23 @@
 
 #include "onesdk/onesdk.h"
 
+#if defined(_WIN32)
+#include <wchar.h>
+#endif
+
+#if defined(unix) || defined(__unix__) || defined(__unix)
+#include <unistd.h>
+#include <signal.h>
+#include <strings.h>
+#if _XOPEN_SOURCE >= 500 || _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED
+#define SAMPLE1_HAVE_FORK_FUNCTIONS
+#endif
+#endif
+
 /*========================================================================================================================================*/
 
-void run_main_loop();
+void run_main_loop(bool use_fork);
+void handle_request(std::string const& input);
 char const* agent_state_to_string(onesdk_int32_t agent_state);
 void ONESDK_CALL onesdk_agent_logging_callback(char const* message);
 
@@ -50,26 +64,43 @@ int main(int argc, char** argv)
     onesdk_stub_process_cmdline_args(argc, argv, true);
     onesdk_stub_strip_sdk_cmdline_args(&argc, argv);
 
+    bool use_fork = false;
+    // Process command line arguments.
+    // (Since we called onesdk_stub_strip_sdk_cmdline_args we won't see ONESDK arguments here anymore.)
+    for (int i = 0; i < argc; i++) {
+#if defined(_WIN32)
+        printf("argv[%d]: '%S'\n", i, argv[i]);
+        if (wcscmp(argv[i], L"--fork") == 0)
+            use_fork = true;
+#else
+        printf("argv[%d]: '%s'\n", i, argv[i]);
+        if (strcasecmp(argv[i], "--fork") == 0)
+            use_fork = true;
+#endif
+    }
+
+    uint32_t onesdk_init_flags = 0;
+    if (use_fork) {
+#if defined(SAMPLE1_HAVE_FORK_FUNCTIONS)
+        puts("Using per-request forked child processes.\n");
+        sigignore(SIGCHLD);
+        onesdk_init_flags |= ONESDK_INIT_FLAG_FORKABLE;
+#else
+        fputs("WARNING: --fork is not supported.\n", stderr);
+        use_fork = false;
+#endif
+    }
+
     // Try to initialize ONESDK.
-    onesdk_result_t const onesdk_init_result = onesdk_initialize();
+    onesdk_result_t const onesdk_init_result = onesdk_initialize_2(onesdk_init_flags);
     printf("ONESDK initialized:   %s\n", (onesdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
     printf("ONESDK agent version: '%" ONESDK_STR_PRI_XSTR "'\n", onesdk_agent_get_version_string());
     printf("ONESDK agent state:   %s\n", agent_state_to_string(onesdk_agent_get_current_state()));
     // Set logging callback so we get warning/error messages from ONESDK.
     onesdk_agent_set_logging_callback(&onesdk_agent_logging_callback);
 
-    // Process command line arguments.
-    // (Since we called onesdk_stub_strip_sdk_cmdline_args we won't see ONESDK arguments here anymore.)
-    for (int i = 0; i < argc; i++) {
-#if defined(_WIN32)
-        printf("argv[%d]: '%S'\n", i, argv[i]);
-#else
-        printf("argv[%d]: '%s'\n", i, argv[i]);
-#endif
-    }
-
     // Run the main service loop.
-	run_main_loop();
+	run_main_loop(use_fork);
 
     // Shut down ONESDK.
     if (onesdk_init_result == ONESDK_SUCCESS)
@@ -80,9 +111,7 @@ int main(int argc, char** argv)
 
 /*========================================================================================================================================*/
 
-void run_main_loop() {
-    web_client client;
-
+void run_main_loop(bool use_fork) {
     std::cout <<
         "\n"
         "Enter request body data or \"exit\" to stop.\n"
@@ -97,24 +126,46 @@ void run_main_loop() {
         if (input == "exit")
             break;
 
-        http_request request;
-        request.method = "POST";
-        request.url = "http://example.com/sample1/web-service/transform";
-        request.headers.emplace_back(std::make_pair("Host", "example.com"));
-        request.headers.emplace_back(std::make_pair("Connection", "close"));
-        request.headers.emplace_back(std::make_pair("Content-Type", "text/html; charset=utf-8"));
-        request.headers.emplace_back(std::make_pair("Pragma", "no-cache"));
-        // We don't have parameters (we're not using application/x-www-form-urlencoded) -> leave request.parameters empty.
-        request.body = input;
-
-        // Let our "web service" process the request.
-        http_response response = client.send_request(request);
-
-        // Just print the response body.
-        std::cout << "Response body: " << response.body << "\n";
+        if (use_fork) {
+#if defined(SAMPLE1_HAVE_FORK_FUNCTIONS)
+            pid_t const child_pid = fork();
+            if (child_pid == -1) {
+                int const ec = errno;
+                fprintf(stderr, "ERROR: Forking request handler process failed (error %d).\n", ec);
+            } else if (child_pid == 0) {
+                // Handle request in child process.
+                handle_request(input);
+                return;
+            } else {
+                // Child process was forked successfully.
+            }
+#endif
+        } else {
+            // Handle request in main process.
+            handle_request(input);
+        }
     }
 
     std::cout << "Shutting down...\n";
+}
+
+void handle_request(std::string const& input) {
+    http_request request;
+    request.method = "POST";
+    request.url = "http://example.com/sample1/web-service/transform";
+    request.headers.emplace_back(std::make_pair("Host", "example.com"));
+    request.headers.emplace_back(std::make_pair("Connection", "close"));
+    request.headers.emplace_back(std::make_pair("Content-Type", "text/html; charset=utf-8"));
+    request.headers.emplace_back(std::make_pair("Pragma", "no-cache"));
+    // We don't have parameters (we're not using application/x-www-form-urlencoded) -> leave request.parameters empty.
+    request.body = input;
+
+    // Let our "web service" process the request.
+    web_client client;
+    http_response response = client.send_request(request);
+
+    // Just print the response body.
+    std::cout << "Response body: " << response.body << "\n";
 }
 
 /*========================================================================================================================================*/

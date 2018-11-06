@@ -16,16 +16,13 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
-find_package(onesdk "1.2" PATHS "${CMAKE_CURRENT_LIST_DIR}/../.." NO_DEFAULT_PATH REQUIRED)
+if (NOT TARGET onesdk_static) # Did a parent CMakeList already define the target?
+    find_package(onesdk "1.2" PATHS
+        "${CMAKE_CURRENT_LIST_DIR}/../.."
+        NO_DEFAULT_PATH REQUIRED)
+endif()
 # alternatively you can also use
 # include("${CMAKE_CURRENT_LIST_DIR}/../../onesdk-config.cmake")
-
-if (CMAKE_VERSION VERSION_LESS "3.0") 
-    project(sample1)
-else ()
-    cmake_policy(SET CMP0048 NEW)
-    project(sample1 VERSION "1.2")
-endif ()
 
 add_executable(sample1
     main.cpp

@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
+   &#160;<span id="projectnumber">1.3.1.0</span>
    </div>
   </td>
  </tr>
@@ -58,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_2a29f73025fe91cc3aed2b0949f7b311.html">onesdk</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e11ff9dae1e7a45d3f00d4242cad749e.html">onesdk</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -84,18 +85,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aaa5a8fa8b6272750f4037e4c91a05b62"><td class="memItemLeft" align="right" valign="top"><a id="aaa5a8fa8b6272750f4037e4c91a05b62"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#aaa5a8fa8b6272750f4037e4c91a05b62">ONESDK_STUB_VERSION_MAJOR</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:aaa5a8fa8b6272750f4037e4c91a05b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Major version number of the SDK stub. <br /></td></tr>
-<tr class="separator:aaa5a8fa8b6272750f4037e4c91a05b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a304fbdff56a3a587db91d47c18513c4e"><td class="memItemLeft" align="right" valign="top"><a id="a304fbdff56a3a587db91d47c18513c4e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a304fbdff56a3a587db91d47c18513c4e">ONESDK_STUB_VERSION_MINOR</a>&#160;&#160;&#160;2</td></tr>
-<tr class="memdesc:a304fbdff56a3a587db91d47c18513c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minor version number of the SDK stub. <br /></td></tr>
-<tr class="separator:a304fbdff56a3a587db91d47c18513c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9dc5414beb6a491a8f171c8ed9a960c"><td class="memItemLeft" align="right" valign="top"><a id="ab9dc5414beb6a491a8f171c8ed9a960c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab9dc5414beb6a491a8f171c8ed9a960c">ONESDK_STUB_VERSION_PATCH</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ab9dc5414beb6a491a8f171c8ed9a960c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patch version number of the SDK stub. <br /></td></tr>
-<tr class="separator:ab9dc5414beb6a491a8f171c8ed9a960c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d44f57c14d3c5b852376e68d2c2fb37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37">ONESDK_INVALID_HANDLE</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:a2d44f57c14d3c5b852376e68d2c2fb37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid handle value (zero).  <a href="#a2d44f57c14d3c5b852376e68d2c2fb37">More...</a><br /></td></tr>
 <tr class="separator:a2d44f57c14d3c5b852376e68d2c2fb37"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -381,6 +370,14 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gafa231027c5332938ab9e22b45d13b7bc">ONESDK_DATABASE_VENDOR_COUCHBASE</a>&#160;&#160;&#160;&quot;Couchbase&quot;</td></tr>
 <tr class="memdesc:gafa231027c5332938ab9e22b45d13b7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Couchbase. <br /></td></tr>
 <tr class="separator:gafa231027c5332938ab9e22b45d13b7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Initialization flag constants</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Flags to use with <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a>.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a></dd></dl>
+<p><a class="anchor" id="init_flags"></a></p>
+</div></td></tr>
+<tr class="memitem:a732bf07f0e190264baf29f3a1c22cc4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a></td></tr>
+<tr class="memdesc:a732bf07f0e190264baf29f3a1c22cc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not fully initialize the SDK now but instead allow it to be used in forked child processes.  <a href="#a732bf07f0e190264baf29f3a1c22cc4a">More...</a><br /></td></tr>
+<tr class="separator:a732bf07f0e190264baf29f3a1c22cc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -492,6 +489,37 @@ typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abb
 <li>No data is captured/reported.</li>
 <li>Creating "passive" objects is possible though (e.g. <a class="el" href="group__database__requests.html#gaecbc2adc821bb4d7e516e9455646fdd5">onesdk_databaseinfo_create</a>). </li>
 </ul>
+
+</div>
+</div>
+<a id="a732bf07f0e190264baf29f3a1c22cc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a732bf07f0e190264baf29f3a1c22cc4a">&#9670;&nbsp;</a></span>ONESDK_INIT_FLAG_FORKABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ONESDK_INIT_FLAG_FORKABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Do not fully initialize the SDK now but instead allow it to be used in forked child processes. </p>
+<p>EAP/EXPERIMENTAL FEATURE**</p>
+<p>When setting this flag, <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> will only partially initialize the SDK agent. In this special <em>parent-initialized</em> initialization state, only the following functions can be called:</p>
+<ul>
+<li>All functions that are valid to call before calling initialize remain valid.</li>
+<li><a class="el" href="group__misc.html#ga4d5834da55f9d533ed6f9441f14cdb51">onesdk_agent_get_version_string</a> and <a class="el" href="group__init.html#ga8c1b37a28163bb7f790ac56091f86466">onesdk_stub_get_agent_load_info</a> work as expected.</li>
+<li><a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> will return <a class="el" href="onesdk__common_8h.html#ad891cc74c5e2c257a5e66c0fac5ad5b3">ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE</a> - but see the note below.</li>
+<li><a class="el" href="group__misc.html#ga3962855fa4d4c78665b96c5b12774c02">onesdk_agent_set_logging_callback</a> works as expected, the callback will be carried over to forked child processes.</li>
+<li>It is recommended you call <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> when the original process will not fork any more children that want to use the SDK.</li>
+</ul>
+<p>After you fork, the child becomes <em>pre-initialized</em>: the first call to an SDK function that needs a <em>fully initialized</em> agent will automatically complete the initialization.</p>
+<p>You can still fork another child (e.g. in a double-fork scenario) in the <em>pre-initialized</em> state. However if you fork another child in the <em>fully initialized</em> state, it will not be able to use the SDK - not even if it tries to shut down the SDK and initialize it again.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling <a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> in the <em>pre-initialized</em> state will cause the agent to become <em>fully initialized</em>.</dd></dl>
+<p>All children forked from a <em>parent-initialized</em> process will use the same agent. That agent will shut down when all child processes and the original <em>parent-initialized</em> process have terminated or called shutdown. Calling <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> in a <em>pre-initialized</em> process is not required otherwise.</p>
+<dl class="section note"><dt>Note</dt><dd>If you use POSIX <code>wait</code> or similar functions, you might observe an additional child process in the original <em>parent-initialized</em> process.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>This flag requires at least agent version 1.151. </dd></dl>
 
 </div>
 </div>
