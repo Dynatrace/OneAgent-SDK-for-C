@@ -570,7 +570,7 @@ The Dynatrace OneAgent SDK is currently in early access. Please report tickets v
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
-|1.3.1  |Support for monitoring forked child processes                                                                           |
+|1.3.1  |Support for monitoring forked child processes, added new API to check agent version compatibility                       |
 |1.2.0  |Added in-process linking, added custom request attributes, added outgoing web request tracers                           |
 |1.1.0  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |
 |1.0.0  |Initial version                                                                                                         |
