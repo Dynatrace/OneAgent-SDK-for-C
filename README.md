@@ -620,7 +620,7 @@ The Dynatrace OneAgent SDK for C/C++ is an open source project, currently in bet
 * Ask a question in the <a href="https://answers.dynatrace.com/spaces/482/view.html" target="_blank">product forums</a>
 * Read the <a href="https://www.dynatrace.com/support/help/" target="_blank">product documentation</a>
 
-**Open a <a href="https://github.com/Dynatrace/OneAgent-SDK-for-Java/issues">GitHub issue</a> to:**
+**Open a <a href="https://github.com/Dynatrace/OneAgent-SDK-for-C/issues">GitHub issue</a> to:**
 * Report minor defects, minor items or typos
 * Ask for improvements or changes in the SDK API
 * Ask any questions related to the community effort
