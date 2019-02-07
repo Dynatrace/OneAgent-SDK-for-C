@@ -30,7 +30,7 @@
 
 
 /** @brief Stores the stub version number.
-	@see @ref onesdk_stub_get_version */
+    @see @ref onesdk_stub_get_version */
 typedef struct onesdk_stub_version {
     onesdk_uint32_t version_major;      /**< @brief ONESDK_STUB_VERSION_MAJOR */
     onesdk_uint32_t version_minor;      /**< @brief ONESDK_STUB_VERSION_MINOR */
@@ -332,18 +332,19 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
 
 /*========================================================================================================================================*/
 
-/** @name Initialization flag constants
+/** @addtogroup init
+    @{
+
+    @name Initialization flag constants
+    @anchor init_flags
     @see @ref onesdk_initialize_2
     @{
-    @anchor init_flags
 
     @brief Flags to use with @ref onesdk_initialize_2.
 */
 
 /** @hideinitializer
     @brief Do not fully initialize the SDK now but instead allow it to be used in forked child processes.
-
-    **EAP/EXPERIMENTAL FEATURE**
 
     When setting this flag, @ref onesdk_initialize_2 will only partially initialize the SDK agent. In this special _parent-initialized_
     initialization state, only the following functions can be called:
@@ -375,6 +376,7 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
 */
 #define ONESDK_INIT_FLAG_FORKABLE ((onesdk_uint32_t) 1)
 
+/** @} */
 /** @} */
 
 /*========================================================================================================================================*/

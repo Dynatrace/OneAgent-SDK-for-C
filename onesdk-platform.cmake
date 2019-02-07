@@ -20,6 +20,10 @@ if (   CMAKE_C_COMPILER_ARCHITECTURE_ID   MATCHES "(x86|X86|x64|X64|amd64|AMD64|
     OR CMAKE_SYSTEM_PROCESSOR             MATCHES "(x86|X86|x64|X64|amd64|AMD64|i386|i686)"
     )
     set(onesdk_arch "x86")
+elseif (   CMAKE_C_COMPILER_ARCHITECTURE_ID   MATCHES "sparc"
+        OR CMAKE_CXX_COMPILER_ARCHITECTURE_ID MATCHES "sparc"
+        OR CMAKE_SYSTEM_PROCESSOR MATCHES "sparc")
+    set(onesdk_arch "sparc")
 else ()
     message(SEND_ERROR "CMAKE_C_COMPILER_ARCHITECTURE_ID = ${CMAKE_C_COMPILER_ARCHITECTURE_ID}")
     message(SEND_ERROR "CMAKE_CXX_COMPILER_ARCHITECTURE_ID = ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}")
@@ -43,6 +47,8 @@ if (WIN32)
     set(onesdk_platform "windows")
 elseif (CMAKE_C_PLATFORM_ID STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(onesdk_platform "linux")
+elseif (CMAKE_C_PLATFORM_ID STREQUAL "SunOS" OR CMAKE_SYSTEM_NAME STREQUAL "SunOS")
+    set(onesdk_platform "sunos")
 else ()
     message(SEND_ERROR "CMAKE_C_PLATFORM_ID = ${CMAKE_C_PLATFORM_ID}")
     message(SEND_ERROR "CMAKE_SYSTEM_NAME = ${CMAKE_SYSTEM_NAME}")

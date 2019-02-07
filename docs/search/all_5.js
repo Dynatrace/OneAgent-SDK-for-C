@@ -98,7 +98,7 @@ var searchData=
   ['onesdk_5fincomingwebrequesttracer_5fset_5fremote_5faddress',['onesdk_incomingwebrequesttracer_set_remote_address',['../group__incoming__web__requests.html#gabd6f90d7e2a79e655a4cbcf043cf7a0d',1,'onesdk_agent.h']]],
   ['onesdk_5fincomingwebrequesttracer_5fset_5fstatus_5fcode',['onesdk_incomingwebrequesttracer_set_status_code',['../group__incoming__web__requests.html#gaf27791a2d845af0cc0abc669a32561dc',1,'onesdk_agent.h']]],
   ['onesdk_5finit_2eh',['onesdk_init.h',['../onesdk__init_8h.html',1,'']]],
-  ['onesdk_5finit_5fflag_5fforkable',['ONESDK_INIT_FLAG_FORKABLE',['../onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a',1,'onesdk_common.h']]],
+  ['onesdk_5finit_5fflag_5fforkable',['ONESDK_INIT_FLAG_FORKABLE',['../group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a',1,'onesdk_common.h']]],
   ['onesdk_5finitialize',['onesdk_initialize',['../group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb',1,'onesdk_init.h']]],
   ['onesdk_5finitialize_5f2',['onesdk_initialize_2',['../group__init.html#gac0681af704ba7e6404c3f67f582ee4db',1,'onesdk_init.h']]],
   ['onesdk_5finprocesslink_5fcreate',['onesdk_inprocesslink_create',['../group__in__process__links.html#ga83b61a85cda88d62b5301ec02e4d1f86',1,'onesdk_agent.h']]],

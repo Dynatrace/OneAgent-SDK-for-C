@@ -5,13 +5,45 @@
 This SDK enables Dynatrace customers to extend request level visibility into any native process. The SDK is C based and thus can be used in any C or C++ application. It can also be used in other languages via language bindings.
 In order to use the development kit you need to have access to the source code of the application in question.
 
+This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https://github.com/Dynatrace/OneAgent-SDK/).
+<!-- Generate with https://github.com/jonschlinkert/markdown-toc -->
+
+<!-- toc -->
+
+- [Package contents](#package-contents)
+- [Features](#features)
+- [Documentation](#documentation)
+- [Getting started](#getting-started)
+- [Building and linking against the Dynatrace OneAgent SDK](#building-and-linking-against-the-dynatrace-oneagent-sdk)
+  * [Using CMake](#using-cmake)
+  * [Auto-linking with Visual Studio](#auto-linking-with-visual-studio)
+  * [Other build systems](#other-build-systems)
+  * [Using CMake to build the samples](#using-cmake-to-build-the-samples)
+- [Initializing the Dynatrace OneAgent SDK](#initializing-the-dynatrace-oneagent-sdk)
+- [Using the Dynatrace OneAgent SDK to trace remote calls](#using-the-dynatrace-oneagent-sdk-to-trace-remote-calls)
+- [Using the Dynatrace OneAgent SDK to trace SQL based database calls](#using-the-dynatrace-oneagent-sdk-to-trace-sql-based-database-calls)
+- [Using the Dynatrace OneAgent SDK to trace incoming web requests](#using-the-dynatrace-oneagent-sdk-to-trace-incoming-web-requests)
+- [Using the Dynatrace OneAgent SDK to trace outgoing web requests](#using-the-dynatrace-oneagent-sdk-to-trace-outgoing-web-requests)
+- [Using the Dynatrace OneAgent SDK to trace asynchronous activities](#using-the-dynatrace-oneagent-sdk-to-trace-asynchronous-activities)
+- [Using the Dynatrace OneAgent SDK to add custom request attributes](#using-the-dynatrace-oneagent-sdk-to-add-custom-request-attributes)
+- [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
+- [Troubleshooting](#troubleshooting)
+- [Requirements](#requirements)
+  * [Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases](#compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases)
+- [Help & Support](#help--support)
+  * [Read the manual](#read-the-manual)
+  * [Let us help you](#let-us-help-you)
+- [Release Notes](#release-notes)
+
+<!-- tocstop -->
 
 ## Package contents
 
 The SDK package includes
-- The libraries and header files necessary for instrumenting applications
-- A simple sample application
-- Reference documentation
+- `lib` and `include`: The libraries and header files necessary for instrumenting applications
+- `*.cmake`: Optional support files to use the libraries more easily with the CMake build system.
+- `samples/sample1`: A simple sample application
+- `docs`: Reference documentation
 
 
 ## Features
@@ -38,6 +70,7 @@ To start using the Dynatrace OneAgent SDK for C/C++, simply download the latest 
 The source archive also includes all necessary artifacts (e.g. the static and dynamic library files), so this is all you need.
 Extract the archive to a local folder on your machine and then add the appropriate "include" and "lib" paths to your build system.
 
+To see if your platform is supported, refer to [requirements](#requirements).
 
 ## Building and linking against the Dynatrace OneAgent SDK
 
@@ -410,7 +443,7 @@ To add a custom request attribute, simply call one of the `onesdk_customrequesta
 This will add the custom request attributes to the currently traced service. If no tracer is active, the values will be discarded.
 
 
-## Using the Dynatrace OneAgent SDK with forked child processes (not available on Windows)
+## Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)
 
 Some applications, especially web servers, use a concurrency model that is based on forked child processes. Typically a master process
 is started which is responsible only for creating and managing child processes by means of forking. The child processes do the real work,
@@ -543,33 +576,69 @@ This will provide additional debug information in agent log file. (Alternatively
 
 To troubleshoot SDK issues you can also use the SDK's agent logging callback - see `onesdk_agent_set_logging_callback` in the reference documentation.
 
+<a name="requirements"></a>
 
-## Dynatrace OneAgent SDK for C/C++ Requirements
+## Requirements
 
-- Dynatrace OneAgent needs to be installed on the system that is to be monitored (supported versions see below)
-- Supported environments include all Windows or Linux x86 environments
-- musl libc is currently not supported (e.g. used in Alpine Linux)
+- Dynatrace OneAgent needs to be installed on the system that is to be monitored (required versions see below)
+- The supported environments are:
+    + Windows on x86
+    + Linux on x86. musl libc is currently not supported (e.g. used in Alpine Linux)
+    + Solaris on SPARC (x86 is *not* supported).
+      Support for this platform is new since version 1.3.2 of the SDK.
 
+  Refer to https://www.dynatrace.com/support/help/shortlink/supported-technologies#operating-systems for the exact versions supported by
+  OneAgent. Note that only the subset of operating systems and processor architectures explicitly listed above in this README are supported
+  by the SDK.
 
-## Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
+### Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|
 |:---------------------|:-----------------|
+|1.3.2                 |>=1.159           |
 |1.3.1                 |>=1.151           |
 |1.2.0                 |>=1.147           |
 |1.1.0                 |>=1.141           |
 |1.0.0                 |>=1.133           |
 
 
-## Support
+<a name="help" />
 
-The Dynatrace OneAgent SDK is currently in early access. Please report tickets via the [GitHub issue tracker](https://github.com/Dynatrace/OneAgent-SDK-for-C/issues).
+## Help & Support
+
+The Dynatrace OneAgent SDK for C/C++ is an open source project, currently in beta status. The features are fully supported by Dynatrace. 
+
+### Read the manual
+
+* The most recent version of the reference documentation can be viewed at https://dynatrace.github.io/OneAgent-SDK-for-C/
+* A high level documentation/description of OneAgent SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/.
+* Of course, this README also contains lots of useful information.
+
+### Let us help you
+
+**Get Help**
+* Ask a question in the <a href="https://answers.dynatrace.com/spaces/482/view.html" target="_blank">product forums</a>
+* Read the <a href="https://www.dynatrace.com/support/help/" target="_blank">product documentation</a>
+
+**Open a <a href="https://github.com/Dynatrace/OneAgent-SDK-for-Java/issues">GitHub issue</a> to:**
+* Report minor defects, minor items or typos
+* Ask for improvements or changes in the SDK API
+* Ask any questions related to the community effort
+
+SLAs don't apply for GitHub tickets
+
+**Customers can open a ticket on the <a href="https://support.dynatrace.com/supportportal/" target="_blank">Dynatrace support portal</a> to:**
+* Get support from the Dynatrace technical support engineering team
+* Manage and resolve product related technical issues
+
+SLAs apply according to the customer's support level.
 
 
 ## Release Notes
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.3.2  |Support for Solaris SPARC                                                                                               |
 |1.3.1  |Support for monitoring forked child processes, added new API to check agent version compatibility                       |
 |1.2.0  |Added in-process linking, added custom request attributes, added outgoing web request tracers                           |
 |1.1.0  |Added incoming web request tracers, added row count & round trip count for DB request tracers                           |

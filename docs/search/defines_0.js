@@ -18,7 +18,6 @@ var searchData=
   ['onesdk_5ferror_5fnot_5finitialized',['ONESDK_ERROR_NOT_INITIALIZED',['../onesdk__common_8h.html#a1cefb376af15ead14f9602ac1b3a2a0b',1,'onesdk_common.h']]],
   ['onesdk_5ferror_5fout_5fof_5fmemory',['ONESDK_ERROR_OUT_OF_MEMORY',['../onesdk__common_8h.html#a611299ba217fba66ae4a93a7db619f44',1,'onesdk_common.h']]],
   ['onesdk_5ferror_5funexpected',['ONESDK_ERROR_UNEXPECTED',['../onesdk__common_8h.html#a5f3e7af2df389b0d3b92d3d43ab9e47d',1,'onesdk_common.h']]],
-  ['onesdk_5finit_5fflag_5fforkable',['ONESDK_INIT_FLAG_FORKABLE',['../onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a',1,'onesdk_common.h']]],
   ['onesdk_5finvalid_5fhandle',['ONESDK_INVALID_HANDLE',['../onesdk__common_8h.html#a2d44f57c14d3c5b852376e68d2c2fb37',1,'onesdk_common.h']]],
   ['onesdk_5flogging_5flevel_5fdebug',['ONESDK_LOGGING_LEVEL_DEBUG',['../onesdk__common_8h.html#a5b96af04981c6589b0c21b8fbeccd1a5',1,'onesdk_common.h']]],
   ['onesdk_5flogging_5flevel_5ffinest',['ONESDK_LOGGING_LEVEL_FINEST',['../onesdk__common_8h.html#ab1bd3260fd56ae6c43873e56335cf7fe',1,'onesdk_common.h']]],
