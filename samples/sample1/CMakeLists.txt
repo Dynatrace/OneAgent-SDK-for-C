@@ -63,3 +63,4 @@ endif ()
 
 # link to SDK library
 target_link_libraries(sample1 onesdk_static)
+
