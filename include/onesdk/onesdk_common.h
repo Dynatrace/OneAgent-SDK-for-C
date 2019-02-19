@@ -128,9 +128,10 @@ typedef onesdk_int32_t onesdk_logging_level_t;
 */
 typedef onesdk_uint64_t onesdk_handle_t;
 
-typedef onesdk_handle_t onesdk_tracer_handle_t;             /**< @brief A handle that refers to a tracer object. */
-typedef onesdk_handle_t onesdk_databaseinfo_handle_t;       /**< @brief A handle that refers to a database info object. */
-typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle that refers to a web application info object. */
+typedef onesdk_handle_t onesdk_tracer_handle_t;              /**< @brief A handle that refers to a tracer object. */
+typedef onesdk_handle_t onesdk_databaseinfo_handle_t;        /**< @brief A handle that refers to a database info object. */
+typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t;  /**< @brief A handle that refers to a web application info object. */
+typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handle that refers to a messaging system info object. */
 
 /** @} */
 
@@ -375,6 +376,54 @@ typedef onesdk_handle_t onesdk_webapplicationinfo_handle_t; /**< @brief A handle
     @since This flag requires at least agent version 1.151.
 */
 #define ONESDK_INIT_FLAG_FORKABLE ((onesdk_uint32_t) 1)
+
+/** @} */
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup messaging
+    @{
+*/
+
+/**
+    @brief Message property name for the Dynatrace byte tag.
+
+    Sending an `"dtdTraceTagInfo"` message property with a Dynatrace byte tag along with an message enables any Dynatrace OneAgent on the
+    server side to continue tracing (connect the server side trace to the traced operation from which the tag was obtained). This works
+    only if the receiving application is monitored by a Dynatrace agent and the messaging system used for receiving is supported.
+*/
+#define ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME "dtdTraceTagInfo"
+
+/**
+    @name Messaging Destination Type Constants
+    @anchor messaging_destination_type
+    @see @ref messaging
+    @{
+*/
+
+#define ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE 1  /**< @brief A message queue: a message sent to this destination will be
+                                                               (sucessfully) received by only one consumer. */
+#define ONESDK_MESSAGING_DESTINATION_TYPE_TOPIC 2  /**< @brief A message topic: a message sent to this destination will be
+                                                               received by all subscribed consumers. */
+
+/** @} */
+
+/**
+    @name Messaging System Vendor Strings
+    @anchor messaging_vendor_strings
+    @see @ref messaging
+    @{
+*/
+
+#define ONESDK_MESSAGING_VENDOR_HORNETQ      "HornetQ"      /**< @brief Messaging system vendor string for HornetQ. */
+#define ONESDK_MESSAGING_VENDOR_ACTIVE_MQ    "ActiveMQ"     /**< @brief Messaging system vendor string for ActiveMQ. */
+#define ONESDK_MESSAGING_VENDOR_RABBIT_MQ    "RabbitMQ"     /**< @brief Messaging system vendor string for RabbitMQ. */
+#define ONESDK_MESSAGING_VENDOR_ARTEMIS      "Artemis"      /**< @brief Messaging system vendor string for Artemis. */
+#define ONESDK_MESSAGING_VENDOR_WEBSPHERE    "WebSphere"    /**< @brief Messaging system vendor string for WebSphere. */
+#define ONESDK_MESSAGING_VENDOR_MQSERIES_JMS "MQSeries JMS" /**< @brief Messaging system vendor string for MQSeries JMS. */
+#define ONESDK_MESSAGING_VENDOR_MQSERIES     "MQSeries"     /**< @brief Messaging system vendor string for MQSeries. */
+#define ONESDK_MESSAGING_VENDOR_TIBCO        "Tibco"        /**< @brief Messaging system vendor string for Tibco. */
 
 /** @} */
 /** @} */

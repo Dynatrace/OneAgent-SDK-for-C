@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.3.2.0</span>
+   &#160;<span id="projectnumber">1.4.1.0</span>
    </div>
   </td>
  </tr>
@@ -153,6 +153,9 @@ $(function() {
 </li>
 <li>onesdk_customrequestattribute_add_string()
 : <a class="el" href="group__custom__request__attributes.html#ga995988f69c9b1945febf5e4f3594d67f">onesdk_agent.h</a>
+</li>
+<li>onesdk_customservicetracer_create()
+: <a class="el" href="group__customservice.html#ga59d071219871d0b1455499ac70c1abc1">onesdk_agent.h</a>
 </li>
 </ul>
 
@@ -287,6 +290,9 @@ $(function() {
 <li>ONESDK_DYNATRACE_HTTP_HEADER_NAME
 : <a class="el" href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">onesdk_common.h</a>
 </li>
+<li>ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME
+: <a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">onesdk_common.h</a>
+</li>
 </ul>
 
 
@@ -341,6 +347,18 @@ $(function() {
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>onesdk_incomingmessageprocesstracer_create()
+: <a class="el" href="group__messaging.html#gad876aa333559d93faa919b54db6b2268">onesdk_agent.h</a>
+</li>
+<li>onesdk_incomingmessageprocesstracer_set_correlation_id()
+: <a class="el" href="group__messaging.html#ga0cc82073a70b67f459b8e879d3fc0406">onesdk_agent.h</a>
+</li>
+<li>onesdk_incomingmessageprocesstracer_set_vendor_message_id()
+: <a class="el" href="group__messaging.html#ga0a16cc58b50d5f3e9f269a9b4cd495ba">onesdk_agent.h</a>
+</li>
+<li>onesdk_incomingmessagereceivetracer_create()
+: <a class="el" href="group__messaging.html#ga863f9af9d6ec807c66306c9c625a3beb">onesdk_agent.h</a>
+</li>
 <li>onesdk_incomingremotecalltracer_create()
 : <a class="el" href="group__remote__calls.html#gaa19b8e19463cc29bf8706e3c7eed1813">onesdk_agent.h</a>
 </li>
@@ -411,6 +429,49 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_m"></a>- m -</h3><ul>
+<li>ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE
+: <a class="el" href="group__messaging.html#gab933a5188a1fb5c1c81abdc8a45a4517">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_DESTINATION_TYPE_TOPIC
+: <a class="el" href="group__messaging.html#gab84fb7392fd6428ea2978d1d030a83b2">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_ACTIVE_MQ
+: <a class="el" href="group__messaging.html#ga9203ecf7b0168be919232dccb0a09e96">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_ARTEMIS
+: <a class="el" href="group__messaging.html#gab3abce7ba70f1209b04344e84d4bc01e">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_HORNETQ
+: <a class="el" href="group__messaging.html#gae02d9a3129b9e2120f931566ef15e0fc">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_MQSERIES
+: <a class="el" href="group__messaging.html#ga3d61d5dd392c26ed1b2e57409ae37968">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_MQSERIES_JMS
+: <a class="el" href="group__messaging.html#ga24dfac93d5e64205e9600337964d9cbf">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_RABBIT_MQ
+: <a class="el" href="group__messaging.html#gabd78dcb50fde37f07466f480b9b56f40">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_TIBCO
+: <a class="el" href="group__messaging.html#ga6351b1a0f1fbf48e34bb8e5e7f62378c">onesdk_common.h</a>
+</li>
+<li>ONESDK_MESSAGING_VENDOR_WEBSPHERE
+: <a class="el" href="group__messaging.html#gad8a60ac7d9a064a998d9be6b205f8dfb">onesdk_common.h</a>
+</li>
+<li>onesdk_messagingsysteminfo_create()
+: <a class="el" href="group__messaging.html#ga89ab369be2d6b3b45952b0a4fb029e51">onesdk_agent.h</a>
+</li>
+<li>onesdk_messagingsysteminfo_delete()
+: <a class="el" href="group__messaging.html#gacbbf28c49263c09707cc7668d7c77c3c">onesdk_agent.h</a>
+</li>
+<li>onesdk_messagingsysteminfo_handle_t
+: <a class="el" href="onesdk__common_8h.html#afbe74f76eed67571abeeecb4308d505c">onesdk_common.h</a>
+</li>
+</ul>
+
+
 <h3><a id="index_n"></a>- n -</h3><ul>
 <li>onesdk_nullstr()
 : <a class="el" href="group__strings.html#ga679a34a9c464e9b1b3bf068dbe6f9c45">onesdk_string.h</a>
@@ -419,6 +480,15 @@ $(function() {
 
 
 <h3><a id="index_o"></a>- o -</h3><ul>
+<li>onesdk_outgoingmessagetracer_create()
+: <a class="el" href="group__messaging.html#gab4eea3fa4c9c6760adc3d09845a9d7fd">onesdk_agent.h</a>
+</li>
+<li>onesdk_outgoingmessagetracer_set_correlation_id()
+: <a class="el" href="group__messaging.html#gab9aa3d5250fe5549baf1dba7589da6ee">onesdk_agent.h</a>
+</li>
+<li>onesdk_outgoingmessagetracer_set_vendor_message_id()
+: <a class="el" href="group__messaging.html#ga8937edb070228c0c12add4c958b302f1">onesdk_agent.h</a>
+</li>
 <li>onesdk_outgoingremotecalltracer_create()
 : <a class="el" href="group__remote__calls.html#gadc69486b30c7f6210f74d3915dd38256">onesdk_agent.h</a>
 </li>

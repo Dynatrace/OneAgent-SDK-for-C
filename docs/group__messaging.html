@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.0.0</span>
+   &#160;<span id="projectnumber">1.4.1.0</span>
    </div>
   </td>
  </tr>
@@ -60,6 +60,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Messaging Tracers</div>  </div>
@@ -69,6 +70,12 @@ $(function() {
 <p>Messaging tracers are used to trace messages sent or received via a messaging system.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gab864ee6a425cc9b238499898ebdc36bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</a>&#160;&#160;&#160;&quot;dtdTraceTagInfo&quot;</td></tr>
+<tr class="memdesc:gab864ee6a425cc9b238499898ebdc36bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message property name for the Dynatrace byte tag.  <a href="#gab864ee6a425cc9b238499898ebdc36bb">More...</a><br /></td></tr>
+<tr class="separator:gab864ee6a425cc9b238499898ebdc36bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga89ab369be2d6b3b45952b0a4fb029e51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="onesdk__common_8h.html#afbe74f76eed67571abeeecb4308d505c">onesdk_messagingsysteminfo_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga89ab369be2d6b3b45952b0a4fb029e51">onesdk_messagingsysteminfo_create</a> (<a class="el" href="structonesdk__string__t.html">onesdk_string_t</a> vendor_name, <a class="el" href="structonesdk__string__t.html">onesdk_string_t</a> destination_name, <a class="el" href="onesdk__config_8h.html#acff8bf967021eaaaeefc001d54e565b0">onesdk_int32_t</a> destination_type, <a class="el" href="onesdk__config_8h.html#acff8bf967021eaaaeefc001d54e565b0">onesdk_int32_t</a> channel_type, <a class="el" href="structonesdk__string__t.html">onesdk_string_t</a> channel_endpoint)</td></tr>
@@ -157,8 +164,30 @@ Messaging System Vendor Strings</h2></td></tr>
 <li>Receiving a message: See <a class="el" href="group__messaging.html#ga863f9af9d6ec807c66306c9c625a3beb">onesdk_incomingmessagereceivetracer_create</a></li>
 <li>Processing a received message: See <a class="el" href="group__messaging.html#gad876aa333559d93faa919b54db6b2268">onesdk_incomingmessageprocesstracer_create</a></li>
 </ul>
+<p>To create an outgoing message tracer, an application can simply call <a class="el" href="group__messaging.html#gab4eea3fa4c9c6760adc3d09845a9d7fd">onesdk_outgoingmessagetracer_create</a>. To enable continuing the trace on the consumer side, the application must then retrieve the byte tag from the tracer and send it along with the message in property named <code>"dtdTraceTagInfo"</code> (if the other side is also traced by the SDK, any other method of transferring the tag is also possible as long as the receiving application's tracing cooperates, but the aforementioned method is highly recommended and also works with non-SDK OneAgents if the receiving message system is supported).</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__tracers.html#ga7ae547cfdab36ab9464f82708fe9d414">onesdk_tracer_get_outgoing_dynatrace_byte_tag</a> </dd>
+<dd>
+<a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</a></dd></dl>
 <p>For further information, see the high level SDK documentation at <a href="https://github.com/Dynatrace/OneAgent-SDK/#messaging">https://github.com/Dynatrace/OneAgent-SDK/#messaging</a></p>
 <dl class="section since"><dt>Since</dt><dd>Messaging tracers were added in version 1.4.0. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gab864ee6a425cc9b238499898ebdc36bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab864ee6a425cc9b238499898ebdc36bb">&#9670;&nbsp;</a></span>ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME&#160;&#160;&#160;&quot;dtdTraceTagInfo&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Message property name for the Dynatrace byte tag. </p>
+<p>Sending an <code>"dtdTraceTagInfo"</code> message property with a Dynatrace byte tag along with an message enables any Dynatrace OneAgent on the server side to continue tracing (connect the server side trace to the traced operation from which the tag was obtained). This works only if the receiving application is monitored by a Dynatrace agent and the messaging system used for receiving is supported. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gad876aa333559d93faa919b54db6b2268"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad876aa333559d93faa919b54db6b2268">&#9670;&nbsp;</a></span>onesdk_incomingmessageprocesstracer_create()</h2>
@@ -229,7 +258,7 @@ Messaging System Vendor Strings</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tracer_handle</td><td>A valid incoming message process tracer handle. </td></tr>
-    <tr><td class="paramname">correlation_id</td><td>The correlation ID used by the messaging system.</td></tr>
+    <tr><td class="paramname">correlation_id</td><td>The correlation ID for the message, usually application-defined.</td></tr>
   </table>
   </dd>
 </dl>
@@ -481,11 +510,11 @@ Messaging System Vendor Strings</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tracer_handle</td><td>A valid incoming message process tracer handle. </td></tr>
-    <tr><td class="paramname">correlation_id</td><td>The correlation ID used by the messaging system.</td></tr>
+    <tr><td class="paramname">correlation_id</td><td>The correlation ID for the message, usually application-defined.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This information is often only available after the message was sent. Thus, calling this function is also supported after starting the tracer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This information is often only available after the message was sent. Thus, calling this function is also supported after starting the tracer.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.4.0. </dd></dl>
 
 </div>

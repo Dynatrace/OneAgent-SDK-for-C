@@ -6,6 +6,7 @@ This SDK enables Dynatrace customers to extend request level visibility into any
 In order to use the development kit you need to have access to the source code of the application in question.
 
 This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https://github.com/Dynatrace/OneAgent-SDK/).
+
 <!-- Generate with https://github.com/jonschlinkert/markdown-toc -->
 
 <!-- toc -->
@@ -20,11 +21,14 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
   * [Other build systems](#other-build-systems)
   * [Using CMake to build the samples](#using-cmake-to-build-the-samples)
 - [Initializing the Dynatrace OneAgent SDK](#initializing-the-dynatrace-oneagent-sdk)
+  * [Special considerations for Solaris SPARC](#special-considerations-for-solaris-sparc)
 - [Using the Dynatrace OneAgent SDK to trace remote calls](#using-the-dynatrace-oneagent-sdk-to-trace-remote-calls)
 - [Using the Dynatrace OneAgent SDK to trace SQL based database calls](#using-the-dynatrace-oneagent-sdk-to-trace-sql-based-database-calls)
 - [Using the Dynatrace OneAgent SDK to trace incoming web requests](#using-the-dynatrace-oneagent-sdk-to-trace-incoming-web-requests)
 - [Using the Dynatrace OneAgent SDK to trace outgoing web requests](#using-the-dynatrace-oneagent-sdk-to-trace-outgoing-web-requests)
 - [Using the Dynatrace OneAgent SDK to trace asynchronous activities](#using-the-dynatrace-oneagent-sdk-to-trace-asynchronous-activities)
+- [Using the Dynatrace OneAgent SDK to trace messaging](#using-the-dynatrace-oneagent-sdk-to-trace-messaging)
+- [Using the Dynatrace OneAgent SDK to trace custom service methods](#using-the-dynatrace-oneagent-sdk-to-trace-custom-service-methods)
 - [Using the Dynatrace OneAgent SDK to add custom request attributes](#using-the-dynatrace-oneagent-sdk-to-add-custom-request-attributes)
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
@@ -52,6 +56,7 @@ The SDK package includes
 - Trace any SQL-based database call.
 - Trace incoming and outgoing web requests.
 - Trace asynchronous processing within one process.
+- Trace custom service methods.
 - Add custom request attributes to any currently traced service.
 
 When tracing incoming or outgoing calls or requests, this SDK is compatible with other OneAgent SDKs and OneAgents in general.
@@ -119,6 +124,9 @@ Then simply use your build system to build the samples (e.g. "make" or open & bu
 
 ## Initializing the Dynatrace OneAgent SDK
 
+To initialize the OneAgent SDK, you call [`onesdk_initialize`][refd_initialize], like in the following sample. It is higly recommended that
+you call [`onesdk_shutdown`][refd_shutdown] when the application is done using the SDK (typically just before exiting):
+
 ```C
 #include <onesdk/onesdk.h>
 
@@ -139,6 +147,40 @@ int main(int argc, char** argv) {
 }
 ```
 
+### Special considerations for Solaris SPARC
+
+Auto-configuration is not supported for the OneAgent SDK for C/C++ on Solaris SPARC. Thus you must either use
+[`onesdk_stub_set_variable`][refd_set_variable] before calling [`initialize`][refd_initialize], or set certain environment variables. If you
+use [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args], you can also use command line options. If you are familiar with [manual
+injection for Apache or Java on
+Solaris](https://www.dynatrace.com/support/help/setup-and-configuration/oneagent/solaris/installation/install-oneagent-on-solaris/#expand-464manual-oneagent-injection),
+this may sound familiar to you.
+
+The following options must be set (to specify on the command line, use the `set_variable`-name but prepend `--dt_`):
+
+|`set_variable`|Environment variable |Value                                                                                      |
+|:-------------|:--------------------|:------------------------------------------------------------------------------------------|
+|`home`        |`DT_HOME`            |Your Dynatrace OneAgent installation folder, e.g. `/opt/dynatrace/oneagent/`.              |
+|`tenant`      |`DT_TENANT`          |The environment ID of your Dynatrace environment.                                          |
+|`tenantToken` |`DT_TENANTTOKEN`     |The token that OneAgent uses to connect to Dynatrace Server. **Not** an API or PaaS token! |
+|`server`      |`DT_CONNECTION_POINT`|One or multiple HTTP addresses that represent Dynatrace Servers or ActiveGates.            |
+
+Please obtain the values of all these variables (except for `home` / `DT_HOME`) from `$DT_HOME/dynatrace-env.sh`. You can also use this
+script directly to set the environment variables (except `DT_HOME`), or start your SDK-using application with
+`$DT_HOME/dynatrace-agent<bitness>.sh <executable> <other command line arguments>` (but you still need to set `home` / `DT_HOME`).
+
+For example, to set `home` via [`onesdk_stub_set_variable`][refd_set_variable], do something like
+`onesdk_stub_set_variable(ONESDK_XSTR("home=/opt/dynatrace/oneagent"), 0);` in your code OR set the `DT_HOME` environment variable, OR, if
+your application calls [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args], you can pass `--dt_home=/opt/dynatrace/oneagent` on
+the command line.
+
+There is an additional option you may want to set: `loglevelcon` / `DT_LOGLEVELCON` can be set to `none` to stop the agent from writing to
+stderr (see also [Troubleshooting](#troubleshooting)).
+
+[refd_initialize]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb
+[refd_shutdown]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1
+[refd_set_variable]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga1271327bb21c71ed5f8d92de0629ebfc
+[refd_process_cmdline_args]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga77bf723c281e4e2963933a57ff1ec51c
 
 ## Using the Dynatrace OneAgent SDK to trace remote calls
 
@@ -422,6 +464,153 @@ Once you have the in-process link, you can create an in-process link tracer to c
 
 Note that you can re-use in-process links to create multiple in-process link tracers.
 
+## Using the Dynatrace OneAgent SDK to trace messaging
+
+To trace interaction with a messaging system, such as sending and receiving messages from message queues, you need a messaging system info
+object which stores the information about your messaging system that does not change between individual requests. This will typically be
+created somewhere in your initialization code (after initializing the SDK):
+
+```C
+    onesdk_messagingsysteminfo_handle_t messagingsysteminfo_handle = onesdk_messagingsysteminfo_create(
+        onesdk_asciistr(ONESDK_MESSAGING_VENDOR_RABBIT_MQ), // vendor name
+        onesdk_asciistr("myqueue"),                         // destination name
+        ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE,            // destination type
+        ONESDK_CHANNEL_TYPE_TCP_IP,                         // channel type
+        onesdk_asciistr("example.com:1234"));               // channel endpoint
+```
+
+Then you can trace sending, receiving and processing of messages.
+
+Tracing the sending of messages is straightforward and works like other tracers:
+
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_(
+        db_info_handle,
+        onesdk_asciistr("SELECT foo FROM bar;"));
+
+    /* start tracer */
+    onesdk_tracer_start(tracer);
+
+    /* get byte representation of tag (an ASCII string representation is also supported) */
+    onesdk_size_t byte_tag_size = 0;
+    onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, NULL, 0, &byte_tag_size);
+    unsigned char* byte_tag = NULL;
+    if (byte_tag_size != 0) {
+        byte_tag = (unsigned char*)malloc(byte_tag_size);
+        if (byte_tag != NULL)
+            byte_tag_size = onesdk_tracer_get_outgoing_dynatrace_byte_tag(tracer, byte_tag, byte_tag_size, NULL);
+    }
+
+    /* ... do the actual message sending (send along `byte_tag` so the other side can continue tracing) ... */
+    mymessage_add_header(mymessage, ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME, byte_tag, byte_tag_size);
+    mymessage_send(mymessage);
+
+    /* release tag memory */
+    free(byte_tag);
+
+    /* optional: set message ID, if provided by the messaging system */
+    onesdk_outgoingmessagetracer_set_vendor_message_id(tracer, onesdk_asciistr(mymessage_get_id_str(mymessage)));
+
+    /* optional: set correlation ID, if you have one (usually application-defined) */
+    onesdk_outgoingmessagetracer_set_correlation_id(tracer, onesdk_asciistr(mycorrelationid);
+
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+
+    /* end and release tracer */
+    onesdk_tracer_end(tracer);
+```
+
+For the other side, we distinguish two activities: Receiving the message an processing it. You can (optionally) use a tracer around
+receiving one or multiple messages if you are interested in the time the actual receiving takes. For the processing of the message, i.e.,
+any business logic that is executed in response to the message content, there is a different tracer. Note that only the tracer for
+processing messages supports an incoming tag. This is because the incoming tag must be set before starting the tracer and this cannot be
+done for the receive-tracer, as the tag is normally part of the message content or headers, thus available only after message receipt.
+
+The following example shows using the message receive and process tracers in the recommended combination, i.e., starting the process tracer
+inside the receive tracer:
+
+```C
+    onesdk_tracer_handle_t receive_tracer = onesdk_incomingmessagereceivetracer_create(messagingsysteminfo_handle);
+
+    /* start receive_tracer */
+    onesdk_tracer_start(receive_tracer);
+
+    while (/* ... e.g., a message is available in the queue, or only once ... */) {
+        /* ... actually receive a message, ... */
+
+        unsigned char const* byte_tag = ...;    /* pointer to the byte tag that we received as part of the message, from the sender  */
+        onesdk_size_t byte_tag_size = ...;      /* size of the byte tag that we received */
+
+        /* create process_tracer */
+        onesdk_tracer_handle_t const process_tracer = onesdk_incomingmessageprocesstracer_create(messagingsysteminfo_handle);
+
+        /* set the tag that we got from the message */
+        if (byte_tag_size != 0)
+            onesdk_tracer_set_incoming_dynatrace_byte_tag(process_tracer, byte_tag, byte_tag_size);
+
+        /* optional: set message ID, if provided by the messaging system */
+        onesdk_outgoingmessagetracer_set_vendor_message_id(process_tracer, onesdk_asciistr(mymessage_get_id_str(mymessage)));
+
+        /* optional: set correlation ID, if you have one (usually application-defined) */
+        onesdk_outgoingmessagetracer_set_correlation_id(process_tracer, onesdk_asciistr(mycorrelationid));
+
+        /* start process_tracer */
+        onesdk_tracer_start(process_tracer);
+
+        /* ... do the actual work: process the message content, do something in response, ... */
+
+        /* set error information */
+        if (something_went_wrong_with_processing)
+            onesdk_tracer_error(process_tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+
+        /* end & release process_tracer */
+        onesdk_tracer_end(process_tracer);
+    }
+    /* set error information */
+    if (something_went_wrong_with_receiving)
+        onesdk_tracer_error(receive_tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+    onesdk_tracer_end(receive_tracer);
+```
+
+Note that currently, the receive tracer will never create a new PurePath, so if it is not started inside another started tracer, nothing
+will be traced by it (although the message process tracer will still work).
+
+
+You should not forget to release the messaging system info object in your cleanup code (before shutting down the SDK):
+
+```C
+    onesdk_messagingsysteminfo_delete(messagingsysteminfo_handle);
+    messagingsysteminfo_handle = ONESDK_INVALID_HANDLE;
+```
+
+
+
+## Using the Dynatrace OneAgent SDK to trace custom service methods
+
+You can use the SDK to trace custom service methods. A custom service method is a meaningful part of your code that you want to trace but
+that does not fit any other tracer.
+
+```C
+    /* create tracer */
+    onesdk_tracer_handle_t const tracer = onesdk_customservicetracer_create(
+        onesdk_asciistr("custom service method"),
+        onesdk_asciistr("logical service name"));
+
+    /* start tracer */
+    onesdk_tracer_start(tracer);
+
+    /* ... actually execute the custom service ... */
+
+    /* set error information */
+    if (something_went_wrong)
+        onesdk_tracer_error(tracer, onesdk_asciistr("error type"), onesdk_asciistr("error message"));
+
+    /* end and release tracer */
+    onesdk_tracer_end(tracer);
+```
 
 ## Using the Dynatrace OneAgent SDK to add custom request attributes
 
@@ -595,6 +784,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|
 |:---------------------|:-----------------|
+|1.4.1                 |>=1.161           |
 |1.3.2                 |>=1.159           |
 |1.3.1                 |>=1.151           |
 |1.2.0                 |>=1.147           |
@@ -606,7 +796,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 ## Help & Support
 
-The Dynatrace OneAgent SDK for C/C++ is an open source project, currently in beta status. The features are fully supported by Dynatrace. 
+The Dynatrace OneAgent SDK for C/C++ is currently in beta status. The features are fully supported by Dynatrace.
 
 ### Read the manual
 
@@ -638,6 +828,7 @@ SLAs apply according to the customer's support level.
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.4.1  |Added custom service tracers and messaging tracers                                                                      |
 |1.3.2  |Support for Solaris SPARC                                                                                               |
 |1.3.1  |Support for monitoring forked child processes, added new API to check agent version compatibility                       |
 |1.2.0  |Added in-process linking, added custom request attributes, added outgoing web request tracers                           |

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.3.2.0</span>
+   &#160;<span id="projectnumber">1.4.1.0</span>
    </div>
   </td>
  </tr>
@@ -91,6 +91,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga20dc71536dec63bd08623989ea362bcc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">ONESDK_DYNATRACE_HTTP_HEADER_NAME</a>&#160;&#160;&#160;&quot;X-dynaTrace&quot;</td></tr>
 <tr class="memdesc:ga20dc71536dec63bd08623989ea362bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP header name for the Dynatrace string tag.  <a href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">More...</a><br /></td></tr>
 <tr class="separator:ga20dc71536dec63bd08623989ea362bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab864ee6a425cc9b238499898ebdc36bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</a>&#160;&#160;&#160;&quot;dtdTraceTagInfo&quot;</td></tr>
+<tr class="memdesc:gab864ee6a425cc9b238499898ebdc36bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message property name for the Dynatrace byte tag.  <a href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">More...</a><br /></td></tr>
+<tr class="separator:gab864ee6a425cc9b238499898ebdc36bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Error Code Constants</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="error_code_constants"></a></p>
 </div></td></tr>
@@ -377,6 +380,52 @@ Macros</h2></td></tr>
 <tr class="memitem:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a></td></tr>
 <tr class="memdesc:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not fully initialize the SDK now but instead allow it to be used in forked child processes.  <a href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">More...</a><br /></td></tr>
 <tr class="separator:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Messaging Destination Type Constants</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_destination_type"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging Tracers</a> </dd></dl>
+</div></td></tr>
+<tr class="memitem:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab933a5188a1fb5c1c81abdc8a45a4517">ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message queue: a message sent to this destination will be (sucessfully) received by only one consumer. <br /></td></tr>
+<tr class="separator:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab84fb7392fd6428ea2978d1d030a83b2"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab84fb7392fd6428ea2978d1d030a83b2">ONESDK_MESSAGING_DESTINATION_TYPE_TOPIC</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:gab84fb7392fd6428ea2978d1d030a83b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message topic: a message sent to this destination will be received by all subscribed consumers. <br /></td></tr>
+<tr class="separator:gab84fb7392fd6428ea2978d1d030a83b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Messaging System Vendor Strings</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_vendor_strings"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging Tracers</a> </dd></dl>
+</div></td></tr>
+<tr class="memitem:gae02d9a3129b9e2120f931566ef15e0fc"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gae02d9a3129b9e2120f931566ef15e0fc">ONESDK_MESSAGING_VENDOR_HORNETQ</a>&#160;&#160;&#160;&quot;HornetQ&quot;</td></tr>
+<tr class="memdesc:gae02d9a3129b9e2120f931566ef15e0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for HornetQ. <br /></td></tr>
+<tr class="separator:gae02d9a3129b9e2120f931566ef15e0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9203ecf7b0168be919232dccb0a09e96"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga9203ecf7b0168be919232dccb0a09e96">ONESDK_MESSAGING_VENDOR_ACTIVE_MQ</a>&#160;&#160;&#160;&quot;ActiveMQ&quot;</td></tr>
+<tr class="memdesc:ga9203ecf7b0168be919232dccb0a09e96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for ActiveMQ. <br /></td></tr>
+<tr class="separator:ga9203ecf7b0168be919232dccb0a09e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd78dcb50fde37f07466f480b9b56f40"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gabd78dcb50fde37f07466f480b9b56f40">ONESDK_MESSAGING_VENDOR_RABBIT_MQ</a>&#160;&#160;&#160;&quot;RabbitMQ&quot;</td></tr>
+<tr class="memdesc:gabd78dcb50fde37f07466f480b9b56f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for RabbitMQ. <br /></td></tr>
+<tr class="separator:gabd78dcb50fde37f07466f480b9b56f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3abce7ba70f1209b04344e84d4bc01e"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab3abce7ba70f1209b04344e84d4bc01e">ONESDK_MESSAGING_VENDOR_ARTEMIS</a>&#160;&#160;&#160;&quot;Artemis&quot;</td></tr>
+<tr class="memdesc:gab3abce7ba70f1209b04344e84d4bc01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Artemis. <br /></td></tr>
+<tr class="separator:gab3abce7ba70f1209b04344e84d4bc01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gad8a60ac7d9a064a998d9be6b205f8dfb">ONESDK_MESSAGING_VENDOR_WEBSPHERE</a>&#160;&#160;&#160;&quot;WebSphere&quot;</td></tr>
+<tr class="memdesc:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for WebSphere. <br /></td></tr>
+<tr class="separator:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24dfac93d5e64205e9600337964d9cbf"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga24dfac93d5e64205e9600337964d9cbf">ONESDK_MESSAGING_VENDOR_MQSERIES_JMS</a>&#160;&#160;&#160;&quot;MQSeries JMS&quot;</td></tr>
+<tr class="memdesc:ga24dfac93d5e64205e9600337964d9cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries JMS. <br /></td></tr>
+<tr class="separator:ga24dfac93d5e64205e9600337964d9cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga3d61d5dd392c26ed1b2e57409ae37968">ONESDK_MESSAGING_VENDOR_MQSERIES</a>&#160;&#160;&#160;&quot;MQSeries&quot;</td></tr>
+<tr class="memdesc:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries. <br /></td></tr>
+<tr class="separator:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga6351b1a0f1fbf48e34bb8e5e7f62378c">ONESDK_MESSAGING_VENDOR_TIBCO</a>&#160;&#160;&#160;&quot;Tibco&quot;</td></tr>
+<tr class="memdesc:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Tibco. <br /></td></tr>
+<tr class="separator:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -404,6 +453,10 @@ typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abb
 typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abbee9f">onesdk_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#af97b608ba8bd6818808d67ab9f8ba93f">onesdk_webapplicationinfo_handle_t</a></td></tr>
 <tr class="memdesc:af97b608ba8bd6818808d67ab9f8ba93f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle that refers to a web application info object. <br /></td></tr>
 <tr class="separator:af97b608ba8bd6818808d67ab9f8ba93f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbe74f76eed67571abeeecb4308d505c"><td class="memItemLeft" align="right" valign="top"><a id="afbe74f76eed67571abeeecb4308d505c"></a>
+typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abbee9f">onesdk_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#afbe74f76eed67571abeeecb4308d505c">onesdk_messagingsysteminfo_handle_t</a></td></tr>
+<tr class="memdesc:afbe74f76eed67571abeeecb4308d505c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle that refers to a messaging system info object. <br /></td></tr>
+<tr class="separator:afbe74f76eed67571abeeecb4308d505c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines common types/constants/macros. Applications should not include this file directly. </p>

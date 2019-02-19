@@ -21,7 +21,7 @@
 
 /*========================================================================================================================================*/
 
-std::string sql_escape(std::string const& str) {
+inline std::string sql_escape(std::string const& str) {
     std::string result;
     result.reserve(str.size());
     for (std::string::size_type i = 0; i < str.size(); i++) {
@@ -35,7 +35,7 @@ std::string sql_escape(std::string const& str) {
 
 /*========================================================================================================================================*/
 
-std::string strip_url_for_http_request(std::string url) {
+inline std::string strip_url_for_http_request(std::string url) {
     // Quick & dirty implementation. Good enough for this sample though.
 
     std::string::size_type pos = url.find("://");
