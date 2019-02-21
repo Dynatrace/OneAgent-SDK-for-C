@@ -44,10 +44,10 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
 ## Package contents
 
 The SDK package includes
-- `lib` and `include`: The libraries and header files necessary for instrumenting applications
+- `lib` and `include`: The libraries and header files necessary for instrumenting applications.
 - `*.cmake`: Optional support files to use the libraries more easily with the CMake build system.
-- `samples/sample1`: A simple sample application
-- `docs`: Reference documentation
+- `samples/sample1`: A simple sample application.
+- `docs`: Reference documentation.
 
 
 ## Features
@@ -56,6 +56,7 @@ The SDK package includes
 - Trace any SQL-based database call.
 - Trace incoming and outgoing web requests.
 - Trace asynchronous processing within one process.
+- Trace messaging systems and messaging queues.
 - Trace custom service methods.
 - Add custom request attributes to any currently traced service.
 
@@ -485,9 +486,7 @@ Tracing the sending of messages is straightforward and works like other tracers:
 
 ```C
     /* create tracer */
-    onesdk_tracer_handle_t const tracer = onesdk_(
-        db_info_handle,
-        onesdk_asciistr("SELECT foo FROM bar;"));
+    onesdk_tracer_handle_t const tracer = onesdk_outgoingmessagetracer_create(messagingsysteminfo_handle);
 
     /* start tracer */
     onesdk_tracer_start(tracer);
