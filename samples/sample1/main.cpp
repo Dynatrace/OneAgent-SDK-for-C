@@ -22,9 +22,12 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <random>
 #include <stdio.h>
 
+
 #include "onesdk/onesdk.h"
+#include <cassert>
 
 #if defined(_WIN32)
 #include <wchar.h>
@@ -43,6 +46,9 @@
 
 void run_main_loop(bool use_fork);
 void handle_request(std::string const& input);
+void perform_cleanup(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info);
+void poll_process_messages(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info);
+void on_billing_message(message_queue::queue_message& msg, onesdk_messagingsysteminfo_handle_t queue_info);
 char const* agent_state_to_string(onesdk_int32_t agent_state);
 void ONESDK_CALL onesdk_agent_logging_callback(char const* message);
 
@@ -95,12 +101,16 @@ int main(int argc, char** argv)
     onesdk_result_t const onesdk_init_result = onesdk_initialize_2(onesdk_init_flags);
     printf("ONESDK initialized:   %s\n", (onesdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
     printf("ONESDK agent version: '%" ONESDK_STR_PRI_XSTR "'\n", onesdk_agent_get_version_string());
-    printf("ONESDK agent state:   %s\n", agent_state_to_string(onesdk_agent_get_current_state()));
+    onesdk_bool_t agent_found, agent_compatible;
+    onesdk_stub_get_agent_load_info(&agent_found, &agent_compatible);
+    printf("ONESDK agent load info:\n");
+    printf("    agent was found: %s\n", agent_found ? "yes" : "no");
+    printf("    agent is compatible: %s\n", agent_compatible ? "yes" : "no");
     // Set logging callback so we get warning/error messages from ONESDK.
     onesdk_agent_set_logging_callback(&onesdk_agent_logging_callback);
 
     // Run the main service loop.
-	run_main_loop(use_fork);
+    run_main_loop(use_fork);
 
     // Shut down ONESDK.
     if (onesdk_init_result == ONESDK_SUCCESS)
@@ -112,41 +122,61 @@ int main(int argc, char** argv)
 /*========================================================================================================================================*/
 
 void run_main_loop(bool use_fork) {
-    std::cout <<
-        "\n"
-        "Enter request body data or \"exit\" to stop.\n"
-        "Hint: '!' is an invalid input character and will cause the service to fail.\n"
-        "\n";
+    message_queue& queue = connect_queue(BillingQueueName);
+    onesdk_messagingsysteminfo_handle_t const messagingsysteminfo_handle = onesdk_messagingsysteminfo_create(
+        onesdk_asciistr("sample1_inprocess_messaging"), // vendor name
+        onesdk_asciistr(BillingQueueName),              // destination name
+        ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE,        // destination type
+        ONESDK_CHANNEL_TYPE_IN_PROCESS,                 // channel type
+        onesdk_nullstr());                              // channel endpoint
+    try {
+        std::cout <<
+            "\n"
+            "Enter request body data or command.\n"
+            "Hint 1: '!' is an invalid input character and will cause the service to fail.\n"
+            "Hint 2: Otherwise, the message text will be uppercased, and a message will be added to the billing queue.\n"
+            "Hint 3: A message of length zero will cause a failure when the cleanup command processes the corresponding message.\n"
+            "Available commands:\n"
+            "    cleanup: perform cleanup\n"
+            "    exit:    stop and exit the application\n"
+            "\n";
 
-    while (true) {
-        // Read input.
-        std::string input;
-        getline(std::cin, input);
+        while (true) {
+            // Read input.
+            std::string input;
+            getline(std::cin, input);
 
-        if (input == "exit")
-            break;
+            if (input == "exit")
+                break;
 
-        if (use_fork) {
+            if (input == "cleanup") {
+                perform_cleanup(queue, messagingsysteminfo_handle);
+            } else if (use_fork) {
 #if defined(SAMPLE1_HAVE_FORK_FUNCTIONS)
-            pid_t const child_pid = fork();
-            if (child_pid == -1) {
-                int const ec = errno;
-                fprintf(stderr, "ERROR: Forking request handler process failed (error %d).\n", ec);
-            } else if (child_pid == 0) {
-                // Handle request in child process.
-                handle_request(input);
-                return;
-            } else {
-                // Child process was forked successfully.
-            }
+                pid_t const child_pid = fork();
+                if (child_pid == -1) {
+                    int const ec = errno;
+                    fprintf(stderr, "ERROR: Forking request handler process failed (error %d).\n", ec);
+                } else if (child_pid == 0) {
+                    // Handle request in child process.
+                    handle_request(input);
+                    return;
+                } else {
+                    // Child process was forked successfully.
+                }
 #endif
-        } else {
-            // Handle request in main process.
-            handle_request(input);
+            } else {
+                // Handle request in main process.
+                handle_request(input);
+            }
         }
-    }
 
-    std::cout << "Shutting down...\n";
+        std::cout << "Shutting down...\n";
+    } catch (...) {
+        onesdk_messagingsysteminfo_delete(messagingsysteminfo_handle);
+        throw;
+    }
+    onesdk_messagingsysteminfo_delete(messagingsysteminfo_handle);
 }
 
 void handle_request(std::string const& input) {
@@ -166,6 +196,95 @@ void handle_request(std::string const& input) {
 
     // Just print the response body.
     std::cout << "Response body: " << response.body << "\n";
+}
+
+void perform_cleanup(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info) {
+    // perform_cleanup simulates an expensive method that takes a long time. It could run
+    // on its own thread, executed periodically, or, as in this example, be executed
+    // manually (if it was triggered by another service, a remote call or in-process
+    // link tracer is a better fit).
+    onesdk_tracer_handle_t const tracer = onesdk_customservicetracer_create(
+        onesdk_asciistr("perform_cleanup"), onesdk_asciistr("CleanupService"));
+
+    try {
+        onesdk_tracer_start(tracer);
+        std::cout << "Performing cleanup...\n";
+        poll_process_messages(queue, queue_info);
+        std::cout << "Cleanup completed.\n";
+    } catch (std::exception const& e) {
+        // Set error information on our tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("std::exception"), onesdk_asciistr(e.what()));
+        std::cerr << "Cleanup failed: " << e.what() << "\n";
+    } catch (...) {
+        // Set error information on our tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("unknown exception"), onesdk_asciistr("unknown error"));
+        std::cerr << "Cleanup failed!\n";
+    }
+    onesdk_tracer_end(tracer);
+}
+
+void poll_process_messages(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info) {
+    // Use one IncomingMessageReceiveTracer per (potential) message.
+    onesdk_tracer_handle_t const tracer = onesdk_incomingmessagereceivetracer_create(queue_info);
+    try {
+        // Start tracer (starts time measurement).
+        onesdk_tracer_start(tracer);
+        // For messaging, it is allowed to start and end (one after the other)
+        // multiple process tracers in a single receive tracer ("bulk receive").
+        for (;;) {
+            message_queue::queue_message msg = queue.poll_receive_one();
+            if (msg.message_id.empty())
+                break;
+            // If you use both an IncomingMessageProcessTracer and an IncomingMessageReceiveTracer, you should start and end tracing
+            // the message processing while the corresponding receive tracer is started.
+            on_billing_message(msg, queue_info);
+        }
+    } catch (std::exception const& e) {
+        // Set error information and end tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("std::exception"), onesdk_asciistr(e.what()));
+        onesdk_tracer_end(tracer);
+        throw;
+    } catch (...) {
+        // Set error information and end tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("unknown exception"), onesdk_asciistr("unknown error"));
+        onesdk_tracer_end(tracer);
+        throw;
+    }
+    onesdk_tracer_end(tracer);
+}
+
+void on_billing_message(message_queue::queue_message& msg, onesdk_messagingsysteminfo_handle_t queue_info) {
+    onesdk_tracer_handle_t const tracer = onesdk_incomingmessageprocesstracer_create(queue_info);
+    try {
+        auto const tag_iterator = msg.headers.find(ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME);
+        if (tag_iterator != msg.headers.end()) {
+            // The tag must be set before starting the tracer.
+            onesdk_tracer_set_incoming_dynatrace_string_tag(tracer, onesdk_asciistr(tag_iterator->second.c_str()));
+        }
+        // Start tracer (starts time measurement).
+        onesdk_tracer_start(tracer);
+        onesdk_incomingmessageprocesstracer_set_vendor_message_id(tracer, onesdk_asciistr(msg.message_id.c_str()));
+
+        auto const cost = msg.payload.changed_chars * 2 + msg.payload.total_chars;
+        std::cout << "Paying up the " << cost << " cents for you...\n";
+        if (cost <= 0)
+            throw std::runtime_error("Cannot pay zero cents.");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        msg.mark_processed();
+    } catch (std::exception const& e) {
+        // Set error information and end tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("std::exception"), onesdk_asciistr(e.what()));
+        onesdk_tracer_end(tracer);
+        throw;
+    } catch (...) {
+        // Set error information and end tracer.
+        onesdk_tracer_error(tracer, onesdk_asciistr("unknown exception"), onesdk_asciistr("unknown error"));
+        onesdk_tracer_end(tracer);
+        throw;
+    }
+
+    // End tracer (stops time measurement and deletes/releases tracer).
+    onesdk_tracer_end(tracer);
 }
 
 /*========================================================================================================================================*/

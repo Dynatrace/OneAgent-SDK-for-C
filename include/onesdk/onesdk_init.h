@@ -36,6 +36,8 @@
 
     An application can use this function to make sure the stub binary matches the header files that were used to compile the application.
     Especially useful when using the shared stub version (DLL/SO).
+
+    @since This function was added in version 1.2.0.
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_stub_get_version(onesdk_stub_version_t* out_stub_version);
 

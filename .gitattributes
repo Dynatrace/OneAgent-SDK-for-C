@@ -1,3 +1,4 @@
+*       text=auto
 *.a     binary
 *.so    binary
 *.dbg   binary

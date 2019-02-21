@@ -36,6 +36,7 @@ add_executable(sample1
     web_client.h
     web_service.h
     web_service_impl.h
+    billing_queue.h
 )
 
 # enable use of C++11

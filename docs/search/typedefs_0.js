@@ -8,6 +8,7 @@ var searchData=
   ['onesdk_5fint32_5ft',['onesdk_int32_t',['../onesdk__config_8h.html#acff8bf967021eaaaeefc001d54e565b0',1,'onesdk_config.h']]],
   ['onesdk_5fint64_5ft',['onesdk_int64_t',['../onesdk__config_8h.html#a4d388eca93cc779496b105acbc5c5ae8',1,'onesdk_config.h']]],
   ['onesdk_5flogging_5flevel_5ft',['onesdk_logging_level_t',['../onesdk__common_8h.html#a663afbbb048fc25577ebb5b64dda4065',1,'onesdk_common.h']]],
+  ['onesdk_5fmessagingsysteminfo_5fhandle_5ft',['onesdk_messagingsysteminfo_handle_t',['../onesdk__common_8h.html#afbe74f76eed67571abeeecb4308d505c',1,'onesdk_common.h']]],
   ['onesdk_5fresult_5ft',['onesdk_result_t',['../onesdk__config_8h.html#a76d5518cc30fddd2df8ca8d313fb79dc',1,'onesdk_config.h']]],
   ['onesdk_5fsize_5ft',['onesdk_size_t',['../onesdk__config_8h.html#ad0101f09e406e39453ed7f0a4982ef32',1,'onesdk_config.h']]],
   ['onesdk_5fstub_5flogging_5fcallback_5ft',['onesdk_stub_logging_callback_t',['../group__init.html#ga9a518cb7d13e846020744c315296432c',1,'onesdk_init.h']]],

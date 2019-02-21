@@ -362,8 +362,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_size_t) onesdk_inprocesslink_create(unsigned char
 
     @return A handle for the newly created in-process link tracer or @ref ONESDK_INVALID_HANDLE.
 
-	@note If the provided in-process link is empty or invalid, no tracer will be created and this function will return
-	      @ref ONESDK_INVALID_HANDLE.
+    @note If the provided in-process link is empty or invalid, no tracer will be created and this function will return
+          @ref ONESDK_INVALID_HANDLE.
 
     For more information see @ref in_process_links.
 
@@ -767,7 +767,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_status_code(on
 
     To create an outgoing web request tracer, an application can simply call @ref onesdk_outgoingwebrequesttracer_create. To enable
     continuing the trace on the server/service side, the application must then retrieve the string tag from the tracer and send it along with
-    the request it in the HTTP request header `"X-dynaTrace"`.
+    the request in the HTTP request header `"X-dynaTrace"`.
 
     @see @ref onesdk_tracer_get_outgoing_dynatrace_string_tag
     @see @ref ONESDK_DYNATRACE_HTTP_HEADER_NAME
@@ -852,6 +852,214 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingwebrequesttracer_add_response
     @since This function was added in version 1.2.0.
 */
 ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingwebrequesttracer_set_status_code(onesdk_tracer_handle_t tracer_handle, onesdk_int32_t status_code);
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup customservice Custom Service Tracers
+
+    Custom service tracers are used to trace service calls for which there is no other suitable tracer.
+
+    To create a custom service tracer, an application can simply call @ref onesdk_customservicetracer_create.
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#customservice
+
+    @since Custom service tracers were added in version 1.4.0.
+
+    @{
+*/
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_customservicetracer_create_p(onesdk_string_t const* service_method, onesdk_string_t const* service_name);
+
+/** @brief Creates a tracer for tracing a custom service.
+    @param service_method           The name of the service method.
+    @param service_name             The name of the service.
+
+    @return A handle for the newly created custom service tracer or @ref ONESDK_INVALID_HANDLE.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_customservicetracer_create(onesdk_string_t service_method, onesdk_string_t service_name) {
+    return onesdk_customservicetracer_create_p(&service_method, &service_name);
+}
+
+/*========================================================================================================================================*/
+
+/** @} */
+
+/*========================================================================================================================================*/
+
+/** @addtogroup messaging Messaging Tracers
+
+    @brief Messaging tracers are used to trace messages sent or received via a messaging system.
+
+    When tracing messages, we distinguish between:
+
+    - Sending a message: See @ref onesdk_outgoingmessagetracer_create.
+    - Receiving a message: See @ref onesdk_incomingmessagereceivetracer_create
+    - Processing a received message: See @ref onesdk_incomingmessageprocesstracer_create
+
+    To create an outgoing message tracer, an application can simply call @ref onesdk_outgoingmessagetracer_create. To enable
+    continuing the trace on the consumer side, the application must then retrieve the byte tag from the tracer and
+    send it along with the message in property named `"dtdTraceTagInfo"` (if the other side is also traced by the SDK,
+    any other method of transferring the tag is also possible as long as the receiving application's tracing cooperates,
+    but the aforementioned method is highly recommended and also works with non-SDK OneAgents if the receiving message
+    system is supported).
+
+    @see @ref onesdk_tracer_get_outgoing_dynatrace_byte_tag
+    @see @ref ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME
+
+    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#messaging
+
+    @since Messaging tracers were added in version 1.4.0.
+
+    @{
+*/
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(onesdk_messagingsysteminfo_handle_t) onesdk_messagingsysteminfo_create_p(
+    onesdk_string_t const* vendor_name, onesdk_string_t const* destination_name, onesdk_int32_t destination_type, onesdk_int32_t channel_type, onesdk_string_t const* channel_endpoint);
+
+/** @brief Creates a messaging system info object.
+    @param vendor_name          One of @ref messaging_vendor_strings for well known vendors, or a custom string otherwise.
+    @param destination_name     The "destination" name, i.e. queue name or topic name.
+    @param destination_type     One of the @ref messaging_destination_type.
+    @param channel_type         The type of the channel used to communicate with the messaging system.
+    @param channel_endpoint     [optional] The endpoint of the channel used to communicate with the messaging system.
+
+    @return A handle for the newly created messaging system info object or @ref ONESDK_INVALID_HANDLE.
+
+    This function creates a messaging system info object which is required for tracing sending, receiving and processing messages.
+    (see @ref messaging).
+
+    For information about @p channel_type and @p channel_endpoint see @ref channels.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(onesdk_messagingsysteminfo_handle_t) onesdk_messagingsysteminfo_create(
+    onesdk_string_t vendor_name, onesdk_string_t destination_name, onesdk_int32_t destination_type, onesdk_int32_t channel_type, onesdk_string_t channel_endpoint
+) {
+    return onesdk_messagingsysteminfo_create_p(&vendor_name, &destination_name, destination_type, channel_type, &channel_endpoint);
+}
+
+/** @brief Releases a messaging system info object.
+    @param messagingsysteminfo_handle   A valid messaging system info handle.
+
+    This function releases the specified messaging system info object. Allocated resources are freed and the handle is invalidated.
+
+    An application should call @ref onesdk_messagingsysteminfo_delete exactly once for each messaging system info object that it has created.
+
+    @note Calling @ref onesdk_messagingsysteminfo_delete with a handle to a messaging system info object which is still referenced by existing
+          tracers is supported. In that case the lifetime of the messaging system info object is extended as necessary. The handle will
+          always become invalid immediately though.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_messagingsysteminfo_delete(onesdk_messagingsysteminfo_handle_t messagingsysteminfo_handle);
+
+/** @brief Creates a tracer for tracing an outgoing message.
+    @param messagingsysteminfo_handle   A valid messaging system info handle.
+
+    @return A handle for the newly created outgoing message tracer or @ref ONESDK_INVALID_HANDLE.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_outgoingmessagetracer_create(onesdk_messagingsysteminfo_handle_t messagingsysteminfo_handle);
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingmessagetracer_set_vendor_message_id_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* vendor_message_id);
+
+/** @brief Sets the vendor message ID of an outgoing message.
+    @param tracer_handle            A valid incoming message process tracer handle.
+    @param vendor_message_id        The message ID provided by the messaging system.
+
+    @note This information is often only available after the message was sent. Thus, calling
+          this function is also supported after starting the tracer.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingmessagetracer_set_vendor_message_id(onesdk_tracer_handle_t tracer_handle, onesdk_string_t vendor_message_id) {
+    onesdk_outgoingmessagetracer_set_vendor_message_id_p(tracer_handle, &vendor_message_id);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingmessagetracer_set_correlation_id_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* correlation_id);
+
+/** @brief Sets the corrrelation ID of an outgoing message.
+    @param tracer_handle            A valid incoming message process tracer handle.
+    @param correlation_id           The correlation ID for the message, usually application-defined.
+
+    @note This information is often only available after the message was sent. Thus, calling
+          this function is also supported after starting the tracer.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_outgoingmessagetracer_set_correlation_id(onesdk_tracer_handle_t tracer_handle, onesdk_string_t correlation_id) {
+    onesdk_outgoingmessagetracer_set_correlation_id_p(tracer_handle, &correlation_id);
+}
+
+/** @brief Creates a tracer for tracing the receipt of an incoming message.
+    @param messagingsysteminfo_handle   A valid messaging system info handle.
+
+    @return A handle for the newly created incoming message receive tracer or @ref ONESDK_INVALID_HANDLE.
+
+    Tracing the receipt of the message is optional but may make sense if receiving may take a significant amount of time,
+    e.g. when doing a blocking receive. It might make less sense when tracing a polling receive. If you do use a receive
+    tracer, start and end the corresponding incoming message process tracer while the receive tracer is still active.
+
+    @see onesdk_incomingmessageprocesstracer_create
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_incomingmessagereceivetracer_create(onesdk_messagingsysteminfo_handle_t messagingsysteminfo_handle);
+
+/** @brief Creates a tracer for tracing the processing of an incoming message.
+    @param messagingsysteminfo_handle   A valid messaging system info handle.
+
+    @return A handle for the newly created incoming message process tracer or @ref ONESDK_INVALID_HANDLE.
+
+    Use this tracer to trace the actual, logical processing of the message as opposed to the time it takes to receive it.
+    
+    If you use an incoming message receive tracer to trace the receipt of the processed message, start
+    and end the corresponding incoming message process tracer while the receive tracer is still active.
+
+    @see onesdk_incomingmessagereceivetracer_create
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_incomingmessageprocesstracer_create(onesdk_messagingsysteminfo_handle_t messagingsysteminfo_handle);
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_vendor_message_id_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* vendor_message_id);
+
+/** @brief Sets the vendor message ID of an incoming message.
+    @param tracer_handle            A valid incoming message process tracer handle.
+    @param vendor_message_id        The message ID provided by the messaging system.
+
+    @note This function can not be used after the tracer was started.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_vendor_message_id(onesdk_tracer_handle_t tracer_handle, onesdk_string_t vendor_message_id) {
+    onesdk_incomingmessageprocesstracer_set_vendor_message_id_p(tracer_handle, &vendor_message_id);
+}
+
+/** @internal */
+ONESDK_DECLARE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_correlation_id_p(onesdk_tracer_handle_t tracer_handle, onesdk_string_t const* correlation_id);
+
+/** @brief Sets the corrrelation ID of an incoming message.
+    @param tracer_handle            A valid incoming message process tracer handle.
+    @param correlation_id           The correlation ID for the message, usually application-defined.
+
+    @note This function can not be used after the tracer was started.
+
+    @since This function was added in version 1.4.0.
+*/
+ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_correlation_id(onesdk_tracer_handle_t tracer_handle, onesdk_string_t correlation_id) {
+    onesdk_incomingmessageprocesstracer_set_correlation_id_p(tracer_handle, &correlation_id);
+}
 
 /*========================================================================================================================================*/
 
