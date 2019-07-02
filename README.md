@@ -1,5 +1,3 @@
-**Disclaimer: This SDK is currently in beta and still work in progress.**
-
 # Dynatrace OneAgent SDK for C/C++
 
 This SDK enables Dynatrace customers to extend request level visibility into any native process. The SDK is C based and thus can be used in any C or C++ application. It can also be used in other languages via language bindings.
@@ -795,7 +793,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 ## Help & Support
 
-The Dynatrace OneAgent SDK for C/C++ is currently in beta status. The features are fully supported by Dynatrace.
+The Dynatrace OneAgent SDK for C/C++ is an open source project. The features are fully supported by Dynatrace.
 
 ### Read the manual
 
