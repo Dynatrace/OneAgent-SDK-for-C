@@ -793,7 +793,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 ## Help & Support
 
-The Dynatrace OneAgent SDK for C/C++ is an open source project. The features are fully supported by Dynatrace.
+The Dynatrace OneAgent SDK for C/C++ is fully supported by Dynatrace.
 
 ### Read the manual
 
