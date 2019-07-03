@@ -779,21 +779,26 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 ### Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
 
-|OneAgent SDK for C/C++|Dynatrace OneAgent|
-|:---------------------|:-----------------|
-|1.4.1                 |>=1.161           |
-|1.3.2                 |>=1.159           |
-|1.3.1                 |>=1.151           |
-|1.2.0                 |>=1.147           |
-|1.1.0                 |>=1.141           |
-|1.0.0                 |>=1.133           |
+|OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
+|:---------------------|:-----------------|:-------------|
+|1.4.1                 |>=1.161           |Supported     |
+|1.3.2                 |>=1.159           |Supported     |
+|1.3.1                 |>=1.151           |Supported     |
+|1.2.0                 |>=1.147           |Supported     |
+|1.1.0                 |>=1.141           |Supported     |
+|1.0.0                 |>=1.133           |Supported     |
 
 
 <a name="help" />
 
 ## Help & Support
 
-The Dynatrace OneAgent SDK for C/C++ is fully supported by Dynatrace.
+**Support policy**
+
+The Dynatrace OneAgent SDK for C/C++ has GA status. The features are fully supported by Dynatrace.
+
+For detailed support policy see [Dynatrace OneAgent SDK help](https://github.com/Dynatrace/OneAgent-SDK#help).
+
 
 ### Read the manual
 
