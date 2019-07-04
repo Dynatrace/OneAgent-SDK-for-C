@@ -31,7 +31,7 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
 - [Requirements](#requirements)
-  * [Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases](#compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases)
+  * [Version support and compatibility table](#version-support-and-compatibility-table)
 - [Help & Support](#help--support)
   * [Read the manual](#read-the-manual)
   * [Let us help you](#let-us-help-you)
@@ -777,7 +777,9 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
   OneAgent. Note that only the subset of operating systems and processor architectures explicitly listed above in this README are supported
   by the SDK.
 
-### Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
+<a name="compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases"></a>
+<a name="version-support-and-compatibility-table"></a>
+### Version support and compatibility table
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
 |:---------------------|:-----------------|:-------------|
@@ -790,14 +792,14 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 
 <a name="help" />
+<a name="help--support" />
 
 ## Help & Support
 
-**Support policy**
+The Dynatrace OneAgent SDK for C/C++ is fully supported by Dynatrace. For the support status of a particular version, refer to the [version
+support and compatibility table](#version-support-and-compatibility-table). For detailed support policy see [Dynatrace OneAgent SDK
+help](https://github.com/Dynatrace/OneAgent-SDK#help).
 
-The Dynatrace OneAgent SDK for C/C++ has GA status. The features are fully supported by Dynatrace.
-
-For detailed support policy see [Dynatrace OneAgent SDK help](https://github.com/Dynatrace/OneAgent-SDK#help).
 
 
 ### Read the manual
