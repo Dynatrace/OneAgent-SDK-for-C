@@ -31,7 +31,7 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
 - [Requirements](#requirements)
-  * [Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases](#compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases)
+  * [Version support and compatibility table](#version-support-and-compatibility-table)
 - [Help & Support](#help--support)
   * [Read the manual](#read-the-manual)
   * [Let us help you](#let-us-help-you)
@@ -777,23 +777,30 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
   OneAgent. Note that only the subset of operating systems and processor architectures explicitly listed above in this README are supported
   by the SDK.
 
-### Compatibility of Dynatrace OneAgent SDK for C/C++ releases with OneAgent releases
+<a name="compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases"></a>
+<a name="version-support-and-compatibility-table"></a>
+### Version support and compatibility table
 
-|OneAgent SDK for C/C++|Dynatrace OneAgent|
-|:---------------------|:-----------------|
-|1.4.1                 |>=1.161           |
-|1.3.2                 |>=1.159           |
-|1.3.1                 |>=1.151           |
-|1.2.0                 |>=1.147           |
-|1.1.0                 |>=1.141           |
-|1.0.0                 |>=1.133           |
+|OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
+|:---------------------|:-----------------|:-------------|
+|1.4.1                 |>=1.161           |Supported     |
+|1.3.2                 |>=1.159           |Supported     |
+|1.3.1                 |>=1.151           |Supported     |
+|1.2.0                 |>=1.147           |Supported     |
+|1.1.0                 |>=1.141           |Supported     |
+|1.0.0                 |>=1.133           |Supported     |
 
 
 <a name="help" />
+<a name="help--support" />
 
 ## Help & Support
 
-The Dynatrace OneAgent SDK for C/C++ is fully supported by Dynatrace.
+The Dynatrace OneAgent SDK for C/C++ is fully supported by Dynatrace. For the support status of a particular version, refer to the [version
+support and compatibility table](#version-support-and-compatibility-table). For detailed support policy see [Dynatrace OneAgent SDK
+help](https://github.com/Dynatrace/OneAgent-SDK#help).
+
+
 
 ### Read the manual
 
