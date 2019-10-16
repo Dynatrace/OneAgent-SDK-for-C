@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.2</span>
    </div>
   </td>
  </tr>
@@ -66,6 +66,9 @@ $(function() {
 <div class="title">Outgoing Web Request Tracers</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Trace the client side of web requests.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -89,11 +92,14 @@ Functions</h2></td></tr>
 <tr class="separator:gab28e8ae0962932d082ed8046fef7d1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Trace the client side of web requests. </p>
 <p>Outgoing web request tracers are used to capture information about HTTP requests that the application sends.</p>
 <p>To create an outgoing web request tracer, an application can simply call <a class="el" href="group__outgoing__web__requests.html#ga5e69bb9338963c0566880d1501471b0b">onesdk_outgoingwebrequesttracer_create</a>. To enable continuing the trace on the server/service side, the application must then retrieve the string tag from the tracer and send it along with the request in the HTTP request header <code>"X-dynaTrace"</code>.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__tracers.html#gad1a200fc7591163158458bb9938f4b29">onesdk_tracer_get_outgoing_dynatrace_string_tag</a> </dd>
 <dd>
-<a class="el" href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">ONESDK_DYNATRACE_HTTP_HEADER_NAME</a></dd></dl>
+<a class="el" href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">ONESDK_DYNATRACE_HTTP_HEADER_NAME</a> </dd>
+<dd>
+<a class="el" href="group__incoming__web__requests.html">Incoming Web Request Tracers</a></dd></dl>
 <p>For further information, see the high level SDK documentation at <a href="https://github.com/Dynatrace/OneAgent-SDK/#webrequests">https://github.com/Dynatrace/OneAgent-SDK/#webrequests</a></p>
 <dl class="section since"><dt>Since</dt><dd>Outgoing web request tracers were added in version 1.2.0. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>

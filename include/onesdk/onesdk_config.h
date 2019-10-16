@@ -56,6 +56,8 @@
 #        else
 #            define ONESDK_EXPORT
 #        endif
+#    elif defined(_AIX)
+#         define ONESDK_EXPORT
 #    elif defined(__GNUC__) && ((__GNUC__ + 0) >= 4)
 #        if defined(ONESDK_SHARED)
 #            define ONESDK_EXPORT __attribute__((visibility("default")))
@@ -71,6 +73,8 @@
 
 /** @internal */
 #if   defined(_WIN32)
+#    define ONESDK_HIDDEN
+#elif defined(_AIX)
 #    define ONESDK_HIDDEN
 #elif defined(__GNUC__) && ((__GNUC__ + 0) >= 4)
 #    define ONESDK_HIDDEN __attribute__((visibility("hidden")))

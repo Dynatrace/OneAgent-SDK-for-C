@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.2</span>
    </div>
   </td>
  </tr>
@@ -59,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_e11ff9dae1e7a45d3f00d4242cad749e.html">onesdk</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_00c011bef261143570b84b595a5a55cb.html">onesdk</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,9 +91,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga20dc71536dec63bd08623989ea362bcc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">ONESDK_DYNATRACE_HTTP_HEADER_NAME</a>&#160;&#160;&#160;&quot;X-dynaTrace&quot;</td></tr>
 <tr class="memdesc:ga20dc71536dec63bd08623989ea362bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP header name for the Dynatrace string tag.  <a href="group__outgoing__web__requests.html#ga20dc71536dec63bd08623989ea362bcc">More...</a><br /></td></tr>
 <tr class="separator:ga20dc71536dec63bd08623989ea362bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab864ee6a425cc9b238499898ebdc36bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</a>&#160;&#160;&#160;&quot;dtdTraceTagInfo&quot;</td></tr>
-<tr class="memdesc:gab864ee6a425cc9b238499898ebdc36bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message property name for the Dynatrace byte tag.  <a href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">More...</a><br /></td></tr>
-<tr class="separator:gab864ee6a425cc9b238499898ebdc36bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Error Code Constants</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="error_code_constants"></a></p>
 </div></td></tr>
@@ -154,26 +151,33 @@ Macros</h2></td></tr>
 <tr class="memdesc:af3f7d04ad8caca4f729971defbfdf555"><td class="mdescLeft">&#160;</td><td class="mdescRight">The operation completed successfully. <br /></td></tr>
 <tr class="separator:af3f7d04ad8caca4f729971defbfdf555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Logging Level Constants</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="logging_level_constants"></a></p>
+<tr><td colspan="2"><div class="groupText"><p>Allows choosing a log level. Lower levels include higher ones.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#ga85b610bcd0d771fe641a1cd1ef03fd13">onesdk_stub_set_logging_level</a></dd></dl>
+<p><a class="anchor" id="logging_level_constants"></a></p>
 </div></td></tr>
 <tr class="memitem:ab1bd3260fd56ae6c43873e56335cf7fe"><td class="memItemLeft" align="right" valign="top"><a id="ab1bd3260fd56ae6c43873e56335cf7fe"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab1bd3260fd56ae6c43873e56335cf7fe">ONESDK_LOGGING_LEVEL_FINEST</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:ab1bd3260fd56ae6c43873e56335cf7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Most verbose logging level. <br /></td></tr>
 <tr class="separator:ab1bd3260fd56ae6c43873e56335cf7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb77908fea090fd1627f18b7f162050e"><td class="memItemLeft" align="right" valign="top"><a id="acb77908fea090fd1627f18b7f162050e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ONESDK_LOGGING_LEVEL_FINER</b>&#160;&#160;&#160;1</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#acb77908fea090fd1627f18b7f162050e">ONESDK_LOGGING_LEVEL_FINER</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:acb77908fea090fd1627f18b7f162050e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log even finer messages. <br /></td></tr>
 <tr class="separator:acb77908fea090fd1627f18b7f162050e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab22a09fe22c1be6f635847bbf07a5db7"><td class="memItemLeft" align="right" valign="top"><a id="ab22a09fe22c1be6f635847bbf07a5db7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ONESDK_LOGGING_LEVEL_FINE</b>&#160;&#160;&#160;2</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab22a09fe22c1be6f635847bbf07a5db7">ONESDK_LOGGING_LEVEL_FINE</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ab22a09fe22c1be6f635847bbf07a5db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log fine messages. <br /></td></tr>
 <tr class="separator:ab22a09fe22c1be6f635847bbf07a5db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71833b3ea925ecc88028a211978c54e3"><td class="memItemLeft" align="right" valign="top"><a id="a71833b3ea925ecc88028a211978c54e3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ONESDK_LOGGING_LEVEL_CONFIG</b>&#160;&#160;&#160;3</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a71833b3ea925ecc88028a211978c54e3">ONESDK_LOGGING_LEVEL_CONFIG</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a71833b3ea925ecc88028a211978c54e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log config-related messages. <br /></td></tr>
 <tr class="separator:a71833b3ea925ecc88028a211978c54e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31e0f6a208d6f5d55ee83a102ee9b0a8"><td class="memItemLeft" align="right" valign="top"><a id="a31e0f6a208d6f5d55ee83a102ee9b0a8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ONESDK_LOGGING_LEVEL_INFO</b>&#160;&#160;&#160;4</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a31e0f6a208d6f5d55ee83a102ee9b0a8">ONESDK_LOGGING_LEVEL_INFO</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a31e0f6a208d6f5d55ee83a102ee9b0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log info messages. <br /></td></tr>
 <tr class="separator:a31e0f6a208d6f5d55ee83a102ee9b0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7dbf833a5e43cd6c6cd0ebac9cd2386"><td class="memItemLeft" align="right" valign="top"><a id="af7dbf833a5e43cd6c6cd0ebac9cd2386"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ONESDK_LOGGING_LEVEL_WARNING</b>&#160;&#160;&#160;5</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#af7dbf833a5e43cd6c6cd0ebac9cd2386">ONESDK_LOGGING_LEVEL_WARNING</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:af7dbf833a5e43cd6c6cd0ebac9cd2386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log warning messages. <br /></td></tr>
 <tr class="separator:af7dbf833a5e43cd6c6cd0ebac9cd2386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f787a61e8b3f283825b22378a85cc47"><td class="memItemLeft" align="right" valign="top"><a id="a7f787a61e8b3f283825b22378a85cc47"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a7f787a61e8b3f283825b22378a85cc47">ONESDK_LOGGING_LEVEL_SEVERE</a>&#160;&#160;&#160;6</td></tr>
@@ -188,7 +192,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a63fc22d31a6380026cf00bfd8e292a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default SDK stub logging level. Setting this log level deactivates all logging. <br /></td></tr>
 <tr class="separator:a63fc22d31a6380026cf00bfd8e292a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Agent State Constants</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="agent_state_constants"></a></p>
+<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="agent_state_constants"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> </dd></dl>
 </div></td></tr>
 <tr class="memitem:a90545e66eca7a234e5f58ff208b8b866"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a90545e66eca7a234e5f58ff208b8b866">ONESDK_AGENT_STATE_ACTIVE</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:a90545e66eca7a234e5f58ff208b8b866"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SDK stub is connected to the agent, which is currently active.  <a href="#a90545e66eca7a234e5f58ff208b8b866">More...</a><br /></td></tr>
@@ -203,9 +207,36 @@ Macros</h2></td></tr>
 <tr class="memdesc:a9cff9e4485f7bf53a06e3ec99afe5928"><td class="mdescLeft">&#160;</td><td class="mdescRight">The agent has not been initialized.  <a href="#a9cff9e4485f7bf53a06e3ec99afe5928">More...</a><br /></td></tr>
 <tr class="separator:a9cff9e4485f7bf53a06e3ec99afe5928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5433a4625cb5452857100e87888a377"><td class="memItemLeft" align="right" valign="top"><a id="ac5433a4625cb5452857100e87888a377"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac5433a4625cb5452857100e87888a377">ONESDK_AGENT_STATE_ERROR</a>&#160;&#160;&#160;-1</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac5433a4625cb5452857100e87888a377">ONESDK_AGENT_STATE_ERROR</a>&#160;&#160;&#160;(-1)</td></tr>
 <tr class="memdesc:ac5433a4625cb5452857100e87888a377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some unexpected error occurred while trying to determine the agent state. <br /></td></tr>
 <tr class="separator:ac5433a4625cb5452857100e87888a377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Agent Forking State Constants</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>The fork-related state the agent is in, only relevant if you used <a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a>.</p>
+<p><a class="anchor" id="agent_fork_state_constants"></a></p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a> </dd>
+<dd>
+<a class="el" href="group__misc.html#ga77260efaf63455969962e05b6b170135">onesdk_agent_get_fork_state</a> </dd></dl>
+</div></td></tr>
+<tr class="memitem:a371d041e50c0e7c04bd265782dc63008"><td class="memItemLeft" align="right" valign="top"><a id="a371d041e50c0e7c04bd265782dc63008"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a371d041e50c0e7c04bd265782dc63008">ONESDK_AGENT_FORK_STATE_PARENT_INITIALIZED</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a371d041e50c0e7c04bd265782dc63008"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDK cannot be used, forked processes may use SDK. <br /></td></tr>
+<tr class="separator:a371d041e50c0e7c04bd265782dc63008"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9227414290cb05245f6f24fe16ad135"><td class="memItemLeft" align="right" valign="top"><a id="ab9227414290cb05245f6f24fe16ad135"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab9227414290cb05245f6f24fe16ad135">ONESDK_AGENT_FORK_STATE_PRE_INITIALIZED</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ab9227414290cb05245f6f24fe16ad135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forked processes can use the SDK. Using the SDK in this process is allowed but changes the state to <a class="el" href="onesdk__common_8h.html#a033ba67d0f060f22dba843934ffef70a">ONESDK_AGENT_FORK_STATE_FULLY_INITIALIZED</a>. <br /></td></tr>
+<tr class="separator:ab9227414290cb05245f6f24fe16ad135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033ba67d0f060f22dba843934ffef70a"><td class="memItemLeft" align="right" valign="top"><a id="a033ba67d0f060f22dba843934ffef70a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a033ba67d0f060f22dba843934ffef70a">ONESDK_AGENT_FORK_STATE_FULLY_INITIALIZED</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a033ba67d0f060f22dba843934ffef70a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDK can be used, forked processes may not use the SDK. <br /></td></tr>
+<tr class="separator:a033ba67d0f060f22dba843934ffef70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e78ae60222eda2de6c8d56f8ea1ef1"><td class="memItemLeft" align="right" valign="top"><a id="a09e78ae60222eda2de6c8d56f8ea1ef1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a09e78ae60222eda2de6c8d56f8ea1ef1">ONESDK_AGENT_FORK_STATE_NOT_FORKABLE</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a09e78ae60222eda2de6c8d56f8ea1ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDK can be used, forked processes may not use the SDK, the agent was initialized without <a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a>. <br /></td></tr>
+<tr class="separator:a09e78ae60222eda2de6c8d56f8ea1ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a383cba88b7267cc4ea62b484ca0fba24"><td class="memItemLeft" align="right" valign="top"><a id="a383cba88b7267cc4ea62b484ca0fba24"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a383cba88b7267cc4ea62b484ca0fba24">ONESDK_AGENT_FORK_STATE_ERROR</a>&#160;&#160;&#160;(-1)</td></tr>
+<tr class="memdesc:a383cba88b7267cc4ea62b484ca0fba24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some error occurred while trying to determine the agent fork state. <br /></td></tr>
+<tr class="separator:a383cba88b7267cc4ea62b484ca0fba24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Channel Type Constants</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__channels.html">Channel Types and Endpoints</a></dd></dl>
 <p><a class="anchor" id="channel_type_constants"></a></p>
@@ -229,203 +260,210 @@ Macros</h2></td></tr>
 <tr><td colspan="2"><div class="groupText"><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__database__requests.html">Database Request Tracers</a>, <a href="https://github.com/Dynatrace/OneAgent-SDK/#database">https://github.com/Dynatrace/OneAgent-SDK/#database</a></dd></dl>
 <p><a class="anchor" id="database_vendor_strings"></a></p>
 </div></td></tr>
-<tr class="memitem:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac89c51a73e1bd750d3318f2b8d2f351c">ONESDK_DATABASE_VENDOR_APACHE_HIVE</a>&#160;&#160;&#160;&quot;ApacheHive&quot;</td></tr>
-<tr class="memdesc:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Hive. <br /></td></tr>
-<tr class="separator:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61c36119884d91a0b0cb301a2d1dd549"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga61c36119884d91a0b0cb301a2d1dd549">ONESDK_DATABASE_VENDOR_CLOUDSCAPE</a>&#160;&#160;&#160;&quot;Cloudscape&quot;</td></tr>
-<tr class="memdesc:ga61c36119884d91a0b0cb301a2d1dd549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
-<tr class="separator:ga61c36119884d91a0b0cb301a2d1dd549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8651b5195f4e85a602a8836976b5ea0"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac8651b5195f4e85a602a8836976b5ea0">ONESDK_DATABASE_VENDOR_HSQLDB</a>&#160;&#160;&#160;&quot;HSQLDB&quot;</td></tr>
-<tr class="memdesc:gac8651b5195f4e85a602a8836976b5ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for HyperSQL DB. <br /></td></tr>
-<tr class="separator:gac8651b5195f4e85a602a8836976b5ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga782eee1ae91953174709680cb24ccbfc"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga782eee1ae91953174709680cb24ccbfc">ONESDK_DATABASE_VENDOR_PROGRESS</a>&#160;&#160;&#160;&quot;Progress&quot;</td></tr>
-<tr class="memdesc:ga782eee1ae91953174709680cb24ccbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for OpenEdge Database (aka. Progress). <br /></td></tr>
-<tr class="separator:ga782eee1ae91953174709680cb24ccbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaabdf954c2e6959e4138e004f2af8311f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaabdf954c2e6959e4138e004f2af8311f">ONESDK_DATABASE_VENDOR_MAXDB</a>&#160;&#160;&#160;&quot;MaxDB&quot;</td></tr>
-<tr class="memdesc:gaabdf954c2e6959e4138e004f2af8311f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP MaxDB. <br /></td></tr>
-<tr class="separator:gaabdf954c2e6959e4138e004f2af8311f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5a3963ff5ea50b0895b5fe29b4afae55">ONESDK_DATABASE_VENDOR_HANADB</a>&#160;&#160;&#160;&quot;HanaDB&quot;</td></tr>
-<tr class="memdesc:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP HANA DB. <br /></td></tr>
-<tr class="separator:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga0b5f90c742fb89533a8034a0bdf236f5">ONESDK_DATABASE_VENDOR_INGRES</a>&#160;&#160;&#160;&quot;Ingres&quot;</td></tr>
-<tr class="memdesc:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Ingres Database. <br /></td></tr>
-<tr class="separator:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaca1d62bc1a8f93d8335d9fe999612eb7">ONESDK_DATABASE_VENDOR_FIRST_SQL</a>&#160;&#160;&#160;&quot;FirstSQL&quot;</td></tr>
-<tr class="memdesc:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FirstSQL. <br /></td></tr>
-<tr class="separator:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafdda18af4c8fec64911b488b6593c62b"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gafdda18af4c8fec64911b488b6593c62b">ONESDK_DATABASE_VENDOR_ENTERPRISE_DB</a>&#160;&#160;&#160;&quot;EnterpriseDB&quot;</td></tr>
-<tr class="memdesc:gafdda18af4c8fec64911b488b6593c62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for EnterpriseDB. <br /></td></tr>
-<tr class="separator:gafdda18af4c8fec64911b488b6593c62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga6c85c0d4c2e52ebd7c75ea2b78fbfc57">ONESDK_DATABASE_VENDOR_CACHE</a>&#160;&#160;&#160;&quot;Cache&quot;</td></tr>
-<tr class="memdesc:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InterSystems Cache. <br /></td></tr>
-<tr class="separator:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga04c6a962cb9071ed5d2ed69f89f7bad4">ONESDK_DATABASE_VENDOR_ADABAS</a>&#160;&#160;&#160;&quot;Adabas&quot;</td></tr>
-<tr class="memdesc:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ADABAS. <br /></td></tr>
-<tr class="separator:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac908e1b462bc9e8a5954da0279774109"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac908e1b462bc9e8a5954da0279774109">ONESDK_DATABASE_VENDOR_FIREBIRD</a>&#160;&#160;&#160;&quot;Firebird&quot;</td></tr>
-<tr class="memdesc:gac908e1b462bc9e8a5954da0279774109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Firebird Database. <br /></td></tr>
-<tr class="separator:gac908e1b462bc9e8a5954da0279774109"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaa3c4b2d2a05bc5117265b5fd8a102d47">ONESDK_DATABASE_VENDOR_DB2</a>&#160;&#160;&#160;&quot;DB2&quot;</td></tr>
-<tr class="memdesc:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Db2. <br /></td></tr>
-<tr class="separator:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga760396456052e4f4b9ea5cef82cd6298"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga760396456052e4f4b9ea5cef82cd6298">ONESDK_DATABASE_VENDOR_DERBY_CLIENT</a>&#160;&#160;&#160;&quot;Derby Client&quot;</td></tr>
-<tr class="memdesc:ga760396456052e4f4b9ea5cef82cd6298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for JDBC connections to Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
-<tr class="separator:ga760396456052e4f4b9ea5cef82cd6298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58034a844a0128e38c11d07062936f97"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga58034a844a0128e38c11d07062936f97">ONESDK_DATABASE_VENDOR_DERBY_EMBEDDED</a>&#160;&#160;&#160;&quot;Derby Embedded&quot;</td></tr>
-<tr class="memdesc:ga58034a844a0128e38c11d07062936f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Derby Embedded. <br /></td></tr>
-<tr class="separator:ga58034a844a0128e38c11d07062936f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b5ccb601fa70be81e3abece9d66df37"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga0b5ccb601fa70be81e3abece9d66df37">ONESDK_DATABASE_VENDOR_FILEMAKER</a>&#160;&#160;&#160;&quot;Filemaker&quot;</td></tr>
-<tr class="memdesc:ga0b5ccb601fa70be81e3abece9d66df37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FileMaker Pro. <br /></td></tr>
-<tr class="separator:ga0b5ccb601fa70be81e3abece9d66df37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac390951403defc36ccd3c433c20c2c92"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac390951403defc36ccd3c433c20c2c92">ONESDK_DATABASE_VENDOR_INFORMIX</a>&#160;&#160;&#160;&quot;Informix&quot;</td></tr>
-<tr class="memdesc:gac390951403defc36ccd3c433c20c2c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Informix. <br /></td></tr>
-<tr class="separator:gac390951403defc36ccd3c433c20c2c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gab76af6c1c8a9f8cbf8715bab006f72e5">ONESDK_DATABASE_VENDOR_INSTANT_DB</a>&#160;&#160;&#160;&quot;InstantDb&quot;</td></tr>
-<tr class="memdesc:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InstantDB. <br /></td></tr>
-<tr class="separator:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga2dee1b5e842ec50960de2609b9b3a0fe">ONESDK_DATABASE_VENDOR_INTERBASE</a>&#160;&#160;&#160;&quot;Interbase&quot;</td></tr>
-<tr class="memdesc:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Embarcadero InterBase. <br /></td></tr>
-<tr class="separator:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga6e0d7b0ad192de331fea710ea1b7c4f3">ONESDK_DATABASE_VENDOR_MYSQL</a>&#160;&#160;&#160;&quot;MySQL&quot;</td></tr>
-<tr class="memdesc:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MySQL. <br /></td></tr>
-<tr class="separator:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaadfe290f2e9308629fa70a58a260acf9"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaadfe290f2e9308629fa70a58a260acf9">ONESDK_DATABASE_VENDOR_MARIADB</a>&#160;&#160;&#160;&quot;MariaDB&quot;</td></tr>
-<tr class="memdesc:gaadfe290f2e9308629fa70a58a260acf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MariaDB. <br /></td></tr>
-<tr class="separator:gaadfe290f2e9308629fa70a58a260acf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9bd48aa7021d10759a20c87ea6355203"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga9bd48aa7021d10759a20c87ea6355203">ONESDK_DATABASE_VENDOR_NETEZZA</a>&#160;&#160;&#160;&quot;Netezza&quot;</td></tr>
-<tr class="memdesc:ga9bd48aa7021d10759a20c87ea6355203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Netezza. <br /></td></tr>
-<tr class="separator:ga9bd48aa7021d10759a20c87ea6355203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga478ff9af386cbf772e1fbb31bd8a62d7">ONESDK_DATABASE_VENDOR_ORACLE</a>&#160;&#160;&#160;&quot;Oracle&quot;</td></tr>
-<tr class="memdesc:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Oracle Database. <br /></td></tr>
-<tr class="separator:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaf64475874d0c49a7aa2f5e4676ead82f">ONESDK_DATABASE_VENDOR_PERVASIVE</a>&#160;&#160;&#160;&quot;Pervasive&quot;</td></tr>
-<tr class="memdesc:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Pervasive PSQL. <br /></td></tr>
-<tr class="separator:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga8bf92a628da23a552c8e1214b4f0b6f7">ONESDK_DATABASE_VENDOR_POINTBASE</a>&#160;&#160;&#160;&quot;Pointbase&quot;</td></tr>
-<tr class="memdesc:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PointBase. <br /></td></tr>
-<tr class="separator:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5485be9bcd33517bec3faf61fa09e80e"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5485be9bcd33517bec3faf61fa09e80e">ONESDK_DATABASE_VENDOR_POSTGRESQL</a>&#160;&#160;&#160;&quot;PostgreSQL&quot;</td></tr>
-<tr class="memdesc:ga5485be9bcd33517bec3faf61fa09e80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PostgreSQL. <br /></td></tr>
-<tr class="separator:ga5485be9bcd33517bec3faf61fa09e80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga9704854c2218c381cc4ae4b8769c4e7c">ONESDK_DATABASE_VENDOR_SQLSERVER</a>&#160;&#160;&#160;&quot;SQL Server&quot;</td></tr>
-<tr class="memdesc:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Microsoft SQL Server. <br /></td></tr>
-<tr class="separator:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41815ff93529c1bee22d20fd75adc449"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga41815ff93529c1bee22d20fd75adc449">ONESDK_DATABASE_VENDOR_SQLITE</a>&#160;&#160;&#160;&quot;sqlite&quot;</td></tr>
-<tr class="memdesc:ga41815ff93529c1bee22d20fd75adc449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SQLite. <br /></td></tr>
-<tr class="separator:ga41815ff93529c1bee22d20fd75adc449"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga678222939ffbde58e4e82f3e9c63b6cb">ONESDK_DATABASE_VENDOR_SYBASE</a>&#160;&#160;&#160;&quot;Sybase&quot;</td></tr>
-<tr class="memdesc:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP ASE (aka. Sybase SQL Server, Sybase DB, Sybase ASE). <br /></td></tr>
-<tr class="separator:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63c62cce89aa300640503287a793c327"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga63c62cce89aa300640503287a793c327">ONESDK_DATABASE_VENDOR_TERADATA</a>&#160;&#160;&#160;&quot;Teradata&quot;</td></tr>
-<tr class="memdesc:ga63c62cce89aa300640503287a793c327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Teradata Database. <br /></td></tr>
-<tr class="separator:ga63c62cce89aa300640503287a793c327"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f750b31a0b0c68808629d6206b16c43"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5f750b31a0b0c68808629d6206b16c43">ONESDK_DATABASE_VENDOR_VERTICA</a>&#160;&#160;&#160;&quot;Vertica&quot;</td></tr>
-<tr class="memdesc:ga5f750b31a0b0c68808629d6206b16c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Vertica. <br /></td></tr>
-<tr class="separator:ga5f750b31a0b0c68808629d6206b16c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e8e0a7906c5c223a51560767fd5180"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga62e8e0a7906c5c223a51560767fd5180">ONESDK_DATABASE_VENDOR_CASSANDRA</a>&#160;&#160;&#160;&quot;Cassandra&quot;</td></tr>
-<tr class="memdesc:ga62e8e0a7906c5c223a51560767fd5180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Cassandra. <br /></td></tr>
-<tr class="separator:ga62e8e0a7906c5c223a51560767fd5180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga711037bd857b89e1cf96f47923229bc5"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga711037bd857b89e1cf96f47923229bc5">ONESDK_DATABASE_VENDOR_H2</a>&#160;&#160;&#160;&quot;H2&quot;</td></tr>
-<tr class="memdesc:ga711037bd857b89e1cf96f47923229bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for H2 Database Engine. <br /></td></tr>
-<tr class="separator:ga711037bd857b89e1cf96f47923229bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga40f8a5f949b2aa0b3bc01abf16ab84dd">ONESDK_DATABASE_VENDOR_COLDFUSION_IMQ</a>&#160;&#160;&#160;&quot;ColdFusion IMQ&quot;</td></tr>
-<tr class="memdesc:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ColdFusion In-Memory Query (aka. Query of Queries). <br /></td></tr>
-<tr class="separator:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750e1099562e7626a5c0bed34a235d5f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga750e1099562e7626a5c0bed34a235d5f">ONESDK_DATABASE_VENDOR_REDSHIFT</a>&#160;&#160;&#160;&quot;Amazon Redshift&quot;</td></tr>
-<tr class="memdesc:ga750e1099562e7626a5c0bed34a235d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Amazon Redshift. <br /></td></tr>
-<tr class="separator:ga750e1099562e7626a5c0bed34a235d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa231027c5332938ab9e22b45d13b7bc"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gafa231027c5332938ab9e22b45d13b7bc">ONESDK_DATABASE_VENDOR_COUCHBASE</a>&#160;&#160;&#160;&quot;Couchbase&quot;</td></tr>
-<tr class="memdesc:gafa231027c5332938ab9e22b45d13b7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Couchbase. <br /></td></tr>
-<tr class="separator:gafa231027c5332938ab9e22b45d13b7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac89c51a73e1bd750d3318f2b8d2f351c"><td class="memItemLeft" align="right" valign="top"><a id="ac89c51a73e1bd750d3318f2b8d2f351c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac89c51a73e1bd750d3318f2b8d2f351c">ONESDK_DATABASE_VENDOR_APACHE_HIVE</a>&#160;&#160;&#160;&quot;ApacheHive&quot;</td></tr>
+<tr class="memdesc:ac89c51a73e1bd750d3318f2b8d2f351c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Hive. <br /></td></tr>
+<tr class="separator:ac89c51a73e1bd750d3318f2b8d2f351c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c36119884d91a0b0cb301a2d1dd549"><td class="memItemLeft" align="right" valign="top"><a id="a61c36119884d91a0b0cb301a2d1dd549"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a61c36119884d91a0b0cb301a2d1dd549">ONESDK_DATABASE_VENDOR_CLOUDSCAPE</a>&#160;&#160;&#160;&quot;Cloudscape&quot;</td></tr>
+<tr class="memdesc:a61c36119884d91a0b0cb301a2d1dd549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
+<tr class="separator:a61c36119884d91a0b0cb301a2d1dd549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8651b5195f4e85a602a8836976b5ea0"><td class="memItemLeft" align="right" valign="top"><a id="ac8651b5195f4e85a602a8836976b5ea0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac8651b5195f4e85a602a8836976b5ea0">ONESDK_DATABASE_VENDOR_HSQLDB</a>&#160;&#160;&#160;&quot;HSQLDB&quot;</td></tr>
+<tr class="memdesc:ac8651b5195f4e85a602a8836976b5ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for HyperSQL DB. <br /></td></tr>
+<tr class="separator:ac8651b5195f4e85a602a8836976b5ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a782eee1ae91953174709680cb24ccbfc"><td class="memItemLeft" align="right" valign="top"><a id="a782eee1ae91953174709680cb24ccbfc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a782eee1ae91953174709680cb24ccbfc">ONESDK_DATABASE_VENDOR_PROGRESS</a>&#160;&#160;&#160;&quot;Progress&quot;</td></tr>
+<tr class="memdesc:a782eee1ae91953174709680cb24ccbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for OpenEdge Database (aka. Progress). <br /></td></tr>
+<tr class="separator:a782eee1ae91953174709680cb24ccbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabdf954c2e6959e4138e004f2af8311f"><td class="memItemLeft" align="right" valign="top"><a id="aabdf954c2e6959e4138e004f2af8311f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#aabdf954c2e6959e4138e004f2af8311f">ONESDK_DATABASE_VENDOR_MAXDB</a>&#160;&#160;&#160;&quot;MaxDB&quot;</td></tr>
+<tr class="memdesc:aabdf954c2e6959e4138e004f2af8311f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP MaxDB. <br /></td></tr>
+<tr class="separator:aabdf954c2e6959e4138e004f2af8311f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a3963ff5ea50b0895b5fe29b4afae55"><td class="memItemLeft" align="right" valign="top"><a id="a5a3963ff5ea50b0895b5fe29b4afae55"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a5a3963ff5ea50b0895b5fe29b4afae55">ONESDK_DATABASE_VENDOR_HANADB</a>&#160;&#160;&#160;&quot;HanaDB&quot;</td></tr>
+<tr class="memdesc:a5a3963ff5ea50b0895b5fe29b4afae55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP HANA DB. <br /></td></tr>
+<tr class="separator:a5a3963ff5ea50b0895b5fe29b4afae55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b5f90c742fb89533a8034a0bdf236f5"><td class="memItemLeft" align="right" valign="top"><a id="a0b5f90c742fb89533a8034a0bdf236f5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a0b5f90c742fb89533a8034a0bdf236f5">ONESDK_DATABASE_VENDOR_INGRES</a>&#160;&#160;&#160;&quot;Ingres&quot;</td></tr>
+<tr class="memdesc:a0b5f90c742fb89533a8034a0bdf236f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Ingres Database. <br /></td></tr>
+<tr class="separator:a0b5f90c742fb89533a8034a0bdf236f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca1d62bc1a8f93d8335d9fe999612eb7"><td class="memItemLeft" align="right" valign="top"><a id="aca1d62bc1a8f93d8335d9fe999612eb7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#aca1d62bc1a8f93d8335d9fe999612eb7">ONESDK_DATABASE_VENDOR_FIRST_SQL</a>&#160;&#160;&#160;&quot;FirstSQL&quot;</td></tr>
+<tr class="memdesc:aca1d62bc1a8f93d8335d9fe999612eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FirstSQL. <br /></td></tr>
+<tr class="separator:aca1d62bc1a8f93d8335d9fe999612eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdda18af4c8fec64911b488b6593c62b"><td class="memItemLeft" align="right" valign="top"><a id="afdda18af4c8fec64911b488b6593c62b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#afdda18af4c8fec64911b488b6593c62b">ONESDK_DATABASE_VENDOR_ENTERPRISE_DB</a>&#160;&#160;&#160;&quot;EnterpriseDB&quot;</td></tr>
+<tr class="memdesc:afdda18af4c8fec64911b488b6593c62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for EnterpriseDB. <br /></td></tr>
+<tr class="separator:afdda18af4c8fec64911b488b6593c62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memItemLeft" align="right" valign="top"><a id="a6c85c0d4c2e52ebd7c75ea2b78fbfc57"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a6c85c0d4c2e52ebd7c75ea2b78fbfc57">ONESDK_DATABASE_VENDOR_CACHE</a>&#160;&#160;&#160;&quot;Cache&quot;</td></tr>
+<tr class="memdesc:a6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InterSystems Cache. <br /></td></tr>
+<tr class="separator:a6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memItemLeft" align="right" valign="top"><a id="a04c6a962cb9071ed5d2ed69f89f7bad4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a04c6a962cb9071ed5d2ed69f89f7bad4">ONESDK_DATABASE_VENDOR_ADABAS</a>&#160;&#160;&#160;&quot;Adabas&quot;</td></tr>
+<tr class="memdesc:a04c6a962cb9071ed5d2ed69f89f7bad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ADABAS. <br /></td></tr>
+<tr class="separator:a04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac908e1b462bc9e8a5954da0279774109"><td class="memItemLeft" align="right" valign="top"><a id="ac908e1b462bc9e8a5954da0279774109"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac908e1b462bc9e8a5954da0279774109">ONESDK_DATABASE_VENDOR_FIREBIRD</a>&#160;&#160;&#160;&quot;Firebird&quot;</td></tr>
+<tr class="memdesc:ac908e1b462bc9e8a5954da0279774109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Firebird Database. <br /></td></tr>
+<tr class="separator:ac908e1b462bc9e8a5954da0279774109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memItemLeft" align="right" valign="top"><a id="aa3c4b2d2a05bc5117265b5fd8a102d47"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#aa3c4b2d2a05bc5117265b5fd8a102d47">ONESDK_DATABASE_VENDOR_DB2</a>&#160;&#160;&#160;&quot;DB2&quot;</td></tr>
+<tr class="memdesc:aa3c4b2d2a05bc5117265b5fd8a102d47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Db2. <br /></td></tr>
+<tr class="separator:aa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a760396456052e4f4b9ea5cef82cd6298"><td class="memItemLeft" align="right" valign="top"><a id="a760396456052e4f4b9ea5cef82cd6298"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a760396456052e4f4b9ea5cef82cd6298">ONESDK_DATABASE_VENDOR_DERBY_CLIENT</a>&#160;&#160;&#160;&quot;Derby Client&quot;</td></tr>
+<tr class="memdesc:a760396456052e4f4b9ea5cef82cd6298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for JDBC connections to Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
+<tr class="separator:a760396456052e4f4b9ea5cef82cd6298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58034a844a0128e38c11d07062936f97"><td class="memItemLeft" align="right" valign="top"><a id="a58034a844a0128e38c11d07062936f97"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a58034a844a0128e38c11d07062936f97">ONESDK_DATABASE_VENDOR_DERBY_EMBEDDED</a>&#160;&#160;&#160;&quot;Derby Embedded&quot;</td></tr>
+<tr class="memdesc:a58034a844a0128e38c11d07062936f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Derby Embedded. <br /></td></tr>
+<tr class="separator:a58034a844a0128e38c11d07062936f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b5ccb601fa70be81e3abece9d66df37"><td class="memItemLeft" align="right" valign="top"><a id="a0b5ccb601fa70be81e3abece9d66df37"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a0b5ccb601fa70be81e3abece9d66df37">ONESDK_DATABASE_VENDOR_FILEMAKER</a>&#160;&#160;&#160;&quot;Filemaker&quot;</td></tr>
+<tr class="memdesc:a0b5ccb601fa70be81e3abece9d66df37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FileMaker Pro. <br /></td></tr>
+<tr class="separator:a0b5ccb601fa70be81e3abece9d66df37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac390951403defc36ccd3c433c20c2c92"><td class="memItemLeft" align="right" valign="top"><a id="ac390951403defc36ccd3c433c20c2c92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ac390951403defc36ccd3c433c20c2c92">ONESDK_DATABASE_VENDOR_INFORMIX</a>&#160;&#160;&#160;&quot;Informix&quot;</td></tr>
+<tr class="memdesc:ac390951403defc36ccd3c433c20c2c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Informix. <br /></td></tr>
+<tr class="separator:ac390951403defc36ccd3c433c20c2c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memItemLeft" align="right" valign="top"><a id="ab76af6c1c8a9f8cbf8715bab006f72e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab76af6c1c8a9f8cbf8715bab006f72e5">ONESDK_DATABASE_VENDOR_INSTANT_DB</a>&#160;&#160;&#160;&quot;InstantDb&quot;</td></tr>
+<tr class="memdesc:ab76af6c1c8a9f8cbf8715bab006f72e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InstantDB. <br /></td></tr>
+<tr class="separator:ab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dee1b5e842ec50960de2609b9b3a0fe"><td class="memItemLeft" align="right" valign="top"><a id="a2dee1b5e842ec50960de2609b9b3a0fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a2dee1b5e842ec50960de2609b9b3a0fe">ONESDK_DATABASE_VENDOR_INTERBASE</a>&#160;&#160;&#160;&quot;Interbase&quot;</td></tr>
+<tr class="memdesc:a2dee1b5e842ec50960de2609b9b3a0fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Embarcadero InterBase. <br /></td></tr>
+<tr class="separator:a2dee1b5e842ec50960de2609b9b3a0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memItemLeft" align="right" valign="top"><a id="a6e0d7b0ad192de331fea710ea1b7c4f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a6e0d7b0ad192de331fea710ea1b7c4f3">ONESDK_DATABASE_VENDOR_MYSQL</a>&#160;&#160;&#160;&quot;MySQL&quot;</td></tr>
+<tr class="memdesc:a6e0d7b0ad192de331fea710ea1b7c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MySQL. <br /></td></tr>
+<tr class="separator:a6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadfe290f2e9308629fa70a58a260acf9"><td class="memItemLeft" align="right" valign="top"><a id="aadfe290f2e9308629fa70a58a260acf9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#aadfe290f2e9308629fa70a58a260acf9">ONESDK_DATABASE_VENDOR_MARIADB</a>&#160;&#160;&#160;&quot;MariaDB&quot;</td></tr>
+<tr class="memdesc:aadfe290f2e9308629fa70a58a260acf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MariaDB. <br /></td></tr>
+<tr class="separator:aadfe290f2e9308629fa70a58a260acf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bd48aa7021d10759a20c87ea6355203"><td class="memItemLeft" align="right" valign="top"><a id="a9bd48aa7021d10759a20c87ea6355203"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a9bd48aa7021d10759a20c87ea6355203">ONESDK_DATABASE_VENDOR_NETEZZA</a>&#160;&#160;&#160;&quot;Netezza&quot;</td></tr>
+<tr class="memdesc:a9bd48aa7021d10759a20c87ea6355203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Netezza. <br /></td></tr>
+<tr class="separator:a9bd48aa7021d10759a20c87ea6355203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a478ff9af386cbf772e1fbb31bd8a62d7"><td class="memItemLeft" align="right" valign="top"><a id="a478ff9af386cbf772e1fbb31bd8a62d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a478ff9af386cbf772e1fbb31bd8a62d7">ONESDK_DATABASE_VENDOR_ORACLE</a>&#160;&#160;&#160;&quot;Oracle&quot;</td></tr>
+<tr class="memdesc:a478ff9af386cbf772e1fbb31bd8a62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Oracle Database. <br /></td></tr>
+<tr class="separator:a478ff9af386cbf772e1fbb31bd8a62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af64475874d0c49a7aa2f5e4676ead82f"><td class="memItemLeft" align="right" valign="top"><a id="af64475874d0c49a7aa2f5e4676ead82f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#af64475874d0c49a7aa2f5e4676ead82f">ONESDK_DATABASE_VENDOR_PERVASIVE</a>&#160;&#160;&#160;&quot;Pervasive&quot;</td></tr>
+<tr class="memdesc:af64475874d0c49a7aa2f5e4676ead82f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Pervasive PSQL. <br /></td></tr>
+<tr class="separator:af64475874d0c49a7aa2f5e4676ead82f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bf92a628da23a552c8e1214b4f0b6f7"><td class="memItemLeft" align="right" valign="top"><a id="a8bf92a628da23a552c8e1214b4f0b6f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a8bf92a628da23a552c8e1214b4f0b6f7">ONESDK_DATABASE_VENDOR_POINTBASE</a>&#160;&#160;&#160;&quot;Pointbase&quot;</td></tr>
+<tr class="memdesc:a8bf92a628da23a552c8e1214b4f0b6f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PointBase. <br /></td></tr>
+<tr class="separator:a8bf92a628da23a552c8e1214b4f0b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5485be9bcd33517bec3faf61fa09e80e"><td class="memItemLeft" align="right" valign="top"><a id="a5485be9bcd33517bec3faf61fa09e80e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a5485be9bcd33517bec3faf61fa09e80e">ONESDK_DATABASE_VENDOR_POSTGRESQL</a>&#160;&#160;&#160;&quot;PostgreSQL&quot;</td></tr>
+<tr class="memdesc:a5485be9bcd33517bec3faf61fa09e80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PostgreSQL. <br /></td></tr>
+<tr class="separator:a5485be9bcd33517bec3faf61fa09e80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9704854c2218c381cc4ae4b8769c4e7c"><td class="memItemLeft" align="right" valign="top"><a id="a9704854c2218c381cc4ae4b8769c4e7c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a9704854c2218c381cc4ae4b8769c4e7c">ONESDK_DATABASE_VENDOR_SQLSERVER</a>&#160;&#160;&#160;&quot;SQL Server&quot;</td></tr>
+<tr class="memdesc:a9704854c2218c381cc4ae4b8769c4e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Microsoft SQL Server. <br /></td></tr>
+<tr class="separator:a9704854c2218c381cc4ae4b8769c4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41815ff93529c1bee22d20fd75adc449"><td class="memItemLeft" align="right" valign="top"><a id="a41815ff93529c1bee22d20fd75adc449"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a41815ff93529c1bee22d20fd75adc449">ONESDK_DATABASE_VENDOR_SQLITE</a>&#160;&#160;&#160;&quot;sqlite&quot;</td></tr>
+<tr class="memdesc:a41815ff93529c1bee22d20fd75adc449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SQLite. <br /></td></tr>
+<tr class="separator:a41815ff93529c1bee22d20fd75adc449"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a678222939ffbde58e4e82f3e9c63b6cb"><td class="memItemLeft" align="right" valign="top"><a id="a678222939ffbde58e4e82f3e9c63b6cb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a678222939ffbde58e4e82f3e9c63b6cb">ONESDK_DATABASE_VENDOR_SYBASE</a>&#160;&#160;&#160;&quot;Sybase&quot;</td></tr>
+<tr class="memdesc:a678222939ffbde58e4e82f3e9c63b6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP ASE (aka. Sybase SQL Server, Sybase DB, Sybase ASE). <br /></td></tr>
+<tr class="separator:a678222939ffbde58e4e82f3e9c63b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c62cce89aa300640503287a793c327"><td class="memItemLeft" align="right" valign="top"><a id="a63c62cce89aa300640503287a793c327"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a63c62cce89aa300640503287a793c327">ONESDK_DATABASE_VENDOR_TERADATA</a>&#160;&#160;&#160;&quot;Teradata&quot;</td></tr>
+<tr class="memdesc:a63c62cce89aa300640503287a793c327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Teradata Database. <br /></td></tr>
+<tr class="separator:a63c62cce89aa300640503287a793c327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f750b31a0b0c68808629d6206b16c43"><td class="memItemLeft" align="right" valign="top"><a id="a5f750b31a0b0c68808629d6206b16c43"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a5f750b31a0b0c68808629d6206b16c43">ONESDK_DATABASE_VENDOR_VERTICA</a>&#160;&#160;&#160;&quot;Vertica&quot;</td></tr>
+<tr class="memdesc:a5f750b31a0b0c68808629d6206b16c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Vertica. <br /></td></tr>
+<tr class="separator:a5f750b31a0b0c68808629d6206b16c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e8e0a7906c5c223a51560767fd5180"><td class="memItemLeft" align="right" valign="top"><a id="a62e8e0a7906c5c223a51560767fd5180"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a62e8e0a7906c5c223a51560767fd5180">ONESDK_DATABASE_VENDOR_CASSANDRA</a>&#160;&#160;&#160;&quot;Cassandra&quot;</td></tr>
+<tr class="memdesc:a62e8e0a7906c5c223a51560767fd5180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Cassandra. <br /></td></tr>
+<tr class="separator:a62e8e0a7906c5c223a51560767fd5180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a711037bd857b89e1cf96f47923229bc5"><td class="memItemLeft" align="right" valign="top"><a id="a711037bd857b89e1cf96f47923229bc5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a711037bd857b89e1cf96f47923229bc5">ONESDK_DATABASE_VENDOR_H2</a>&#160;&#160;&#160;&quot;H2&quot;</td></tr>
+<tr class="memdesc:a711037bd857b89e1cf96f47923229bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for H2 Database Engine. <br /></td></tr>
+<tr class="separator:a711037bd857b89e1cf96f47923229bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memItemLeft" align="right" valign="top"><a id="a40f8a5f949b2aa0b3bc01abf16ab84dd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a40f8a5f949b2aa0b3bc01abf16ab84dd">ONESDK_DATABASE_VENDOR_COLDFUSION_IMQ</a>&#160;&#160;&#160;&quot;ColdFusion IMQ&quot;</td></tr>
+<tr class="memdesc:a40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ColdFusion In-Memory Query (aka. Query of Queries). <br /></td></tr>
+<tr class="separator:a40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750e1099562e7626a5c0bed34a235d5f"><td class="memItemLeft" align="right" valign="top"><a id="a750e1099562e7626a5c0bed34a235d5f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a750e1099562e7626a5c0bed34a235d5f">ONESDK_DATABASE_VENDOR_REDSHIFT</a>&#160;&#160;&#160;&quot;Amazon Redshift&quot;</td></tr>
+<tr class="memdesc:a750e1099562e7626a5c0bed34a235d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Amazon Redshift. <br /></td></tr>
+<tr class="separator:a750e1099562e7626a5c0bed34a235d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa231027c5332938ab9e22b45d13b7bc"><td class="memItemLeft" align="right" valign="top"><a id="afa231027c5332938ab9e22b45d13b7bc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#afa231027c5332938ab9e22b45d13b7bc">ONESDK_DATABASE_VENDOR_COUCHBASE</a>&#160;&#160;&#160;&quot;Couchbase&quot;</td></tr>
+<tr class="memdesc:afa231027c5332938ab9e22b45d13b7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Couchbase. <br /></td></tr>
+<tr class="separator:afa231027c5332938ab9e22b45d13b7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Initialization flag constants</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Flags to use with <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a>.</p>
 <p><a class="anchor" id="init_flags"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> </dd></dl>
 </div></td></tr>
-<tr class="memitem:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a></td></tr>
-<tr class="memdesc:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not fully initialize the SDK now but instead allow it to be used in forked child processes.  <a href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">More...</a><br /></td></tr>
-<tr class="separator:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732bf07f0e190264baf29f3a1c22cc4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a></td></tr>
+<tr class="memdesc:a732bf07f0e190264baf29f3a1c22cc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not fully initialize the SDK now but instead allow it to be used in forked child processes.  <a href="#a732bf07f0e190264baf29f3a1c22cc4a">More...</a><br /></td></tr>
+<tr class="separator:a732bf07f0e190264baf29f3a1c22cc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:ga2f13c9540fec16785224aa5c5c2f46c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga2f13c9540fec16785224aa5c5c2f46c7">ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME</a>&#160;&#160;&#160;&quot;dtdTraceTagInfo&quot;</td></tr>
+<tr class="memdesc:ga2f13c9540fec16785224aa5c5c2f46c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message property name for the Dynatrace byte tag.  <a href="group__messaging.html#ga2f13c9540fec16785224aa5c5c2f46c7">More...</a><br /></td></tr>
+<tr class="separator:ga2f13c9540fec16785224aa5c5c2f46c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab864ee6a425cc9b238499898ebdc36bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME</a>&#160;&#160;&#160;<a class="el" href="group__messaging.html#ga2f13c9540fec16785224aa5c5c2f46c7">ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME</a></td></tr>
+<tr class="memdesc:gab864ee6a425cc9b238499898ebdc36bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">DEPRECATED alias for <a class="el" href="group__messaging.html#ga2f13c9540fec16785224aa5c5c2f46c7">ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME</a>.  <a href="group__messaging.html#gab864ee6a425cc9b238499898ebdc36bb">More...</a><br /></td></tr>
+<tr class="separator:gab864ee6a425cc9b238499898ebdc36bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Messaging Destination Type Constants</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_destination_type"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging Tracers</a> </dd></dl>
+<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_destination_type"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging</a> </dd></dl>
 </div></td></tr>
-<tr class="memitem:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab933a5188a1fb5c1c81abdc8a45a4517">ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message queue: a message sent to this destination will be (sucessfully) received by only one consumer. <br /></td></tr>
-<tr class="separator:gab933a5188a1fb5c1c81abdc8a45a4517"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab84fb7392fd6428ea2978d1d030a83b2"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab84fb7392fd6428ea2978d1d030a83b2">ONESDK_MESSAGING_DESTINATION_TYPE_TOPIC</a>&#160;&#160;&#160;2</td></tr>
-<tr class="memdesc:gab84fb7392fd6428ea2978d1d030a83b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message topic: a message sent to this destination will be received by all subscribed consumers. <br /></td></tr>
-<tr class="separator:gab84fb7392fd6428ea2978d1d030a83b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab933a5188a1fb5c1c81abdc8a45a4517"><td class="memItemLeft" align="right" valign="top"><a id="ab933a5188a1fb5c1c81abdc8a45a4517"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab933a5188a1fb5c1c81abdc8a45a4517">ONESDK_MESSAGING_DESTINATION_TYPE_QUEUE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ab933a5188a1fb5c1c81abdc8a45a4517"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message queue: a message sent to this destination will be (sucessfully) received by only one consumer. <br /></td></tr>
+<tr class="separator:ab933a5188a1fb5c1c81abdc8a45a4517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab84fb7392fd6428ea2978d1d030a83b2"><td class="memItemLeft" align="right" valign="top"><a id="ab84fb7392fd6428ea2978d1d030a83b2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab84fb7392fd6428ea2978d1d030a83b2">ONESDK_MESSAGING_DESTINATION_TYPE_TOPIC</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ab84fb7392fd6428ea2978d1d030a83b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message topic: a message sent to this destination will be received by all subscribed consumers. <br /></td></tr>
+<tr class="separator:ab84fb7392fd6428ea2978d1d030a83b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Messaging System Vendor Strings</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_vendor_strings"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging Tracers</a> </dd></dl>
+<tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="messaging_vendor_strings"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__messaging.html">Messaging</a> </dd></dl>
 </div></td></tr>
-<tr class="memitem:gae02d9a3129b9e2120f931566ef15e0fc"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gae02d9a3129b9e2120f931566ef15e0fc">ONESDK_MESSAGING_VENDOR_HORNETQ</a>&#160;&#160;&#160;&quot;HornetQ&quot;</td></tr>
-<tr class="memdesc:gae02d9a3129b9e2120f931566ef15e0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for HornetQ. <br /></td></tr>
-<tr class="separator:gae02d9a3129b9e2120f931566ef15e0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9203ecf7b0168be919232dccb0a09e96"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga9203ecf7b0168be919232dccb0a09e96">ONESDK_MESSAGING_VENDOR_ACTIVE_MQ</a>&#160;&#160;&#160;&quot;ActiveMQ&quot;</td></tr>
-<tr class="memdesc:ga9203ecf7b0168be919232dccb0a09e96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for ActiveMQ. <br /></td></tr>
-<tr class="separator:ga9203ecf7b0168be919232dccb0a09e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd78dcb50fde37f07466f480b9b56f40"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gabd78dcb50fde37f07466f480b9b56f40">ONESDK_MESSAGING_VENDOR_RABBIT_MQ</a>&#160;&#160;&#160;&quot;RabbitMQ&quot;</td></tr>
-<tr class="memdesc:gabd78dcb50fde37f07466f480b9b56f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for RabbitMQ. <br /></td></tr>
-<tr class="separator:gabd78dcb50fde37f07466f480b9b56f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3abce7ba70f1209b04344e84d4bc01e"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gab3abce7ba70f1209b04344e84d4bc01e">ONESDK_MESSAGING_VENDOR_ARTEMIS</a>&#160;&#160;&#160;&quot;Artemis&quot;</td></tr>
-<tr class="memdesc:gab3abce7ba70f1209b04344e84d4bc01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Artemis. <br /></td></tr>
-<tr class="separator:gab3abce7ba70f1209b04344e84d4bc01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#gad8a60ac7d9a064a998d9be6b205f8dfb">ONESDK_MESSAGING_VENDOR_WEBSPHERE</a>&#160;&#160;&#160;&quot;WebSphere&quot;</td></tr>
-<tr class="memdesc:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for WebSphere. <br /></td></tr>
-<tr class="separator:gad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24dfac93d5e64205e9600337964d9cbf"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga24dfac93d5e64205e9600337964d9cbf">ONESDK_MESSAGING_VENDOR_MQSERIES_JMS</a>&#160;&#160;&#160;&quot;MQSeries JMS&quot;</td></tr>
-<tr class="memdesc:ga24dfac93d5e64205e9600337964d9cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries JMS. <br /></td></tr>
-<tr class="separator:ga24dfac93d5e64205e9600337964d9cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga3d61d5dd392c26ed1b2e57409ae37968">ONESDK_MESSAGING_VENDOR_MQSERIES</a>&#160;&#160;&#160;&quot;MQSeries&quot;</td></tr>
-<tr class="memdesc:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries. <br /></td></tr>
-<tr class="separator:ga3d61d5dd392c26ed1b2e57409ae37968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__messaging.html#ga6351b1a0f1fbf48e34bb8e5e7f62378c">ONESDK_MESSAGING_VENDOR_TIBCO</a>&#160;&#160;&#160;&quot;Tibco&quot;</td></tr>
-<tr class="memdesc:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Tibco. <br /></td></tr>
-<tr class="separator:ga6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae02d9a3129b9e2120f931566ef15e0fc"><td class="memItemLeft" align="right" valign="top"><a id="ae02d9a3129b9e2120f931566ef15e0fc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ae02d9a3129b9e2120f931566ef15e0fc">ONESDK_MESSAGING_VENDOR_HORNETQ</a>&#160;&#160;&#160;&quot;HornetQ&quot;</td></tr>
+<tr class="memdesc:ae02d9a3129b9e2120f931566ef15e0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for HornetQ. <br /></td></tr>
+<tr class="separator:ae02d9a3129b9e2120f931566ef15e0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9203ecf7b0168be919232dccb0a09e96"><td class="memItemLeft" align="right" valign="top"><a id="a9203ecf7b0168be919232dccb0a09e96"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a9203ecf7b0168be919232dccb0a09e96">ONESDK_MESSAGING_VENDOR_ACTIVE_MQ</a>&#160;&#160;&#160;&quot;ActiveMQ&quot;</td></tr>
+<tr class="memdesc:a9203ecf7b0168be919232dccb0a09e96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for ActiveMQ. <br /></td></tr>
+<tr class="separator:a9203ecf7b0168be919232dccb0a09e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd78dcb50fde37f07466f480b9b56f40"><td class="memItemLeft" align="right" valign="top"><a id="abd78dcb50fde37f07466f480b9b56f40"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#abd78dcb50fde37f07466f480b9b56f40">ONESDK_MESSAGING_VENDOR_RABBIT_MQ</a>&#160;&#160;&#160;&quot;RabbitMQ&quot;</td></tr>
+<tr class="memdesc:abd78dcb50fde37f07466f480b9b56f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for RabbitMQ. <br /></td></tr>
+<tr class="separator:abd78dcb50fde37f07466f480b9b56f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3abce7ba70f1209b04344e84d4bc01e"><td class="memItemLeft" align="right" valign="top"><a id="ab3abce7ba70f1209b04344e84d4bc01e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ab3abce7ba70f1209b04344e84d4bc01e">ONESDK_MESSAGING_VENDOR_ARTEMIS</a>&#160;&#160;&#160;&quot;Artemis&quot;</td></tr>
+<tr class="memdesc:ab3abce7ba70f1209b04344e84d4bc01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Artemis. <br /></td></tr>
+<tr class="separator:ab3abce7ba70f1209b04344e84d4bc01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memItemLeft" align="right" valign="top"><a id="ad8a60ac7d9a064a998d9be6b205f8dfb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#ad8a60ac7d9a064a998d9be6b205f8dfb">ONESDK_MESSAGING_VENDOR_WEBSPHERE</a>&#160;&#160;&#160;&quot;WebSphere&quot;</td></tr>
+<tr class="memdesc:ad8a60ac7d9a064a998d9be6b205f8dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for WebSphere. <br /></td></tr>
+<tr class="separator:ad8a60ac7d9a064a998d9be6b205f8dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24dfac93d5e64205e9600337964d9cbf"><td class="memItemLeft" align="right" valign="top"><a id="a24dfac93d5e64205e9600337964d9cbf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a24dfac93d5e64205e9600337964d9cbf">ONESDK_MESSAGING_VENDOR_MQSERIES_JMS</a>&#160;&#160;&#160;&quot;MQSeries JMS&quot;</td></tr>
+<tr class="memdesc:a24dfac93d5e64205e9600337964d9cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries JMS. <br /></td></tr>
+<tr class="separator:a24dfac93d5e64205e9600337964d9cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d61d5dd392c26ed1b2e57409ae37968"><td class="memItemLeft" align="right" valign="top"><a id="a3d61d5dd392c26ed1b2e57409ae37968"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a3d61d5dd392c26ed1b2e57409ae37968">ONESDK_MESSAGING_VENDOR_MQSERIES</a>&#160;&#160;&#160;&quot;MQSeries&quot;</td></tr>
+<tr class="memdesc:a3d61d5dd392c26ed1b2e57409ae37968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for MQSeries. <br /></td></tr>
+<tr class="separator:a3d61d5dd392c26ed1b2e57409ae37968"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memItemLeft" align="right" valign="top"><a id="a6351b1a0f1fbf48e34bb8e5e7f62378c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#a6351b1a0f1fbf48e34bb8e5e7f62378c">ONESDK_MESSAGING_VENDOR_TIBCO</a>&#160;&#160;&#160;&quot;Tibco&quot;</td></tr>
+<tr class="memdesc:a6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging system vendor string for Tibco. <br /></td></tr>
+<tr class="separator:a6351b1a0f1fbf48e34bb8e5e7f62378c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -457,6 +495,11 @@ typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abb
 typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abbee9f">onesdk_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onesdk__common_8h.html#afbe74f76eed67571abeeecb4308d505c">onesdk_messagingsysteminfo_handle_t</a></td></tr>
 <tr class="memdesc:afbe74f76eed67571abeeecb4308d505c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle that refers to a messaging system info object. <br /></td></tr>
 <tr class="separator:afbe74f76eed67571abeeecb4308d505c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:gaca0d75a1a592308964f51c249143baf0"><td class="memItemLeft" align="right" valign="top">
+typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abbee9f">onesdk_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ex__metrics.html#gaca0d75a1a592308964f51c249143baf0">onesdk_metric_handle_t</a></td></tr>
+<tr class="memdesc:gaca0d75a1a592308964f51c249143baf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle that refers to a metric object. <br /></td></tr>
+<tr class="separator:gaca0d75a1a592308964f51c249143baf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines common types/constants/macros. Applications should not include this file directly. </p>
@@ -541,6 +584,37 @@ typedef <a class="el" href="onesdk__common_8h.html#ae2ba1a4115ddc99529ab39f50abb
 <li>No data is captured/reported.</li>
 <li>Creating "passive" objects is possible though (e.g. <a class="el" href="group__database__requests.html#gaecbc2adc821bb4d7e516e9455646fdd5">onesdk_databaseinfo_create</a>). </li>
 </ul>
+
+</div>
+</div>
+<a id="a732bf07f0e190264baf29f3a1c22cc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a732bf07f0e190264baf29f3a1c22cc4a">&#9670;&nbsp;</a></span>ONESDK_INIT_FLAG_FORKABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ONESDK_INIT_FLAG_FORKABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Do not fully initialize the SDK now but instead allow it to be used in forked child processes. </p>
+<p>When setting this flag, <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> will only partially initialize the SDK agent. In this special <em>parent-initialized</em> initialization state, only the following functions can be called:</p>
+<ul>
+<li>All functions that are valid to call before calling initialize remain valid.</li>
+<li><a class="el" href="group__misc.html#ga4d5834da55f9d533ed6f9441f14cdb51">onesdk_agent_get_version_string</a> and <a class="el" href="group__init.html#ga8c1b37a28163bb7f790ac56091f86466">onesdk_stub_get_agent_load_info</a> work as expected.</li>
+<li><a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> will return <a class="el" href="onesdk__common_8h.html#ad891cc74c5e2c257a5e66c0fac5ad5b3">ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE</a> - but see the note below.</li>
+<li><a class="el" href="group__misc.html#ga31c7f418f4b3515097434f8df6810cad">onesdk_agent_set_warning_callback</a> and <a class="el" href="group__misc.html#ga1324a8c95a407255e838641e8a8f03a9">onesdk_agent_set_verbose_callback</a> work as expected, the callback will be carried over to forked child processes.</li>
+<li>It is recommended you call <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> when the original process will not fork any more children that want to use the SDK.</li>
+</ul>
+<p>After you fork, the child becomes <em>pre-initialized</em>: the first call to an SDK function that needs a <em>fully initialized</em> agent will automatically complete the initialization.</p>
+<p>You can still fork another child (e.g. in a double-fork scenario) in the <em>pre-initialized</em> state. However if you fork another child in the <em>fully initialized</em> state, it will not be able to use the SDK - not even if it tries to shut down the SDK and initialize it again.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling <a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> in the <em>pre-initialized</em> state will cause the agent to become <em>fully initialized</em>.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__misc.html#ga77260efaf63455969962e05b6b170135">onesdk_agent_get_fork_state</a> can be used to query which of these states the agent is in.</dd></dl>
+<p>All children forked from a <em>parent-initialized</em> process will use the same agent. That agent will shut down when all child processes and the original <em>parent-initialized</em> process have terminated or called shutdown. Calling <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> in a <em>pre-initialized</em> process is not required otherwise.</p>
+<dl class="section note"><dt>Note</dt><dd>If you use POSIX <code>wait</code> or similar functions, you might observe an additional child process in the original <em>parent-initialized</em> process.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>This flag requires at least agent version 1.151. </dd></dl>
 
 </div>
 </div>

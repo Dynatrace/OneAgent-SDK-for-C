@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.2</span>
    </div>
   </td>
  </tr>
@@ -65,6 +65,9 @@ $(function() {
 <div class="title">Common Tracer Functions</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Basic functions that can be used with all or multiple tracer types.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -91,6 +94,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga7a2c9b92ca453b575a1aa11cf5ab7ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Basic functions that can be used with all or multiple tracer types. </p>
 <p>Tracers are the objects used to capture information about "operations" (e.g. remote calls or database requests) that your application performs.</p>
 <p>Tracers are created by different factory functions, depending on the type of the tracer, and destroyed/released by <a class="el" href="group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f">onesdk_tracer_end</a>.</p>
 <p>Tracers are automatically linked to other active tracers on the same thread. To link to an operation that's running in another thread, processes or on another system you have to use the tagging or <a class="el" href="group__in__process__links.html">in-process linking</a> functions.</p>

@@ -25,7 +25,45 @@
 
 #include "onesdk/onesdk_common.h" /* IWYU pragma: export */
 
-/** @addtogroup init Initialization and Shutdown
+/** @defgroup init Initialization and Shutdown
+    @brief APIs to configure, initialize and shutdown the SDK and agent and related basic functions.
+
+    A typical use of these functions could be:
+    
+    @code{.c}
+    #include <onesdk/onesdk.h>
+    #include <stdio.h>
+
+    // optional but higly recommended (see below)
+    static void mycallback(char const* message) {
+        fputs(message, stderr);
+    }
+
+    int main(int argc, char** argv) {
+        onesdk_stub_process_cmdline_args(argc, argv, 1);  // optional: let the SDK process command line arguments 
+        onesdk_stub_strip_sdk_cmdline_args(&argc, argv);  // optional: remove SDK command line arguments from argv
+
+        // Initialize SDK
+        onesdk_result_t const onesdk_init_result = onesdk_initialize();
+
+        // optional: Set logging callbacks (see @ref misc)
+        onesdk_agent_set_warning_callback(mycallback); // Highly recommended.
+        onesdk_agent_set_verbose_callback(mycallback); // Recommended for development & debugging.
+
+        // ... use SDK ...
+
+        // Shut down SDK only if initialization suceeded.
+        if (onesdk_init_result == ONESDK_SUCCESS)
+            onesdk_shutdown();
+
+        return 0;
+    }
+    @endcode
+
+    Note that most of the functions in this module have return codes and @ref onesdk_stub_xstrerror can be used to translate
+    them to human-readable messages. After initialization, errors are reported via the logging callbacks (`mycallback`
+    in the example above).
+
     @{
 */
 

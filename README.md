@@ -13,21 +13,24 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
 - [Features](#features)
 - [Documentation](#documentation)
 - [Getting started](#getting-started)
-- [Building and linking against the Dynatrace OneAgent SDK](#building-and-linking-against-the-dynatrace-oneagent-sdk)
-  * [Using CMake](#using-cmake)
-  * [Auto-linking with Visual Studio](#auto-linking-with-visual-studio)
-  * [Other build systems](#other-build-systems)
+  * [Getting the SDK](#getting-the-sdk)
+  * [Building and linking against the Dynatrace OneAgent SDK](#building-and-linking-against-the-dynatrace-oneagent-sdk)
+    + [Using CMake](#using-cmake)
+    + [Auto-linking with Visual Studio](#auto-linking-with-visual-studio)
+    + [Other build systems](#other-build-systems)
   * [Using CMake to build the samples](#using-cmake-to-build-the-samples)
-- [Initializing the Dynatrace OneAgent SDK](#initializing-the-dynatrace-oneagent-sdk)
-  * [Special considerations for Solaris SPARC](#special-considerations-for-solaris-sparc)
-- [Using the Dynatrace OneAgent SDK to trace remote calls](#using-the-dynatrace-oneagent-sdk-to-trace-remote-calls)
-- [Using the Dynatrace OneAgent SDK to trace SQL based database calls](#using-the-dynatrace-oneagent-sdk-to-trace-sql-based-database-calls)
-- [Using the Dynatrace OneAgent SDK to trace incoming web requests](#using-the-dynatrace-oneagent-sdk-to-trace-incoming-web-requests)
-- [Using the Dynatrace OneAgent SDK to trace outgoing web requests](#using-the-dynatrace-oneagent-sdk-to-trace-outgoing-web-requests)
-- [Using the Dynatrace OneAgent SDK to trace asynchronous activities](#using-the-dynatrace-oneagent-sdk-to-trace-asynchronous-activities)
-- [Using the Dynatrace OneAgent SDK to trace messaging](#using-the-dynatrace-oneagent-sdk-to-trace-messaging)
-- [Using the Dynatrace OneAgent SDK to trace custom service methods](#using-the-dynatrace-oneagent-sdk-to-trace-custom-service-methods)
-- [Using the Dynatrace OneAgent SDK to add custom request attributes](#using-the-dynatrace-oneagent-sdk-to-add-custom-request-attributes)
+  * [Initializing the Dynatrace OneAgent SDK](#initializing-the-dynatrace-oneagent-sdk)
+    + [Special considerations for Solaris SPARC](#special-considerations-for-solaris-sparc)
+- [How to instrument your application](#how-to-instrument-your-application)
+  * [Trace remote calls](#trace-remote-calls)
+  * [Trace SQL based database calls](#trace-sql-based-database-calls)
+  * [Trace incoming web requests](#trace-incoming-web-requests)
+  * [Trace outgoing web requests](#trace-outgoing-web-requests)
+  * [Trace asynchronous activities](#trace-asynchronous-activities)
+  * [Trace messaging](#trace-messaging)
+  * [Trace custom service methods](#trace-custom-service-methods)
+  * [Add custom request attributes](#add-custom-request-attributes)
+  * [Report metrics (preview feature)](#report-metrics-preview-feature)
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
 - [Requirements](#requirements)
@@ -39,6 +42,8 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
 
 <!-- tocstop -->
 
+<a name="package-contents"></a>
+
 ## Package contents
 
 The SDK package includes
@@ -47,28 +52,39 @@ The SDK package includes
 - `samples/sample1`: A simple sample application.
 - `docs`: Reference documentation.
 
+<a name="features"></a>
 
 ## Features
 
-- Trace any remote call end-to-end across processes and different programming languages.
-- Trace any SQL-based database call.
-- Trace incoming and outgoing web requests.
-- Trace asynchronous processing within one process.
-- Trace messaging systems and messaging queues.
-- Trace custom service methods.
-- Add custom request attributes to any currently traced service.
+- [Trace any remote call end-to-end across processes and different programming languages.](#trace-remote-calls)
+- [Trace any SQL-based database call.](#trace-sql-based-database-calls)
+- [Trace incoming and outgoing web requests.](#trace-incoming-web-requests)
+- [Trace asynchronous processing within one process.](#trace-outgoing-web-requests)
+- [Trace messaging systems and messaging queues.](#trace-messaging)
+- [Trace custom service methods.](#trace-custom-service-methods)
+- [Add custom request attributes to any currently traced service.](#add-custom-request-attributes)
 
-When tracing incoming or outgoing calls or requests, this SDK is compatible with other OneAgent SDKs and OneAgents in general.
+When tracing incoming or outgoing calls, requests or messages, this SDK is compatible with other OneAgent SDKs and OneAgent code modules in general.
 
+See [Planned features for OneAgent
+SDK](https://answers.dynatrace.com/spaces/483/dynatrace-product-ideas/idea/198106/planned-features-for-oneagent-sdk.html) for details on
+upcoming features.
+
+<a name="documentation"></a>
 
 ## Documentation
 
-The reference documentation is included in this package. The most recent version is also available online at https://dynatrace.github.io/OneAgent-SDK-for-C/
+The reference documentation is included in this package. The most recent version is also available online at <https://dynatrace.github.io/OneAgent-SDK-for-C/>.
 
-A high level documentation/description of OneAgent SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/
+A high level documentation/description of OneAgent SDK concepts is available at <https://github.com/Dynatrace/OneAgent-SDK/>.
 
+<a name="getting-started"></a>
 
 ## Getting started
+
+<a name="getting-the-sdk"></a>
+
+### Getting the SDK
 
 To start using the Dynatrace OneAgent SDK for C/C++, simply download the latest source archive from [releases](https://github.com/Dynatrace/OneAgent-SDK-for-C/releases).
 The source archive also includes all necessary artifacts (e.g. the static and dynamic library files), so this is all you need.
@@ -76,11 +92,15 @@ Extract the archive to a local folder on your machine and then add the appropria
 
 To see if your platform is supported, refer to [requirements](#requirements).
 
-## Building and linking against the Dynatrace OneAgent SDK
+<a name="building-and-linking-against-the-dynatrace-oneagent-sdk"></a>
+
+### Building and linking against the Dynatrace OneAgent SDK
 
 The SDK doesn't have to be compiled, you only need to link your application to the SDK libraries.
 
-### Using CMake
+<a name="using-cmake"></a>
+
+#### Using CMake
 
 If you use CMake to generate build files for your application, you should be able to use the provided `onesdk-config.cmake` script ala
 
@@ -89,12 +109,16 @@ include("path/to/sdk-package/onesdk-config.cmake")
 target_link_libraries(your_application onesdk_static)
 ```
 
-### Auto-linking with Visual Studio
+<a name="auto-linking-with-visual-studio"></a>
+
+#### Auto-linking with Visual Studio
 
 If you use Visual Studio to build a Windows application, you can use the SDK's auto-linking feature. To do this, simply define the preprocessor macro `ONESDK_AUTO_LINK` before including any SDK header file.
 Aside from that, you only have to add the appropriate "include" and "lib" paths.
 
-### Other build systems
+<a name="other-build-systems"></a>
+
+#### Other build systems
 
 If you use another build system you have to configure it to
 - add an "include" path to `path/to/sdk-package/include`
@@ -105,6 +129,8 @@ The SDK contains code that dynamically loads the agent library (`.dll`/`.so`/...
 additional libraries (e.g. under Linux you would typically add `-ldl` to the linker command line).
 
 On Windows, when using Visual Studio 2015 or later, you also have to link `legacy_stdio_definitions.lib`.
+
+<a name="using-cmake-to-build-the-samples"></a>
 
 ### Using CMake to build the samples
 
@@ -120,14 +146,20 @@ C:\onesdk\samples\build>
 
 Then simply use your build system to build the samples (e.g. "make" or open & build the generated solution in Visual Studio).
 
+<a name="initializing-the-dynatrace-oneagent-sdk"></a>
 
-## Initializing the Dynatrace OneAgent SDK
+### Initializing the Dynatrace OneAgent SDK
 
 To initialize the OneAgent SDK, you call [`onesdk_initialize`][refd_initialize], like in the following sample. It is higly recommended that
 you call [`onesdk_shutdown`][refd_shutdown] when the application is done using the SDK (typically just before exiting):
 
 ```C
 #include <onesdk/onesdk.h>
+#include <stdio.h>
+
+static void mycallback(char const* message) {
+    fputs(message, stderr);
+}
 
 int main(int argc, char** argv) {
     onesdk_stub_process_cmdline_args(argc, argv, 1);  /* optional: let the SDK process command line arguments   */
@@ -135,6 +167,10 @@ int main(int argc, char** argv) {
 
     /* Initialize SDK */
     onesdk_result_t const onesdk_init_result = onesdk_initialize();
+
+    /* optional: Set logging callbacks. */
+    onesdk_agent_set_warning_callback(mycallback); /* Highly recommended. */
+    onesdk_agent_set_verbose_callback(mycallback); /* Recommended for development & debugging. */
 
     /* ... use SDK ... */
 
@@ -146,9 +182,14 @@ int main(int argc, char** argv) {
 }
 ```
 
-### Special considerations for Solaris SPARC
+> 📕 [Reference documentation for initialization and shutdown](https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html)
+> 📕 [Miscellaneous functions](https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html)
 
-Auto-configuration is not supported for the OneAgent SDK for C/C++ on Solaris SPARC. Thus you must either use
+<a name="special-considerations-for-solaris-sparc"></a>
+
+#### Special considerations for Solaris SPARC
+
+For agents older than 1.173, auto-configuration is not supported for the OneAgent SDK for C/C++ on Solaris SPARC. Thus you must either use
 [`onesdk_stub_set_variable`][refd_set_variable] before calling [`initialize`][refd_initialize], or set certain environment variables. If you
 use [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args], you can also use command line options. If you are familiar with [manual
 injection for Apache or Java on
@@ -181,7 +222,22 @@ stderr (see also [Troubleshooting](#troubleshooting)).
 [refd_set_variable]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga1271327bb21c71ed5f8d92de0629ebfc
 [refd_process_cmdline_args]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga77bf723c281e4e2963933a57ff1ec51c
 
-## Using the Dynatrace OneAgent SDK to trace remote calls
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-remote-calls"></a>
+
+<a name="how-to-instrument-your-application"></a>
+
+## How to instrument your application
+
+This section gives samples of how to instrument your application for each supported feature. Refer to the [documentation](#documentation)
+for more details.
+
+> See also:
+>
+> 📕 [Reference documentation for common tracer functions](https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracers.html)
+
+<a name="trace-remote-calls"></a>
+
+### Trace remote calls
 
 You can use the SDK to trace proprietary IPC communication from one process to the other. This will enable you to see full Service Flow,
 PurePath and Smartscape topology for remoting technologies that Dynatrace is not aware of.
@@ -252,8 +308,12 @@ Instrumenting an incoming remote call:
     onesdk_tracer_end(tracer);
 ```
 
+> 📕 [Reference documentation for remote call tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__remote__calls.html)
 
-## Using the Dynatrace OneAgent SDK to trace SQL based database calls
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-sql-based-database-calls"></a>
+<a name="trace-sql-based-database-calls"></a>
+
+### Trace SQL based database calls
 
 To trace database requests you need a database info object which stores the information about your database which does not change between
 individual requests. This will typically be created somewhere in your initialization code (after initializing the SDK):
@@ -303,8 +363,14 @@ Finally, release the database info object in your cleanup code (before shutting 
     db_info_handle = ONESDK_INVALID_HANDLE;
 ```
 
+Please note that SQL database traces are only created if they occur within some other SDK trace (e.g. incoming remote call).
 
-## Using the Dynatrace OneAgent SDK to trace incoming web requests
+> 📕 [Reference documentation for database request tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__database__requests.html)
+
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-incoming-web-requests"></a>
+<a name="trace-incoming-web-requests"></a>
+
+### Trace incoming web requests
 
 To trace incoming web requests you first need to create a web application info object which describes your web application:
 
@@ -364,8 +430,14 @@ And release the web application info object before shutting down the SDK:
     web_application_info_handle = ONESDK_INVALID_HANDLE;
 ```
 
+> 📕 [Reference documentation for incoming web request tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__incoming__web__requests.html)
+>
+> ➡️ [Trace outgoing web requests](#trace-outgoing-web-requests)
 
-## Using the Dynatrace OneAgent SDK to trace outgoing web requests
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-outgoing-web-requests"></a>
+<a name="trace-outgoing-web-requests"></a>
+
+### Trace outgoing web requests
 
 You can use the SDK to trace web requests sent by your application:
 
@@ -418,8 +490,14 @@ You can use the SDK to trace web requests sent by your application:
     onesdk_tracer_end(tracer);
 ```
 
+> 📕 [Reference documentation for outgoing web request tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__outgoing__web__requests.html)
+>
+> ➡️ [Trace incoming web requests](#trace-incoming-web-requests)
 
-## Using the Dynatrace OneAgent SDK to trace asynchronous activities
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-asynchronous-activities"></a>
+<a name="trace-asynchronous-activities"></a>
+
+### Trace asynchronous activities
 
 Many applications schedule work in some asynchronous fashion. Automatic linking of tracers will not work in such scenarios - it can only link to the innermost active tracer on the current thread.
 To link the asynchronous parts to the currently active tracer, you first have to create an in-process link:
@@ -463,7 +541,12 @@ Once you have the in-process link, you can create an in-process link tracer to c
 
 Note that you can re-use in-process links to create multiple in-process link tracers.
 
-## Using the Dynatrace OneAgent SDK to trace messaging
+> 📕 [Reference documentation for in-process link functions](https://dynatrace.github.io/OneAgent-SDK-for-C/group__in__process__links.html)
+
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-messaging"></a>
+<a name="trace-messaging"></a>
+
+### Trace messaging
 
 To trace interaction with a messaging system, such as sending and receiving messages from message queues, you need a messaging system info
 object which stores the information about your messaging system that does not change between individual requests. This will typically be
@@ -500,7 +583,7 @@ Tracing the sending of messages is straightforward and works like other tracers:
     }
 
     /* ... do the actual message sending (send along `byte_tag` so the other side can continue tracing) ... */
-    mymessage_add_header(mymessage, ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME, byte_tag, byte_tag_size);
+    mymessage_add_header(mymessage, ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME, byte_tag, byte_tag_size);
     mymessage_send(mymessage);
 
     /* release tag memory */
@@ -538,8 +621,8 @@ inside the receive tracer:
     while (/* ... e.g., a message is available in the queue, or only once ... */) {
         /* ... actually receive a message, ... */
 
-        unsigned char const* byte_tag = ...;    /* pointer to the byte tag that we received as part of the message, from the sender  */
-        onesdk_size_t byte_tag_size = ...;      /* size of the byte tag that we received */
+        unsigned char const* byte_tag = mymessage_get_header_optional(mymessage, ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME);
+        onesdk_size_t byte_tag_size = ...;      /* size of the byte tag that we received (Note: byte_tag is not null-terminated) */
 
         /* create process_tracer */
         onesdk_tracer_handle_t const process_tracer = onesdk_incomingmessageprocesstracer_create(messagingsysteminfo_handle);
@@ -583,9 +666,12 @@ You should not forget to release the messaging system info object in your cleanu
     messagingsysteminfo_handle = ONESDK_INVALID_HANDLE;
 ```
 
+> 📕 [Reference documentation for messaging tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__messaging.html)
 
+<a name="using-the-dynatrace-oneagent-sdk-to-trace-custom-service-methods"></a>
+<a name="trace-custom-service-methods"></a>
 
-## Using the Dynatrace OneAgent SDK to trace custom service methods
+### Trace custom service methods
 
 You can use the SDK to trace custom service methods. A custom service method is a meaningful part of your code that you want to trace but
 that does not fit any other tracer.
@@ -609,7 +695,12 @@ that does not fit any other tracer.
     onesdk_tracer_end(tracer);
 ```
 
-## Using the Dynatrace OneAgent SDK to add custom request attributes
+> 📕 [Reference documentation for custom service tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__customservice.html)
+
+<a name="using-the-dynatrace-oneagent-sdk-to-add-custom-request-attributes"></a>
+<a name="add-custom-request-attributes"></a>
+
+### Add custom request attributes
 
 You can add custom request attributes (key value pairs) to the currently traced service. Those attributes can then be used to e.g. search/filter requests in Dynatrace.
 To add a custom request attribute, simply call one of the `onesdk_customrequestattribute_add_{type}` functions:
@@ -628,6 +719,48 @@ To add a custom request attribute, simply call one of the `onesdk_customrequesta
 
 This will add the custom request attributes to the currently traced service. If no tracer is active, the values will be discarded.
 
+> 📕 [Reference documentation for custom request attributes](https://dynatrace.github.io/OneAgent-SDK-for-C/group__custom__request__attributes.html)
+
+
+<a name="metrics"></a>
+<a name="report-metrics"></a>
+<a name="report-metrics-preview-feature"></a>
+
+### Report metrics (preview feature)
+
+**The metrics API is currently part of a preview program and will not work for users outside of the preview program. Visit [Dynatrace Help][previewhelp] for details.**
+
+You can report metrics (i.e., time series data) using the OneAgent SDK. Counters, gauges and statistic metrics for floating point and integer numbers with one or zero additional dimensions are supported. Make sure to read the [reference documentation][metricref] to find out which metric is right for your use case. To give you an example of an integer gauge with one additional dimensions:
+
+```C
+    /* Create a metric handle somewhere in your initialization logic (after initializing the SDK) */
+    onesdk_metric_handle_t const mqsize_metric = onesdk_integergaugemetric_create(
+        /*key=*/ onesdk_asciistr("message_queue.size"),
+        /*unit=*/ onesdk_asciistr("count"),
+        /*dimension_name=*/onesdk_asciistr("queue_name"));
+
+    /* Periodically update the gauge with the current value (use a statistic instead, if you update event-based) */
+    onesdk_integergaugemetric_set_value(mqsize_metric, get_my_queue_size(), onesdk_asciistr("myqueuename"));
+
+    /* Somewhere before shutting down the SDK: */
+    onesdk_metric_delete(mqsize_metric);
+```
+
+In general you should try to use the same metric handle for the same metric instead of creating a new handle each time you report a value.
+
+You will need to subscribe to the metric in Dynatrace to see it. If a metric is not subscribed the agent will efficiently discard it.
+
+Note that metrics will currently not work when the SDK is initialized in [forkable mode](#forking).
+
+> 📕 [Reference documentation for metrics][metricref]
+> ➡️ [Dynatrace Help on preview features][previewhelp]
+
+[metricref]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__ex__metrics.html
+[previewhelp]: https://www.dynatrace.com/support/help/shortlink/preview-and-early-adopter-releases
+
+<a name="forking"></a>
+<a name="using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux"></a>
+<a name="using-the-dynatrace-oneagent-sdk-with-forked-child-processes-not-available-on-windows"></a>
 
 ## Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)
 
@@ -635,11 +768,11 @@ Some applications, especially web servers, use a concurrency model that is based
 is started which is responsible only for creating and managing child processes by means of forking. The child processes do the real work,
 for example handling web requests.
 
-The recommended way to use the SDK in such a scenario is as follows: You initialize the SDK in the master using the `onesdk_initialize_2`
-function passing the `ONESDK_INIT_FLAG_FORKABLE` flag in the flags argument. This way you will not be able to use the SDK in the
-master process (attempts to do so will be ignored, if applicable with an error code), but all forked child processes will share the same
-agent. This has a lower overhead, for example the startup of worker processes is not slowed down, and the per-worker memory overhead is
-reduced.
+The recommended way to use the SDK in such a scenario is as follows: You initialize the SDK in the master using the [`onesdk_initialize_2`
+function][refd_initialize_2] passing the [`ONESDK_INIT_FLAG_FORKABLE` flag][refd_init_flag_forkable] in the flags argument. This way you
+will not be able to use the SDK in the master process (attempts to do so will be ignored, if applicable with an error code), but all forked
+child processes will share the same agent. This has a lower overhead, for example the startup of worker processes is not slowed down, and
+the per-worker memory overhead is reduced.
 
 ![Diagram color legend](img/fork-legend.png)
 
@@ -746,24 +879,44 @@ int worker_main() {
 }
 ```
 
+> 📕 Reference documentation for:
+> * [initialization and shutdown](https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html)
+> * [`onesdk_agent_get_fork_state`](https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga77260efaf63455969962e05b6b170135)
+
+[refd_initialize_2]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#gac0681af704ba7e6404c3f67f582ee4db
+[refd_init_flag_forkable]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a
+
+
+<a name="troubleshooting"></a>
 
 ## Troubleshooting
 
-If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate logging by either
-- calling `onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`
-- setting the environment variable `DT_LOGLEVELSDK={level}`
-- if your program passes command line arguments to the SDK (see `onesdk_stub_process_cmdline_args`), you can use the command line argument `--dt_loglevelsdk={level}`
+If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate
+logging by either
+- calling [`onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`](refd_stub_set_logging_level]; or
+- setting the environment variable `DT_LOGLEVELSDK={level}`; or
+- if your program passes command line arguments to the SDK (see [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args]), you can
+  use the command line argument `--dt_loglevelsdk={level}`.
 
-Once you have enabled logging, log output of the stub will be written to `stderr` by default. See documentation for `onesdk_stub_set_logging_callback` if you need to process stub log messages in another way.
+Once you have enabled logging, log output of the stub will be written to `stderr` by default. Refer to the [documentation for
+`onesdk_stub_set_logging_callback`][refd_stub_set_logging_callback] if you need to process stub log messages in another way.
 
-If the SDK agent is active, but no paths are shown in the UI, check the agent log files.
+If the SDK agent is active, but no paths are shown in the UI, check any messages from the agent logging callbacks: see
+[`onesdk_agent_set_warning_callback`][refd_agent_set_warning_callback] and
+[`onesdk_agent_set_verbose_callback`][refd_agent_set_verbose_callback] in the reference documentation or in sample1.
+
+You can also check the agent log files (see the Dynatrace documentation for where to find them, e.g., on
+[Linux](https://www.dynatrace.com/support/help/shortlink/oneagent-files-linux#log-files) or
+[Windows](https://www.dynatrace.com/support/help/shortlink/oneagent-files-windows#log-files).
 You can increase the agent log level by setting the environment variable `DT_LOGLEVELFILE={level}` or passing the command line argument `--dt_loglevelfile={level}` to the SDK.
 This will provide additional debug information in agent log file. (Alternatively you can use `DT_LOGLEVELCON={level}` or `--dt_loglevelcon={level}` if you want to receive agent log output via `stderr`.)
 
-To troubleshoot SDK issues you can also use the SDK's agent logging callback - see `onesdk_agent_set_logging_callback` in the reference documentation.
+[refd_stub_set_logging_level]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga85b610bcd0d771fe641a1cd1ef03fd13
+[refd_stub_set_logging_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga68fd905f95b1fdc05b7d45e5a419934d
+[refd_agent_set_warning_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga31c7f418f4b3515097434f8df6810cad
+[refd_agent_set_verbose_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga1324a8c95a407255e838641e8a8f03a9
 
 <a name="requirements"></a>
-
 ## Requirements
 
 - Dynatrace OneAgent needs to be installed on the system that is to be monitored (required versions see below)
@@ -783,6 +936,7 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
 |:---------------------|:-----------------|:-------------|
+|1.5.1                 |>=1.179           |Supported     |
 |1.4.1                 |>=1.161           |Supported     |
 |1.3.2                 |>=1.159           |Supported     |
 |1.3.1                 |>=1.151           |Supported     |
@@ -790,6 +944,8 @@ To troubleshoot SDK issues you can also use the SDK's agent logging callback - s
 |1.1.0                 |>=1.141           |Supported     |
 |1.0.0                 |>=1.133           |Supported     |
 
+Note that this table only states the support status of the mentioned OneAgent SDK for C/C++ version,
+not the OneAgent itself.
 
 <a name="help" />
 <a name="help--support" />
@@ -801,12 +957,15 @@ support and compatibility table](#version-support-and-compatibility-table). For 
 help](https://github.com/Dynatrace/OneAgent-SDK#help).
 
 
+<a name="read-the-manual" />
 
 ### Read the manual
 
 * The most recent version of the reference documentation can be viewed at https://dynatrace.github.io/OneAgent-SDK-for-C/
 * A high level documentation/description of OneAgent SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/.
 * Of course, this README also contains lots of useful information.
+
+<a name="let-us-help-you" />
 
 ### Let us help you
 
@@ -827,11 +986,15 @@ SLAs don't apply for GitHub tickets
 
 SLAs apply according to the customer's support level.
 
+<a name="release-notes" />
 
 ## Release Notes
 
+See also https://github.com/Dynatrace/OneAgent-SDK-for-C/releases.
+
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.5.1  |Added metrics APIs (preview feature), improved logging callback APIs, new API to query fork state                       |
 |1.4.1  |Added custom service tracers and messaging tracers                                                                      |
 |1.3.2  |Support for Solaris SPARC                                                                                               |
 |1.3.1  |Support for monitoring forked child processes, added new API to check agent version compatibility                       |

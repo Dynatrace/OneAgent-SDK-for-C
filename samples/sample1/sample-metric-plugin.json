@@ -1,0 +1,34 @@
+{
+  "jsonVersion": "1.1",
+  "version": "1.0",
+  "name": "custom.codemodule.oneagentsdk.c.sample.metricsplugin",
+  "metricGroup": "oneagentsdk.c.sample",
+  "type": "codemodule",
+  "entity": "PROCESS_GROUP_INSTANCE",
+  "configUI": {
+    "displayName": "OneAgent SDK for C/C++ sample metrics plugin"
+  },
+  "processTypes": [],
+  "metrics": [
+    {
+      "timeseries": {
+        "displayname": "Message Queue's pending message count",
+        "key": "mq.pending",
+        "metricdatatype": "IntegerGauge",
+        "unit": "Count",
+        "description": "Number of unprocessed messages in the message queue",
+        "dimensions": [ "queue_name" ],
+        "topxconfig": {
+          "limit": "100",
+          "calculation": "AVERAGE",
+          "direction": "DESCENDING"
+        }
+      },
+      "source": {
+        "provider": "SDK",
+        "nativedatatype": "IntegerGauge",
+        "metricKey": "message_queue.pending"
+      }
+    }
+  ]
+}

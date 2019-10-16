@@ -1,5 +1,5 @@
 /*
-    Copyright 2017-2018 Dynatrace LLC
+    Copyright 2017-2019 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -94,16 +94,18 @@ typedef void ONESDK_CALL onesdk_agent_logging_callback_t(char const* message);
 /*========================================================================================================================================*/
 
 /** @name Logging Level Constants
+    @brief Allows choosing a log level. Lower levels include higher ones.
+    @see @ref onesdk_stub_set_logging_level
     @{
     @anchor logging_level_constants
 */
 
 #define ONESDK_LOGGING_LEVEL_FINEST		0   /**< @brief Most verbose logging level. */
-#define ONESDK_LOGGING_LEVEL_FINER		1
-#define ONESDK_LOGGING_LEVEL_FINE		2
-#define ONESDK_LOGGING_LEVEL_CONFIG		3
-#define ONESDK_LOGGING_LEVEL_INFO		4
-#define ONESDK_LOGGING_LEVEL_WARNING	5
+#define ONESDK_LOGGING_LEVEL_FINER		1   /**< @brief Log even finer messages. */
+#define ONESDK_LOGGING_LEVEL_FINE		2   /**< @brief Log fine messages. */
+#define ONESDK_LOGGING_LEVEL_CONFIG		3   /**< @brief Log config-related messages. */
+#define ONESDK_LOGGING_LEVEL_INFO		4   /**< @brief Log info messages. */
+#define ONESDK_LOGGING_LEVEL_WARNING	5   /**< @brief Log warning messages. */
 #define ONESDK_LOGGING_LEVEL_SEVERE		6   /**< @brief Least verbose regular logging level. */
 #define ONESDK_LOGGING_LEVEL_DEBUG		7   /**< @brief Only used for debug messages which are not enabled by default. */
 #define ONESDK_LOGGING_LEVEL_NONE       8   /**< @brief Default SDK stub logging level. Setting this log level deactivates all logging. */
@@ -148,6 +150,7 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 /** @name Agent State Constants
     @{
     @anchor agent_state_constants
+    @see @ref onesdk_agent_get_current_state
 */
 
 /** @brief The SDK stub is connected to the agent, which is currently active.
@@ -193,13 +196,43 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 #define ONESDK_AGENT_STATE_NOT_INITIALIZED			3
 
 /** @brief Some unexpected error occurred while trying to determine the agent state. */
-#define ONESDK_AGENT_STATE_ERROR					-1
+#define ONESDK_AGENT_STATE_ERROR	              (-1)
 
 /** @} */
 
+
+/** @anchor agent_fork_state_constants
+    @name Agent Forking State Constants
+    @{
+    @brief The fork-related state the agent is in, only relevant if you used @ref ONESDK_INIT_FLAG_FORKABLE.
+    @see @ref ONESDK_INIT_FLAG_FORKABLE
+    @see @ref onesdk_agent_get_fork_state
+*/
+
+/** @brief SDK cannot be used, forked processes may use SDK. */
+#define ONESDK_AGENT_FORK_STATE_PARENT_INITIALIZED    1
+
+/** @brief Forked processes can use the SDK. Using the SDK in this process is allowed but
+           changes the state to @ref ONESDK_AGENT_FORK_STATE_FULLY_INITIALIZED */
+#define ONESDK_AGENT_FORK_STATE_PRE_INITIALIZED       2
+
+/** @brief SDK can be used, forked processes may not use the SDK. */
+#define ONESDK_AGENT_FORK_STATE_FULLY_INITIALIZED     3
+
+/** @brief SDK can be used, forked processes may not use the SDK, the agent was initialized without @ref ONESDK_INIT_FLAG_FORKABLE. */
+#define ONESDK_AGENT_FORK_STATE_NOT_FORKABLE          4
+
+
+/** @brief Some error occurred while trying to determine the agent fork state. */
+#define ONESDK_AGENT_FORK_STATE_ERROR	              (-1)
+
+/** @} */
+
+
 /*========================================================================================================================================*/
 
-/** @addtogroup channels Channel Types and Endpoints
+/** @defgroup channels Channel Types and Endpoints
+    @brief Describes communication (networking, I/O) channels and endpoints.
 
     When we talk about channel types and channel endpoints in the SDK, we're talking about a "communication channel" which is used
     to access/communicate with some service or resource. Mapped to the OSI model or Internet protocol suite, our kind of channels would be
@@ -267,7 +300,7 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 
 /*========================================================================================================================================*/
 
-/** @addtogroup database_requests
+/** @ingroup database_requests
     @{
 
     @name Database Vendor Strings
@@ -333,7 +366,7 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 
 /*========================================================================================================================================*/
 
-/** @addtogroup init
+/** @ingroup init
     @{
 
     @name Initialization flag constants
@@ -353,7 +386,8 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
     - All functions that are valid to call before calling initialize remain valid.
     - @ref onesdk_agent_get_version_string and @ref onesdk_stub_get_agent_load_info work as expected.
     - @ref onesdk_agent_get_current_state will return @ref ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE - but see the note below.
-    - @ref onesdk_agent_set_logging_callback works as expected, the callback will be carried over to forked child processes.
+    - @ref onesdk_agent_set_warning_callback and @ref onesdk_agent_set_verbose_callback work as expected,
+      the callback will be carried over to forked child processes.
     - It is recommended you call @ref onesdk_shutdown when the original process will not fork any more children that want to use the
       SDK.
 
@@ -365,6 +399,8 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
     again.
 
     @note Calling @ref onesdk_agent_get_current_state in the _pre-initialized_ state will cause the agent to become _fully initialized_.
+
+    @see @ref onesdk_agent_get_fork_state can be used to query which of these states the agent is in.
 
     All children forked from a _parent-initialized_ process will use the same agent. That agent will shut down when all child processes and
     the original _parent-initialized_ process have terminated or called shutdown. Calling @ref onesdk_shutdown in a _pre-initialized_
@@ -382,7 +418,7 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 
 /*========================================================================================================================================*/
 
-/** @addtogroup messaging
+/** @ingroup messaging
     @{
 */
 
@@ -393,7 +429,12 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
     server side to continue tracing (connect the server side trace to the traced operation from which the tag was obtained). This works
     only if the receiving application is monitored by a Dynatrace agent and the messaging system used for receiving is supported.
 */
-#define ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME "dtdTraceTagInfo"
+#define ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME "dtdTraceTagInfo"
+
+/** @brief DEPRECATED alias for @ref ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME.
+    @deprecated Use @ref ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME instead.
+*/
+#define ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME
 
 /**
     @name Messaging Destination Type Constants
@@ -426,6 +467,11 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 #define ONESDK_MESSAGING_VENDOR_TIBCO        "Tibco"        /**< @brief Messaging system vendor string for Tibco. */
 
 /** @} */
+/** @} */
+
+/** @ingroup ex_metrics */
+/** @{ */
+typedef onesdk_handle_t onesdk_metric_handle_t;             /**< @brief A handle that refers to a metric object. */
 /** @} */
 
 /*========================================================================================================================================*/

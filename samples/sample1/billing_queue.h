@@ -24,6 +24,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
+#include "onesdk/onesdk.h"
 
 /*========================================================================================================================================*/
 
@@ -50,12 +51,18 @@ public:
     message_queue(message_queue const&) = delete; // We're non-copyable.
     message_queue operator =(message_queue const&) = delete; // We're non-copyable.
 
-    message_queue() = default;
+    explicit message_queue(std::string const& name) : m_name(name), m_size_metric(
+        onesdk_integergaugemetric_create(
+            onesdk_asciistr("message_queue.pending"),
+            onesdk_asciistr("count"),
+            onesdk_asciistr("queue_name")))
+    {}
 
     void send(queue_message& message) {
-        message.message_id = std::to_string(m_queue.size());
         try {
             std::lock_guard<std::mutex> lock(m_queue_mut);
+            message.message_id = std::to_string(m_queue.size());
+            update_queue_metric();
             m_queue.push(message);
         } catch (...) {
             message.message_id.clear();
@@ -69,10 +76,17 @@ public:
             return {};
         auto result = std::move(m_queue.front());
         m_queue.pop();
+        update_queue_metric();
         return result;
     }
 
 private:
+    void update_queue_metric() {
+        onesdk_integergaugemetric_set_value(m_size_metric, m_queue.size(), onesdk_asciistr(m_name.c_str()));
+    }
+
+    std::string m_name;
+    onesdk_metric_handle_t m_size_metric;
     std::mutex m_queue_mut;
     std::queue<queue_message> m_queue;
 };
@@ -85,7 +99,7 @@ inline message_queue& connect_queue(std::string const& queue_name) {
     std::lock_guard<std::mutex> lock(queues_mut);
     auto& result = queues[queue_name];
     if (!result)
-        result.reset(new message_queue);
+        result.reset(new message_queue(queue_name));
     return *result;
 }
 

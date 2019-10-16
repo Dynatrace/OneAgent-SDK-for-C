@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.2</span>
    </div>
   </td>
  </tr>
@@ -65,6 +65,9 @@ $(function() {
 <div class="title">Database Request Tracers</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Trace SQL-based database requests.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -83,160 +86,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9c2610329a2d5fe22d26512df386fac5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga9c2610329a2d5fe22d26512df386fac5">onesdk_databaserequesttracer_set_round_trip_count</a> (<a class="el" href="onesdk__common_8h.html#afd307ae54a60c333f87bad4e4cb2cbf3">onesdk_tracer_handle_t</a> tracer_handle, <a class="el" href="onesdk__config_8h.html#acff8bf967021eaaaeefc001d54e565b0">onesdk_int32_t</a> round_trip_count)</td></tr>
 <tr class="memdesc:ga9c2610329a2d5fe22d26512df386fac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the number of round trips for a database request.  <a href="#ga9c2610329a2d5fe22d26512df386fac5">More...</a><br /></td></tr>
 <tr class="separator:ga9c2610329a2d5fe22d26512df386fac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Database Vendor Strings</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp258456b80bf1320c204b8a5b19775f14"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__database__requests.html">Database Request Tracers</a>, <a href="https://github.com/Dynatrace/OneAgent-SDK/#database">https://github.com/Dynatrace/OneAgent-SDK/#database</a></dd></dl>
-<p><a class="anchor" id="database_vendor_strings"></a></p>
-</td></tr>
-<tr class="memitem:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="memItemLeft" align="right" valign="top"><a id="gac89c51a73e1bd750d3318f2b8d2f351c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac89c51a73e1bd750d3318f2b8d2f351c">ONESDK_DATABASE_VENDOR_APACHE_HIVE</a>&#160;&#160;&#160;&quot;ApacheHive&quot;</td></tr>
-<tr class="memdesc:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Hive. <br /></td></tr>
-<tr class="separator:gac89c51a73e1bd750d3318f2b8d2f351c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61c36119884d91a0b0cb301a2d1dd549"><td class="memItemLeft" align="right" valign="top"><a id="ga61c36119884d91a0b0cb301a2d1dd549"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga61c36119884d91a0b0cb301a2d1dd549">ONESDK_DATABASE_VENDOR_CLOUDSCAPE</a>&#160;&#160;&#160;&quot;Cloudscape&quot;</td></tr>
-<tr class="memdesc:ga61c36119884d91a0b0cb301a2d1dd549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
-<tr class="separator:ga61c36119884d91a0b0cb301a2d1dd549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8651b5195f4e85a602a8836976b5ea0"><td class="memItemLeft" align="right" valign="top"><a id="gac8651b5195f4e85a602a8836976b5ea0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac8651b5195f4e85a602a8836976b5ea0">ONESDK_DATABASE_VENDOR_HSQLDB</a>&#160;&#160;&#160;&quot;HSQLDB&quot;</td></tr>
-<tr class="memdesc:gac8651b5195f4e85a602a8836976b5ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for HyperSQL DB. <br /></td></tr>
-<tr class="separator:gac8651b5195f4e85a602a8836976b5ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga782eee1ae91953174709680cb24ccbfc"><td class="memItemLeft" align="right" valign="top"><a id="ga782eee1ae91953174709680cb24ccbfc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga782eee1ae91953174709680cb24ccbfc">ONESDK_DATABASE_VENDOR_PROGRESS</a>&#160;&#160;&#160;&quot;Progress&quot;</td></tr>
-<tr class="memdesc:ga782eee1ae91953174709680cb24ccbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for OpenEdge Database (aka. Progress). <br /></td></tr>
-<tr class="separator:ga782eee1ae91953174709680cb24ccbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaabdf954c2e6959e4138e004f2af8311f"><td class="memItemLeft" align="right" valign="top"><a id="gaabdf954c2e6959e4138e004f2af8311f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaabdf954c2e6959e4138e004f2af8311f">ONESDK_DATABASE_VENDOR_MAXDB</a>&#160;&#160;&#160;&quot;MaxDB&quot;</td></tr>
-<tr class="memdesc:gaabdf954c2e6959e4138e004f2af8311f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP MaxDB. <br /></td></tr>
-<tr class="separator:gaabdf954c2e6959e4138e004f2af8311f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="memItemLeft" align="right" valign="top"><a id="ga5a3963ff5ea50b0895b5fe29b4afae55"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5a3963ff5ea50b0895b5fe29b4afae55">ONESDK_DATABASE_VENDOR_HANADB</a>&#160;&#160;&#160;&quot;HanaDB&quot;</td></tr>
-<tr class="memdesc:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP HANA DB. <br /></td></tr>
-<tr class="separator:ga5a3963ff5ea50b0895b5fe29b4afae55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="memItemLeft" align="right" valign="top"><a id="ga0b5f90c742fb89533a8034a0bdf236f5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga0b5f90c742fb89533a8034a0bdf236f5">ONESDK_DATABASE_VENDOR_INGRES</a>&#160;&#160;&#160;&quot;Ingres&quot;</td></tr>
-<tr class="memdesc:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Ingres Database. <br /></td></tr>
-<tr class="separator:ga0b5f90c742fb89533a8034a0bdf236f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="memItemLeft" align="right" valign="top"><a id="gaca1d62bc1a8f93d8335d9fe999612eb7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaca1d62bc1a8f93d8335d9fe999612eb7">ONESDK_DATABASE_VENDOR_FIRST_SQL</a>&#160;&#160;&#160;&quot;FirstSQL&quot;</td></tr>
-<tr class="memdesc:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FirstSQL. <br /></td></tr>
-<tr class="separator:gaca1d62bc1a8f93d8335d9fe999612eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafdda18af4c8fec64911b488b6593c62b"><td class="memItemLeft" align="right" valign="top"><a id="gafdda18af4c8fec64911b488b6593c62b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gafdda18af4c8fec64911b488b6593c62b">ONESDK_DATABASE_VENDOR_ENTERPRISE_DB</a>&#160;&#160;&#160;&quot;EnterpriseDB&quot;</td></tr>
-<tr class="memdesc:gafdda18af4c8fec64911b488b6593c62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for EnterpriseDB. <br /></td></tr>
-<tr class="separator:gafdda18af4c8fec64911b488b6593c62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memItemLeft" align="right" valign="top"><a id="ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga6c85c0d4c2e52ebd7c75ea2b78fbfc57">ONESDK_DATABASE_VENDOR_CACHE</a>&#160;&#160;&#160;&quot;Cache&quot;</td></tr>
-<tr class="memdesc:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InterSystems Cache. <br /></td></tr>
-<tr class="separator:ga6c85c0d4c2e52ebd7c75ea2b78fbfc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memItemLeft" align="right" valign="top"><a id="ga04c6a962cb9071ed5d2ed69f89f7bad4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga04c6a962cb9071ed5d2ed69f89f7bad4">ONESDK_DATABASE_VENDOR_ADABAS</a>&#160;&#160;&#160;&quot;Adabas&quot;</td></tr>
-<tr class="memdesc:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ADABAS. <br /></td></tr>
-<tr class="separator:ga04c6a962cb9071ed5d2ed69f89f7bad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac908e1b462bc9e8a5954da0279774109"><td class="memItemLeft" align="right" valign="top"><a id="gac908e1b462bc9e8a5954da0279774109"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac908e1b462bc9e8a5954da0279774109">ONESDK_DATABASE_VENDOR_FIREBIRD</a>&#160;&#160;&#160;&quot;Firebird&quot;</td></tr>
-<tr class="memdesc:gac908e1b462bc9e8a5954da0279774109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Firebird Database. <br /></td></tr>
-<tr class="separator:gac908e1b462bc9e8a5954da0279774109"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memItemLeft" align="right" valign="top"><a id="gaa3c4b2d2a05bc5117265b5fd8a102d47"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaa3c4b2d2a05bc5117265b5fd8a102d47">ONESDK_DATABASE_VENDOR_DB2</a>&#160;&#160;&#160;&quot;DB2&quot;</td></tr>
-<tr class="memdesc:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Db2. <br /></td></tr>
-<tr class="separator:gaa3c4b2d2a05bc5117265b5fd8a102d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga760396456052e4f4b9ea5cef82cd6298"><td class="memItemLeft" align="right" valign="top"><a id="ga760396456052e4f4b9ea5cef82cd6298"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga760396456052e4f4b9ea5cef82cd6298">ONESDK_DATABASE_VENDOR_DERBY_CLIENT</a>&#160;&#160;&#160;&quot;Derby Client&quot;</td></tr>
-<tr class="memdesc:ga760396456052e4f4b9ea5cef82cd6298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for JDBC connections to Apache Derby (aka. IBM Cloudscape). <br /></td></tr>
-<tr class="separator:ga760396456052e4f4b9ea5cef82cd6298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58034a844a0128e38c11d07062936f97"><td class="memItemLeft" align="right" valign="top"><a id="ga58034a844a0128e38c11d07062936f97"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga58034a844a0128e38c11d07062936f97">ONESDK_DATABASE_VENDOR_DERBY_EMBEDDED</a>&#160;&#160;&#160;&quot;Derby Embedded&quot;</td></tr>
-<tr class="memdesc:ga58034a844a0128e38c11d07062936f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Derby Embedded. <br /></td></tr>
-<tr class="separator:ga58034a844a0128e38c11d07062936f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b5ccb601fa70be81e3abece9d66df37"><td class="memItemLeft" align="right" valign="top"><a id="ga0b5ccb601fa70be81e3abece9d66df37"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga0b5ccb601fa70be81e3abece9d66df37">ONESDK_DATABASE_VENDOR_FILEMAKER</a>&#160;&#160;&#160;&quot;Filemaker&quot;</td></tr>
-<tr class="memdesc:ga0b5ccb601fa70be81e3abece9d66df37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for FileMaker Pro. <br /></td></tr>
-<tr class="separator:ga0b5ccb601fa70be81e3abece9d66df37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac390951403defc36ccd3c433c20c2c92"><td class="memItemLeft" align="right" valign="top"><a id="gac390951403defc36ccd3c433c20c2c92"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gac390951403defc36ccd3c433c20c2c92">ONESDK_DATABASE_VENDOR_INFORMIX</a>&#160;&#160;&#160;&quot;Informix&quot;</td></tr>
-<tr class="memdesc:gac390951403defc36ccd3c433c20c2c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Informix. <br /></td></tr>
-<tr class="separator:gac390951403defc36ccd3c433c20c2c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memItemLeft" align="right" valign="top"><a id="gab76af6c1c8a9f8cbf8715bab006f72e5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gab76af6c1c8a9f8cbf8715bab006f72e5">ONESDK_DATABASE_VENDOR_INSTANT_DB</a>&#160;&#160;&#160;&quot;InstantDb&quot;</td></tr>
-<tr class="memdesc:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for InstantDB. <br /></td></tr>
-<tr class="separator:gab76af6c1c8a9f8cbf8715bab006f72e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="memItemLeft" align="right" valign="top"><a id="ga2dee1b5e842ec50960de2609b9b3a0fe"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga2dee1b5e842ec50960de2609b9b3a0fe">ONESDK_DATABASE_VENDOR_INTERBASE</a>&#160;&#160;&#160;&quot;Interbase&quot;</td></tr>
-<tr class="memdesc:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Embarcadero InterBase. <br /></td></tr>
-<tr class="separator:ga2dee1b5e842ec50960de2609b9b3a0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memItemLeft" align="right" valign="top"><a id="ga6e0d7b0ad192de331fea710ea1b7c4f3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga6e0d7b0ad192de331fea710ea1b7c4f3">ONESDK_DATABASE_VENDOR_MYSQL</a>&#160;&#160;&#160;&quot;MySQL&quot;</td></tr>
-<tr class="memdesc:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MySQL. <br /></td></tr>
-<tr class="separator:ga6e0d7b0ad192de331fea710ea1b7c4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaadfe290f2e9308629fa70a58a260acf9"><td class="memItemLeft" align="right" valign="top"><a id="gaadfe290f2e9308629fa70a58a260acf9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaadfe290f2e9308629fa70a58a260acf9">ONESDK_DATABASE_VENDOR_MARIADB</a>&#160;&#160;&#160;&quot;MariaDB&quot;</td></tr>
-<tr class="memdesc:gaadfe290f2e9308629fa70a58a260acf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for MariaDB. <br /></td></tr>
-<tr class="separator:gaadfe290f2e9308629fa70a58a260acf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9bd48aa7021d10759a20c87ea6355203"><td class="memItemLeft" align="right" valign="top"><a id="ga9bd48aa7021d10759a20c87ea6355203"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga9bd48aa7021d10759a20c87ea6355203">ONESDK_DATABASE_VENDOR_NETEZZA</a>&#160;&#160;&#160;&quot;Netezza&quot;</td></tr>
-<tr class="memdesc:ga9bd48aa7021d10759a20c87ea6355203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for IBM Netezza. <br /></td></tr>
-<tr class="separator:ga9bd48aa7021d10759a20c87ea6355203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="memItemLeft" align="right" valign="top"><a id="ga478ff9af386cbf772e1fbb31bd8a62d7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga478ff9af386cbf772e1fbb31bd8a62d7">ONESDK_DATABASE_VENDOR_ORACLE</a>&#160;&#160;&#160;&quot;Oracle&quot;</td></tr>
-<tr class="memdesc:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Oracle Database. <br /></td></tr>
-<tr class="separator:ga478ff9af386cbf772e1fbb31bd8a62d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="memItemLeft" align="right" valign="top"><a id="gaf64475874d0c49a7aa2f5e4676ead82f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gaf64475874d0c49a7aa2f5e4676ead82f">ONESDK_DATABASE_VENDOR_PERVASIVE</a>&#160;&#160;&#160;&quot;Pervasive&quot;</td></tr>
-<tr class="memdesc:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Pervasive PSQL. <br /></td></tr>
-<tr class="separator:gaf64475874d0c49a7aa2f5e4676ead82f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="memItemLeft" align="right" valign="top"><a id="ga8bf92a628da23a552c8e1214b4f0b6f7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga8bf92a628da23a552c8e1214b4f0b6f7">ONESDK_DATABASE_VENDOR_POINTBASE</a>&#160;&#160;&#160;&quot;Pointbase&quot;</td></tr>
-<tr class="memdesc:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PointBase. <br /></td></tr>
-<tr class="separator:ga8bf92a628da23a552c8e1214b4f0b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5485be9bcd33517bec3faf61fa09e80e"><td class="memItemLeft" align="right" valign="top"><a id="ga5485be9bcd33517bec3faf61fa09e80e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5485be9bcd33517bec3faf61fa09e80e">ONESDK_DATABASE_VENDOR_POSTGRESQL</a>&#160;&#160;&#160;&quot;PostgreSQL&quot;</td></tr>
-<tr class="memdesc:ga5485be9bcd33517bec3faf61fa09e80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for PostgreSQL. <br /></td></tr>
-<tr class="separator:ga5485be9bcd33517bec3faf61fa09e80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="memItemLeft" align="right" valign="top"><a id="ga9704854c2218c381cc4ae4b8769c4e7c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga9704854c2218c381cc4ae4b8769c4e7c">ONESDK_DATABASE_VENDOR_SQLSERVER</a>&#160;&#160;&#160;&quot;SQL Server&quot;</td></tr>
-<tr class="memdesc:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Microsoft SQL Server. <br /></td></tr>
-<tr class="separator:ga9704854c2218c381cc4ae4b8769c4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41815ff93529c1bee22d20fd75adc449"><td class="memItemLeft" align="right" valign="top"><a id="ga41815ff93529c1bee22d20fd75adc449"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga41815ff93529c1bee22d20fd75adc449">ONESDK_DATABASE_VENDOR_SQLITE</a>&#160;&#160;&#160;&quot;sqlite&quot;</td></tr>
-<tr class="memdesc:ga41815ff93529c1bee22d20fd75adc449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SQLite. <br /></td></tr>
-<tr class="separator:ga41815ff93529c1bee22d20fd75adc449"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="memItemLeft" align="right" valign="top"><a id="ga678222939ffbde58e4e82f3e9c63b6cb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga678222939ffbde58e4e82f3e9c63b6cb">ONESDK_DATABASE_VENDOR_SYBASE</a>&#160;&#160;&#160;&quot;Sybase&quot;</td></tr>
-<tr class="memdesc:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for SAP ASE (aka. Sybase SQL Server, Sybase DB, Sybase ASE). <br /></td></tr>
-<tr class="separator:ga678222939ffbde58e4e82f3e9c63b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63c62cce89aa300640503287a793c327"><td class="memItemLeft" align="right" valign="top"><a id="ga63c62cce89aa300640503287a793c327"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga63c62cce89aa300640503287a793c327">ONESDK_DATABASE_VENDOR_TERADATA</a>&#160;&#160;&#160;&quot;Teradata&quot;</td></tr>
-<tr class="memdesc:ga63c62cce89aa300640503287a793c327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Teradata Database. <br /></td></tr>
-<tr class="separator:ga63c62cce89aa300640503287a793c327"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f750b31a0b0c68808629d6206b16c43"><td class="memItemLeft" align="right" valign="top"><a id="ga5f750b31a0b0c68808629d6206b16c43"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga5f750b31a0b0c68808629d6206b16c43">ONESDK_DATABASE_VENDOR_VERTICA</a>&#160;&#160;&#160;&quot;Vertica&quot;</td></tr>
-<tr class="memdesc:ga5f750b31a0b0c68808629d6206b16c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Vertica. <br /></td></tr>
-<tr class="separator:ga5f750b31a0b0c68808629d6206b16c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e8e0a7906c5c223a51560767fd5180"><td class="memItemLeft" align="right" valign="top"><a id="ga62e8e0a7906c5c223a51560767fd5180"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga62e8e0a7906c5c223a51560767fd5180">ONESDK_DATABASE_VENDOR_CASSANDRA</a>&#160;&#160;&#160;&quot;Cassandra&quot;</td></tr>
-<tr class="memdesc:ga62e8e0a7906c5c223a51560767fd5180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Cassandra. <br /></td></tr>
-<tr class="separator:ga62e8e0a7906c5c223a51560767fd5180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga711037bd857b89e1cf96f47923229bc5"><td class="memItemLeft" align="right" valign="top"><a id="ga711037bd857b89e1cf96f47923229bc5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga711037bd857b89e1cf96f47923229bc5">ONESDK_DATABASE_VENDOR_H2</a>&#160;&#160;&#160;&quot;H2&quot;</td></tr>
-<tr class="memdesc:ga711037bd857b89e1cf96f47923229bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for H2 Database Engine. <br /></td></tr>
-<tr class="separator:ga711037bd857b89e1cf96f47923229bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memItemLeft" align="right" valign="top"><a id="ga40f8a5f949b2aa0b3bc01abf16ab84dd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga40f8a5f949b2aa0b3bc01abf16ab84dd">ONESDK_DATABASE_VENDOR_COLDFUSION_IMQ</a>&#160;&#160;&#160;&quot;ColdFusion IMQ&quot;</td></tr>
-<tr class="memdesc:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for ColdFusion In-Memory Query (aka. Query of Queries). <br /></td></tr>
-<tr class="separator:ga40f8a5f949b2aa0b3bc01abf16ab84dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750e1099562e7626a5c0bed34a235d5f"><td class="memItemLeft" align="right" valign="top"><a id="ga750e1099562e7626a5c0bed34a235d5f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#ga750e1099562e7626a5c0bed34a235d5f">ONESDK_DATABASE_VENDOR_REDSHIFT</a>&#160;&#160;&#160;&quot;Amazon Redshift&quot;</td></tr>
-<tr class="memdesc:ga750e1099562e7626a5c0bed34a235d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Amazon Redshift. <br /></td></tr>
-<tr class="separator:ga750e1099562e7626a5c0bed34a235d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa231027c5332938ab9e22b45d13b7bc"><td class="memItemLeft" align="right" valign="top"><a id="gafa231027c5332938ab9e22b45d13b7bc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__database__requests.html#gafa231027c5332938ab9e22b45d13b7bc">ONESDK_DATABASE_VENDOR_COUCHBASE</a>&#160;&#160;&#160;&quot;Couchbase&quot;</td></tr>
-<tr class="memdesc:gafa231027c5332938ab9e22b45d13b7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Database vendor string for Couchbase. <br /></td></tr>
-<tr class="separator:gafa231027c5332938ab9e22b45d13b7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Trace SQL-based database requests. </p>
 <p>Database request tracers are used to capture information about database requests. They're not taggable.</p>
 <p>To create a database request tracer, an application must first create a database info object which describes the database that the application uses - see <a class="el" href="group__database__requests.html#gaecbc2adc821bb4d7e516e9455646fdd5">onesdk_databaseinfo_create</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>Note that SQL database traces are only created if they occur within some other SDK trace (e.g. incoming remote call).</dd></dl>
 <p>For further information, see the high level SDK documentation at <a href="https://github.com/Dynatrace/OneAgent-SDK/#database">https://github.com/Dynatrace/OneAgent-SDK/#database</a> </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaecbc2adc821bb4d7e516e9455646fdd5"></a>
@@ -289,7 +144,7 @@ Database Vendor Strings</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the database. </td></tr>
-    <tr><td class="paramname">vendor</td><td>The type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2" - see <a class="el" href="group__database__requests.html#database_vendor_strings">database_vendor_strings</a>). </td></tr>
+    <tr><td class="paramname">vendor</td><td>The type of the database (e.g. "sqlite", "MySQL", "Oracle", "DB2" - see <a class="el" href="onesdk__common_8h.html#database_vendor_strings">database_vendor_strings</a>). </td></tr>
     <tr><td class="paramname">channel_type</td><td>The type of the channel used to communicate with the database. </td></tr>
     <tr><td class="paramname">channel_endpoint</td><td>[optional] The endpoint of the channel used to communicate with the database.</td></tr>
   </table>
