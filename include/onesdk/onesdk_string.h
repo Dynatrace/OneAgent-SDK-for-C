@@ -33,10 +33,9 @@
 
 /*========================================================================================================================================*/
 
-/** @addtogroup strings Strings
+/** @defgroup strings Strings
+    @brief See @ref onesdk_string_t for more information about SDK strings.
     @{
-
-    See @ref onesdk_string_t for more information about SDK strings.
 */
 
 /*========================================================================================================================================*/

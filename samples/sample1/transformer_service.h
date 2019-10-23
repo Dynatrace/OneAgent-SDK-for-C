@@ -98,7 +98,7 @@ public:
 
 
             message_queue::queue_message msg;
-            msg.headers[ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME] = std::move(tag);
+            msg.headers[ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME] = std::move(tag);
             msg.payload.changed_chars = static_cast<unsigned>(changed_count);
             msg.payload.total_chars = static_cast<unsigned>(str.size());
             m_msg_queue.send(msg);

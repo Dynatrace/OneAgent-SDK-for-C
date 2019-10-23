@@ -1,5 +1,5 @@
 /*
-    Copyright 2017-2018 Dynatrace LLC
+    Copyright 2017-2019 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -50,7 +50,9 @@ void perform_cleanup(message_queue& queue, onesdk_messagingsysteminfo_handle_t q
 void poll_process_messages(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info);
 void on_billing_message(message_queue::queue_message& msg, onesdk_messagingsysteminfo_handle_t queue_info);
 char const* agent_state_to_string(onesdk_int32_t agent_state);
-void ONESDK_CALL onesdk_agent_logging_callback(char const* message);
+void ONESDK_CALL onesdk_agent_warning_callback(char const* message);
+void ONESDK_CALL onesdk_agent_verbose_callback(char const* message);
+onesdk_result_t checkresult(onesdk_result_t r, char const* message);
 
 /*========================================================================================================================================*/
 
@@ -67,8 +69,8 @@ int main(int argc, char** argv)
 #endif
 
     // Process and strip out ONESDK command line arguments.
-    onesdk_stub_process_cmdline_args(argc, argv, true);
-    onesdk_stub_strip_sdk_cmdline_args(&argc, argv);
+    checkresult(onesdk_stub_process_cmdline_args(argc, argv, true), "stub_process_cmdline_args");
+    checkresult(onesdk_stub_strip_sdk_cmdline_args(&argc, argv), "stub_strip_sdk_cmdline_args");
 
     bool use_fork = false;
     // Process command line arguments.
@@ -97,24 +99,29 @@ int main(int argc, char** argv)
 #endif
     }
 
-    // Try to initialize ONESDK.
+    // Try to initialize the OneAgent SDK for C/C++.
     onesdk_result_t const onesdk_init_result = onesdk_initialize_2(onesdk_init_flags);
     printf("ONESDK initialized:   %s\n", (onesdk_init_result == ONESDK_SUCCESS) ? "yes" : "no");
+    checkresult(onesdk_init_result, "  initialize");
+
+    // Set logging callbacks (as soon after initialize as possible) so we get info/warning/error messages from the agent.
+    checkresult(onesdk_agent_set_warning_callback(&onesdk_agent_warning_callback), "agent_set_warning_callback");
+    checkresult(onesdk_agent_set_verbose_callback(&onesdk_agent_verbose_callback), "agent_set_verbose_callback");
+
     printf("ONESDK agent version: '%" ONESDK_STR_PRI_XSTR "'\n", onesdk_agent_get_version_string());
     onesdk_bool_t agent_found, agent_compatible;
     onesdk_stub_get_agent_load_info(&agent_found, &agent_compatible);
     printf("ONESDK agent load info:\n");
     printf("    agent was found: %s\n", agent_found ? "yes" : "no");
     printf("    agent is compatible: %s\n", agent_compatible ? "yes" : "no");
-    // Set logging callback so we get warning/error messages from ONESDK.
-    onesdk_agent_set_logging_callback(&onesdk_agent_logging_callback);
+
 
     // Run the main service loop.
     run_main_loop(use_fork);
 
     // Shut down ONESDK.
     if (onesdk_init_result == ONESDK_SUCCESS)
-        onesdk_shutdown();
+        checkresult(onesdk_shutdown(), "shutdown");
 
     return 0;
 }
@@ -256,7 +263,7 @@ void poll_process_messages(message_queue& queue, onesdk_messagingsysteminfo_hand
 void on_billing_message(message_queue::queue_message& msg, onesdk_messagingsysteminfo_handle_t queue_info) {
     onesdk_tracer_handle_t const tracer = onesdk_incomingmessageprocesstracer_create(queue_info);
     try {
-        auto const tag_iterator = msg.headers.find(ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME);
+        auto const tag_iterator = msg.headers.find(ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME);
         if (tag_iterator != msg.headers.end()) {
             // The tag must be set before starting the tracer.
             onesdk_tracer_set_incoming_dynatrace_string_tag(tracer, onesdk_asciistr(tag_iterator->second.c_str()));
@@ -309,8 +316,23 @@ char const* agent_state_to_string(onesdk_int32_t agent_state) {
 
 /*========================================================================================================================================*/
 
-void ONESDK_CALL onesdk_agent_logging_callback(char const* message) {
+void ONESDK_CALL onesdk_agent_warning_callback(char const* message) {
     printf("ONESDK log message: %s\n", message);
+}
+
+void ONESDK_CALL onesdk_agent_verbose_callback(char const* message) {
+    printf("ONESDK log message (verbose): %s\n", message);
+}
+
+
+onesdk_result_t checkresult(onesdk_result_t r, char const* message) {
+    if (r != ONESDK_SUCCESS) {
+        static const size_t message_buffer_len = 2048;
+        onesdk_xchar_t message_buffer[message_buffer_len];
+        fprintf(stderr, "%s: %" ONESDK_STR_PRI_XSTR "\n",
+            message, onesdk_stub_xstrerror(r, message_buffer, message_buffer_len));
+    }
+    return r;
 }
 
 /*========================================================================================================================================*/

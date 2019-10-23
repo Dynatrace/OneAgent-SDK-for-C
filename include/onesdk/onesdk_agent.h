@@ -1,5 +1,5 @@
 /*
-    Copyright 2017-2018 Dynatrace LLC
+    Copyright 2017-2019 Dynatrace LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 
 /*========================================================================================================================================*/
 
-/** @addtogroup misc Miscellaneous
+/** @defgroup misc Miscellaneous
     @{
 */
 
@@ -54,28 +54,68 @@ ONESDK_DECLARE_FUNCTION(onesdk_xchar_t const*) onesdk_agent_get_version_string(v
 
     @return The current agent state.
 
-    @see @ref agent_state_constants
+    @see @ref agent_state_constants "Agent state constants"
 */
 ONESDK_DECLARE_FUNCTION(onesdk_int32_t) onesdk_agent_get_current_state(void);
 
-/** @brief Sets the agent logging callback function.
-    @param agent_logging_callback   The new agent logging callback function.
+/** @brief DEPRECATED. Sets the agent warning callback function.
+    @param agent_logging_callback   The new agent warning callback function.
 
-    The agent logging callback is called whenever one of the following happens while executing an SDK function:
+    @deprecated From 1.5 on, use @ref onesdk_agent_set_warning_callback instead, which has a return code but is otherwise the same
+        (@c onesdk_agent_set_logging_callback, like @ref onesdk_agent_set_warning_callback, can fail but it has no way to report errors).
+*/
+ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
+
+/** @brief Sets the agent warning callback function.
+    @param agent_logging_callback   The new agent warning callback function.
+    @return @ref ONESDK_SUCCESS if successful, an SDK stub error code otherwise.
+
+    The agent warning callback is called whenever one of the following happens while executing an SDK function:
     - An SDK usage error is detected or
     - An unexpected or unusual event (e.g. out of memory) prevented an operation from completing successfully.
 
-    The agent logging callback is only ever called while executing an SDK function, in the context of the application thread that is
-    calling the SDK function. The application must not call any SDK functions while executing the callback.
+    The agent warning callback is only ever called from SDK functions (i.e., it can only be invoked on threads
+    that call SDK functions, while the SDK function is executing). The application must not call any SDK functions
+    from the callback.
 
-    This mechanism is provided primarily as a development and debugging aid.
+    This mechanism is provided primarily as a development and debugging aid. Typically, you should set it once, right after initializing
+    the SDK and never change it (though changing the callback is supported, it rarely makes sense).
 
     There is no default logging function.
 
+    @note This function requires that the SDK is initialized (using @ref onesdk_initialize or @ref onesdk_initialize_2).
     @see @ref onesdk_agent_logging_callback_t
-    @see @ref onesdk_stub_set_logging_callback
+    @see @ref onesdk_stub_set_logging_callback sets the callback that is used for logging before and while the agent is loaded.
+    @since This function was added in version 1.5.0, as a replacement for @ref onesdk_agent_set_logging_callback.
 */
-ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
+ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_agent_set_warning_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
+
+/** @brief Sets the verbose agent logging callback function.
+    @param agent_logging_callback   The new verbose agent logging callback function.
+    @return @ref ONESDK_SUCCESS if successful, an SDK stub error code otherwise.
+
+    Similar to @ref onesdk_agent_set_warning_callback but the callback supplied here will not be called with warning messages
+    but with additional messages that may e.g. explain why a PurePath was not created even if the reason is (usually) benign.
+
+    @note
+     - It usually does not make sense to set this callback without also using @ref onesdk_agent_set_warning_callback in addition.
+     - This function requires that the SDK is initialized (using @ref onesdk_initialize or @ref onesdk_initialize_2).
+    @warning This callback can receive lots and lots of messages. You should not usually use it in production.
+    @since This function was added in version 1.5.0.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_agent_set_verbose_callback(onesdk_agent_logging_callback_t* agent_logging_callback);
+
+
+
+/** @brief Returns the current agent fork state. Only relevant if you used @ref ONESDK_INIT_FLAG_FORKABLE. See @ref agent_fork_state_constants "Agent forking state constants".
+
+    Calling this function only has a defined result when @ref onesdk_agent_get_current_state returns @ref ONESDK_AGENT_STATE_ACTIVE or
+    @ref ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE.
+
+    @return The current agent fork state, i.e., one of the @ref agent_fork_state_constants.
+    @see @ref agent_fork_state_constants "Agent forking state constants"
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_int32_t) onesdk_agent_get_fork_state(void);
 
 /*========================================================================================================================================*/
 
@@ -83,7 +123,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_agent_set_logging_callback(onesdk_agent_log
 
 /*========================================================================================================================================*/
 
-/** @addtogroup tracers Common Tracer Functions
+/** @defgroup tracers Common Tracer Functions
+    @brief Basic functions that can be used with all or multiple tracer types.
 
     Tracers are the objects used to capture information about "operations" (e.g. remote calls or database requests) that your application
     performs.
@@ -251,7 +292,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_tracer_set_incoming_dynatrace_byte_tag(ones
 
 /*========================================================================================================================================*/
 
-/** @addtogroup custom_request_attributes Custom Request Attributes
+/** @defgroup custom_request_attributes Custom Request Attributes
+    @brief Attach custom key/value pairs to the active tracer.
 
     Custom request attributes can be used by an application to attach custom key/value pairs to the active tracer.
 
@@ -315,7 +357,8 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_string(one
 
 /*========================================================================================================================================*/
 
-/** @addtogroup in_process_links In-Process Link Functions
+/** @defgroup in_process_links In-Process Link Functions
+    @brief Associate asynchronous tasks in the same process with the current operation.
 
     In-process links allow an application to associate (link) tasks, that will be executed asynchronously in the same process, with the
     currently running task/operation. The linked tasks may be started and completed at arbitrary times - it's not necessary for them
@@ -377,7 +420,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_tracer_handle_t) onesdk_inprocesslinktracer_creat
 
 /*========================================================================================================================================*/
 
-/** @addtogroup remote_calls Remote Call Tracers
+/** @defgroup remote_calls Remote Call Tracers
+    @brief Trace calls to remote services (RMI, etc.).
 
     When tracing remote calls, we use the following parameters
     - @p service_method
@@ -508,12 +552,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingremotecalltracer_set_protocol
 
 /*========================================================================================================================================*/
 
-/** @addtogroup database_requests Database Request Tracers
+/** @defgroup database_requests Database Request Tracers
+    @brief Trace SQL-based database requests.
 
     Database request tracers are used to capture information about database requests. They're not taggable.
 
     To create a database request tracer, an application must first create a database info object which describes the database that the
     application uses - see @ref onesdk_databaseinfo_create.
+
+    @note Note that SQL database traces are only created if they occur within some other SDK trace (e.g. incoming remote call).
 
     For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#database
 
@@ -590,7 +637,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_databaserequesttracer_set_round_trip_count(
 
 /*========================================================================================================================================*/
 
-/** @addtogroup incoming_web_requests Incoming Web Request Tracers
+/** @defgroup incoming_web_requests Incoming Web Request Tracers
+    @brief Trace the server side of web requests.
 
     Incoming web request tracers are used to capture information about HTTP requests that the application services (processes, answers).
 
@@ -599,6 +647,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_databaserequesttracer_set_round_trip_count(
 
     For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#webrequests
 
+    @see @ref outgoing_web_requests
     @since Incoming web request tracers were added in version 1.1.0.
 
     @{
@@ -761,7 +810,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_status_code(on
 
 /*========================================================================================================================================*/
 
-/** @addtogroup outgoing_web_requests Outgoing Web Request Tracers
+/** @defgroup outgoing_web_requests Outgoing Web Request Tracers
+    @brief Trace the client side of web requests.
 
     Outgoing web request tracers are used to capture information about HTTP requests that the application sends.
 
@@ -771,6 +821,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingwebrequesttracer_set_status_code(on
 
     @see @ref onesdk_tracer_get_outgoing_dynatrace_string_tag
     @see @ref ONESDK_DYNATRACE_HTTP_HEADER_NAME
+    @see @ref incoming_web_requests
 
     For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#webrequests
 
@@ -859,7 +910,8 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_outgoingwebrequesttracer_set_status_code(on
 
 /*========================================================================================================================================*/
 
-/** @addtogroup customservice Custom Service Tracers
+/** @defgroup customservice Custom Service Tracers
+    @brief Trace services that are important but for which there is no more specific tracer.
 
     Custom service tracers are used to trace service calls for which there is no other suitable tracer.
 
@@ -893,9 +945,8 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_customservicetracer
 
 /*========================================================================================================================================*/
 
-/** @addtogroup messaging Messaging Tracers
-
-    @brief Messaging tracers are used to trace messages sent or received via a messaging system.
+/** @defgroup messaging Messaging 
+    @brief Trace messages sent or received via a messaging system.
 
     When tracing messages, we distinguish between:
 
@@ -905,13 +956,13 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_tracer_handle_t) onesdk_customservicetracer
 
     To create an outgoing message tracer, an application can simply call @ref onesdk_outgoingmessagetracer_create. To enable
     continuing the trace on the consumer side, the application must then retrieve the byte tag from the tracer and
-    send it along with the message in property named `"dtdTraceTagInfo"` (if the other side is also traced by the SDK,
+    send it along with the message in a property named `"dtdTraceTagInfo"` (if the other side is also traced by the SDK,
     any other method of transferring the tag is also possible as long as the receiving application's tracing cooperates,
     but the aforementioned method is highly recommended and also works with non-SDK OneAgents if the receiving message
     system is supported).
 
     @see @ref onesdk_tracer_get_outgoing_dynatrace_byte_tag
-    @see @ref ONESDK_DYNATRACE_MESSAGE_PROPERTYNAME
+    @see @ref ONESDK_DYNATRACE_MESSAGE_PROPERTY_NAME
 
     For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#messaging
 
@@ -1038,8 +1089,6 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_vendor_mes
     @param tracer_handle            A valid incoming message process tracer handle.
     @param vendor_message_id        The message ID provided by the messaging system.
 
-    @note This function can not be used after the tracer was started.
-
     @since This function was added in version 1.4.0.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_vendor_message_id(onesdk_tracer_handle_t tracer_handle, onesdk_string_t vendor_message_id) {
@@ -1052,8 +1101,6 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_correlatio
 /** @brief Sets the corrrelation ID of an incoming message.
     @param tracer_handle            A valid incoming message process tracer handle.
     @param correlation_id           The correlation ID for the message, usually application-defined.
-
-    @note This function can not be used after the tracer was started.
 
     @since This function was added in version 1.4.0.
 */

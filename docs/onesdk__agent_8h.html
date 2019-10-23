@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.4</span>
    </div>
   </td>
  </tr>
@@ -59,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_e11ff9dae1e7a45d3f00d4242cad749e.html">onesdk</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_00c011bef261143570b84b595a5a55cb.html">onesdk</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -84,8 +84,17 @@ Functions</h2></td></tr>
 <tr class="memdesc:gab45441c798009a1bad93480e8476a1e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current agent state.  <a href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">More...</a><br /></td></tr>
 <tr class="separator:gab45441c798009a1bad93480e8476a1e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3962855fa4d4c78665b96c5b12774c02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__misc.html#ga3962855fa4d4c78665b96c5b12774c02">onesdk_agent_set_logging_callback</a> (<a class="el" href="onesdk__common_8h.html#a124401b9c44ba32cc2e450f11564a258">onesdk_agent_logging_callback_t</a> *agent_logging_callback)</td></tr>
-<tr class="memdesc:ga3962855fa4d4c78665b96c5b12774c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the agent logging callback function.  <a href="group__misc.html#ga3962855fa4d4c78665b96c5b12774c02">More...</a><br /></td></tr>
+<tr class="memdesc:ga3962855fa4d4c78665b96c5b12774c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">DEPRECATED. Sets the agent warning callback function.  <a href="group__misc.html#ga3962855fa4d4c78665b96c5b12774c02">More...</a><br /></td></tr>
 <tr class="separator:ga3962855fa4d4c78665b96c5b12774c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31c7f418f4b3515097434f8df6810cad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="onesdk__config_8h.html#a76d5518cc30fddd2df8ca8d313fb79dc">onesdk_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__misc.html#ga31c7f418f4b3515097434f8df6810cad">onesdk_agent_set_warning_callback</a> (<a class="el" href="onesdk__common_8h.html#a124401b9c44ba32cc2e450f11564a258">onesdk_agent_logging_callback_t</a> *agent_logging_callback)</td></tr>
+<tr class="memdesc:ga31c7f418f4b3515097434f8df6810cad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the agent warning callback function.  <a href="group__misc.html#ga31c7f418f4b3515097434f8df6810cad">More...</a><br /></td></tr>
+<tr class="separator:ga31c7f418f4b3515097434f8df6810cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1324a8c95a407255e838641e8a8f03a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="onesdk__config_8h.html#a76d5518cc30fddd2df8ca8d313fb79dc">onesdk_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__misc.html#ga1324a8c95a407255e838641e8a8f03a9">onesdk_agent_set_verbose_callback</a> (<a class="el" href="onesdk__common_8h.html#a124401b9c44ba32cc2e450f11564a258">onesdk_agent_logging_callback_t</a> *agent_logging_callback)</td></tr>
+<tr class="memdesc:ga1324a8c95a407255e838641e8a8f03a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the verbose agent logging callback function.  <a href="group__misc.html#ga1324a8c95a407255e838641e8a8f03a9">More...</a><br /></td></tr>
+<tr class="separator:ga1324a8c95a407255e838641e8a8f03a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77260efaf63455969962e05b6b170135"><td class="memItemLeft" align="right" valign="top"><a class="el" href="onesdk__config_8h.html#acff8bf967021eaaaeefc001d54e565b0">onesdk_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__misc.html#ga77260efaf63455969962e05b6b170135">onesdk_agent_get_fork_state</a> (void)</td></tr>
+<tr class="memdesc:ga77260efaf63455969962e05b6b170135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current agent fork state. Only relevant if you used <a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a>. See <a class="el" href="onesdk__common_8h.html#agent_fork_state_constants">Agent forking state constants</a>.  <a href="group__misc.html#ga77260efaf63455969962e05b6b170135">More...</a><br /></td></tr>
+<tr class="separator:ga77260efaf63455969962e05b6b170135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga750068677c6732cf423d4cfdd2e2edf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tracers.html#ga750068677c6732cf423d4cfdd2e2edf0">onesdk_tracer_start</a> (<a class="el" href="onesdk__common_8h.html#afd307ae54a60c333f87bad4e4cb2cbf3">onesdk_tracer_handle_t</a> tracer_handle)</td></tr>
 <tr class="memdesc:ga750068677c6732cf423d4cfdd2e2edf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a tracer.  <a href="group__tracers.html#ga750068677c6732cf423d4cfdd2e2edf0">More...</a><br /></td></tr>
 <tr class="separator:ga750068677c6732cf423d4cfdd2e2edf0"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.4</span>
    </div>
   </td>
  </tr>
@@ -66,6 +66,9 @@ $(function() {
 <div class="title">Initialization and Shutdown</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>APIs to configure, initialize and shutdown the SDK and agent and related basic functions.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -120,48 +123,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8c1b37a28163bb7f790ac56091f86466"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__init.html#ga8c1b37a28163bb7f790ac56091f86466">onesdk_stub_get_agent_load_info</a> (<a class="el" href="onesdk__config_8h.html#aa645d5ffe376f1aa0163f784b167ded4">onesdk_bool_t</a> *agent_found, <a class="el" href="onesdk__config_8h.html#aa645d5ffe376f1aa0163f784b167ded4">onesdk_bool_t</a> *agent_compatible)</td></tr>
 <tr class="memdesc:ga8c1b37a28163bb7f790ac56091f86466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves debug information about the currently used agent.  <a href="#ga8c1b37a28163bb7f790ac56091f86466">More...</a><br /></td></tr>
 <tr class="separator:ga8c1b37a28163bb7f790ac56091f86466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization flag constants</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpf0983ac42c247adfdad5e32105545a5a"></a>Flags to use with <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a>.</p>
-<p><a class="anchor" id="init_flags"></a></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> </dd></dl>
-</td></tr>
-<tr class="memitem:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a></td></tr>
-<tr class="memdesc:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not fully initialize the SDK now but instead allow it to be used in forked child processes.  <a href="#ga732bf07f0e190264baf29f3a1c22cc4a">More...</a><br /></td></tr>
-<tr class="separator:ga732bf07f0e190264baf29f3a1c22cc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga732bf07f0e190264baf29f3a1c22cc4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga732bf07f0e190264baf29f3a1c22cc4a">&#9670;&nbsp;</a></span>ONESDK_INIT_FLAG_FORKABLE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ONESDK_INIT_FLAG_FORKABLE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Do not fully initialize the SDK now but instead allow it to be used in forked child processes. </p>
-<p>When setting this flag, <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> will only partially initialize the SDK agent. In this special <em>parent-initialized</em> initialization state, only the following functions can be called:</p>
-<ul>
-<li>All functions that are valid to call before calling initialize remain valid.</li>
-<li><a class="el" href="group__misc.html#ga4d5834da55f9d533ed6f9441f14cdb51">onesdk_agent_get_version_string</a> and <a class="el" href="group__init.html#ga8c1b37a28163bb7f790ac56091f86466">onesdk_stub_get_agent_load_info</a> work as expected.</li>
-<li><a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> will return <a class="el" href="onesdk__common_8h.html#ad891cc74c5e2c257a5e66c0fac5ad5b3">ONESDK_AGENT_STATE_TEMPORARILY_INACTIVE</a> - but see the note below.</li>
-<li><a class="el" href="group__misc.html#ga3962855fa4d4c78665b96c5b12774c02">onesdk_agent_set_logging_callback</a> works as expected, the callback will be carried over to forked child processes.</li>
-<li>It is recommended you call <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> when the original process will not fork any more children that want to use the SDK.</li>
-</ul>
-<p>After you fork, the child becomes <em>pre-initialized</em>: the first call to an SDK function that needs a <em>fully initialized</em> agent will automatically complete the initialization.</p>
-<p>You can still fork another child (e.g. in a double-fork scenario) in the <em>pre-initialized</em> state. However if you fork another child in the <em>fully initialized</em> state, it will not be able to use the SDK - not even if it tries to shut down the SDK and initialize it again.</p>
-<dl class="section note"><dt>Note</dt><dd>Calling <a class="el" href="group__misc.html#gab45441c798009a1bad93480e8476a1e4">onesdk_agent_get_current_state</a> in the <em>pre-initialized</em> state will cause the agent to become <em>fully initialized</em>.</dd></dl>
-<p>All children forked from a <em>parent-initialized</em> process will use the same agent. That agent will shut down when all child processes and the original <em>parent-initialized</em> process have terminated or called shutdown. Calling <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> in a <em>pre-initialized</em> process is not required otherwise.</p>
-<dl class="section note"><dt>Note</dt><dd>If you use POSIX <code>wait</code> or similar functions, you might observe an additional child process in the original <em>parent-initialized</em> process.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>This flag requires at least agent version 1.151. </dd></dl>
-
-</div>
-</div>
+<p>APIs to configure, initialize and shutdown the SDK and agent and related basic functions. </p>
+<p>A typical use of these functions could be:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="onesdk_8h.html">onesdk/onesdk.h</a>&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div><div class="line"></div><div class="line"><span class="comment">// optional but higly recommended (see below)</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> mycallback(<span class="keywordtype">char</span> <span class="keyword">const</span>* message) {</div><div class="line">    fputs(message, stderr);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {</div><div class="line">    <a class="code" href="group__init.html#ga77bf723c281e4e2963933a57ff1ec51c">onesdk_stub_process_cmdline_args</a>(argc, argv, 1);  <span class="comment">// optional: let the SDK process command line arguments </span></div><div class="line">    <a class="code" href="group__init.html#ga6a8fc76f55f653df1662be1cdb761486">onesdk_stub_strip_sdk_cmdline_args</a>(&amp;argc, argv);  <span class="comment">// optional: remove SDK command line arguments from argv</span></div><div class="line"></div><div class="line">    <span class="comment">// Initialize SDK</span></div><div class="line">    <a class="code" href="onesdk__config_8h.html#a76d5518cc30fddd2df8ca8d313fb79dc">onesdk_result_t</a> <span class="keyword">const</span> onesdk_init_result = <a class="code" href="group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb">onesdk_initialize</a>();</div><div class="line"></div><div class="line">    <span class="comment">// optional: Set logging callbacks (see @ref misc)</span></div><div class="line">    <a class="code" href="group__misc.html#ga31c7f418f4b3515097434f8df6810cad">onesdk_agent_set_warning_callback</a>(mycallback); <span class="comment">// Highly recommended.</span></div><div class="line">    <a class="code" href="group__misc.html#ga1324a8c95a407255e838641e8a8f03a9">onesdk_agent_set_verbose_callback</a>(mycallback); <span class="comment">// Recommended for development &amp; debugging.</span></div><div class="line"></div><div class="line">    <span class="comment">// ... use SDK ...</span></div><div class="line"></div><div class="line">    <span class="comment">// Shut down SDK only if initialization suceeded.</span></div><div class="line">    <span class="keywordflow">if</span> (onesdk_init_result == <a class="code" href="onesdk__common_8h.html#af3f7d04ad8caca4f729971defbfdf555">ONESDK_SUCCESS</a>)</div><div class="line">        <a class="code" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a>();</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --><p>Note that most of the functions in this module have return codes and <a class="el" href="group__init.html#gad9f783e4270eadfd618bf81d090985cf">onesdk_stub_xstrerror</a> can be used to translate them to human-readable messages. After initialization, errors are reported via the logging callbacks (<code>mycallback</code> in the example above). </p>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga9a518cb7d13e846020744c315296432c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9a518cb7d13e846020744c315296432c">&#9670;&nbsp;</a></span>onesdk_stub_logging_callback_t</h2>
@@ -236,15 +202,15 @@ The message string will not contain any decoration as described in <a class="el"
 <p>Load and initialize the SDK agent, with additional flags. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">init_flags</td><td>A bitwise combination of flags from <a class="el" href="group__init.html#init_flags">init_flags</a> or zero.</td></tr>
+    <tr><td class="paramname">init_flags</td><td>A bitwise combination of flags from <a class="el" href="onesdk__common_8h.html#init_flags">init_flags</a> or zero.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="onesdk__common_8h.html#af3f7d04ad8caca4f729971defbfdf555">ONESDK_SUCCESS</a> if successful, an SDK stub error code otherwise.</dd></dl>
 <p>This function tries to locate, load and initialize the SDK agent. See <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> for shutting down and unloading the agent. If this function is called after the agent has already been initialized, an internal reference count will be incremented. In that case the application must call <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> once for each successful call to <a class="el" href="group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb">onesdk_initialize</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>If your application forks while executing <a class="el" href="group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb">onesdk_initialize</a>, <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> or <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> on another thread, it is not safe to call SDK functions in the forked child process without calling <code>exec</code> first. Doing so may result in a deadlock. (This restriction also applies when using <a class="el" href="group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a>.)</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If your application forks while executing <a class="el" href="group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb">onesdk_initialize</a>, <a class="el" href="group__init.html#gac0681af704ba7e6404c3f67f582ee4db">onesdk_initialize_2</a> or <a class="el" href="group__init.html#gab65ee07ae9c61fae6d0ca0b4afbd8bb1">onesdk_shutdown</a> on another thread, it is not safe to call SDK functions in the forked child process without calling <code>exec</code> first. Doing so may result in a deadlock. (This restriction also applies when using <a class="el" href="onesdk__common_8h.html#a732bf07f0e190264baf29f3a1c22cc4a">ONESDK_INIT_FLAG_FORKABLE</a>.)</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>This function was added in version 1.3.0.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__init.html#init_flags">init_flags</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="onesdk__common_8h.html#init_flags">init_flags</a> </dd>
 <dd>
 <a class="el" href="group__init.html#gac3d473d2899bdb54196f864ae0ccf3eb">onesdk_initialize</a> </dd>
 <dd>

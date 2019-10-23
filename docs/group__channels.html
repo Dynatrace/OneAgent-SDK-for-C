@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Dynatrace OneAgent SDK for C/C++
-   &#160;<span id="projectnumber">1.4.1.0</span>
+   &#160;<span id="projectnumber">1.5.1.4</span>
    </div>
   </td>
  </tr>
@@ -63,6 +63,9 @@ $(function() {
 <div class="title">Channel Types and Endpoints</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Describes communication (networking, I/O) channels and endpoints.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Channel Type Constants</h2></td></tr>
@@ -86,6 +89,7 @@ Channel Type Constants</h2></td></tr>
 <tr class="separator:gaa62fe885cf7aed0a458608ba32c525e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Describes communication (networking, I/O) channels and endpoints. </p>
 <p>When we talk about channel types and channel endpoints in the SDK, we're talking about a "communication channel" which is used to access/communicate with some service or resource. Mapped to the OSI model or Internet protocol suite, our kind of channels would be located in the transport layer. So, unsurprisingly, there is a channel type <a class="el" href="group__channels.html#gabb59b92a3a1151026238fd3cffa97150">ONESDK_CHANNEL_TYPE_TCP_IP</a>. Communication doesn't always happen over the network though, so for e.g. in-process communication there's also <a class="el" href="group__channels.html#gaa62fe885cf7aed0a458608ba32c525e5">ONESDK_CHANNEL_TYPE_IN_PROCESS</a>.</p>
 <p>So if, for example, your application is sending SOAP requests via HTTP via TCP/IP, then the channel we're talking about would be the TCP/IP connection.</p>
 <p>The channel endpoint then is the endpoint of that connection. E.g. for a TCP/IP connection that endpoint is usually expressed by an <code>IP:PORT</code> or <code>HOSTNAME:PORT</code> pair, so that's what your application should use if the channel type is <a class="el" href="group__channels.html#gabb59b92a3a1151026238fd3cffa97150">ONESDK_CHANNEL_TYPE_TCP_IP</a>.</p>
