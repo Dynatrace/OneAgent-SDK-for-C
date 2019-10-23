@@ -135,6 +135,7 @@ On Windows, when using Visual Studio 2015 or later, you also have to link `legac
 ### Using CMake to build the samples
 
 Assuming that you have a C++11 compiler and suitable build system installed (e.g. Visual Studio or g++ & make), which are supported and correctly detected by CMake, creating build files for the samples can be as easy as
+
 ```
 C:\onesdk\samples>mkdir build
 C:\onesdk\samples>cd build
@@ -182,7 +183,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-> 📕 [Reference documentation for initialization and shutdown](https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html)
+> 📕 [Reference documentation for initialization and shutdown](https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html)  
 > 📕 [Miscellaneous functions](https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html)
 
 <a name="special-considerations-for-solaris-sparc"></a>
@@ -666,7 +667,8 @@ You should not forget to release the messaging system info object in your cleanu
     messagingsysteminfo_handle = ONESDK_INVALID_HANDLE;
 ```
 
-> 📕 [Reference documentation for messaging tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__messaging.html)
+> 📕 [Reference documentation for messaging tracers](https://dynatrace.github.io/OneAgent-SDK-for-C/group__messaging.html)  
+> 📗 [Documentation on messaging tracers in the specification repository](https://github.com/Dynatrace/OneAgent-SDK#messaging)
 
 <a name="using-the-dynatrace-oneagent-sdk-to-trace-custom-service-methods"></a>
 <a name="trace-custom-service-methods"></a>
@@ -752,7 +754,7 @@ You will need to subscribe to the metric in Dynatrace to see it. If a metric is 
 
 Note that metrics will currently not work when the SDK is initialized in [forkable mode](#forking).
 
-> 📕 [Reference documentation for metrics][metricref]
+> 📕 [Reference documentation for metrics][metricref]  
 > ➡️ [Dynatrace Help on preview features][previewhelp]
 
 [metricref]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__ex__metrics.html
@@ -893,7 +895,7 @@ int worker_main() {
 
 If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate
 logging by either
-- calling [`onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`](refd_stub_set_logging_level]; or
+- calling [`onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`][refd_stub_set_logging_level]; or
 - setting the environment variable `DT_LOGLEVELSDK={level}`; or
 - if your program passes command line arguments to the SDK (see [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args]), you can
   use the command line argument `--dt_loglevelsdk={level}`.

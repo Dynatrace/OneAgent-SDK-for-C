@@ -358,7 +358,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_customrequestattribute_add_string(one
 /*========================================================================================================================================*/
 
 /** @defgroup in_process_links In-Process Link Functions
-    @brief Associate asyncrouous tasks in the same process with the current operation.
+    @brief Associate asynchronous tasks in the same process with the current operation.
 
     In-process links allow an application to associate (link) tasks, that will be executed asynchronously in the same process, with the
     currently running task/operation. The linked tasks may be started and completed at arbitrary times - it's not necessary for them
