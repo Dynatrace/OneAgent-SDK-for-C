@@ -16,10 +16,10 @@
 
 # DO NOT EDIT onesdk-version.cmake! It is a GENERATED file.
 
-# FULL VERSION: 1.5.1.4 (2019.10.23 12:58:09)
+# FULL VERSION: 1.6.1.0 (2021.01.21 10:18:35)
 
 set(onesdk_VERSION_MAJOR 1)
-set(onesdk_VERSION_MINOR 5)
+set(onesdk_VERSION_MINOR 6)
 set(onesdk_VERSION_PATCH 1)
 
 set(onesdk_VERSION_COUNT 3)

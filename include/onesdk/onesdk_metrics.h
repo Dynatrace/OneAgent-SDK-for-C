@@ -72,18 +72,22 @@
 
     All metric objects (regardless of type) should be freed using @ref onesdk_metric_delete.
 
-    For further information, see the high level SDK documentation at https://github.com/Dynatrace/OneAgent-SDK/#metrics
-
-    @note Metrics are currently not supported when the SDK is intialized using @ref ONESDK_INIT_FLAG_FORKABLE.
+    @note Metrics are not supported when the SDK is intialized using @ref ONESDK_INIT_FLAG_FORKABLE.
     @since Metrics are available since version 1.5.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
     @{
 */
 
 
-/** @brief Releases a metric object.
+/** @brief DEPRECATED. Releases a metric object.
     @param metric_handle      A valid metric handle (all types are supported).
 
-    This function releases the specified metric object. Allocated resources are freed and the handle is invalidated.
+    @since This function was added in version 1.5.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
+    
+    This function releases the specified metric object. Allocated resources are freed and the handle is invalidated. 
 
     An application should call @ref onesdk_metric_delete exactly once for each metric object that it has created.
 */
@@ -92,7 +96,7 @@ ONESDK_DECLARE_FUNCTION(void) onesdk_metric_delete(onesdk_metric_handle_t metric
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integercountermetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to count (sum up) some 64 bit integer values, e.g., number of records inserted in a database.
+/** @brief DEPRECATED. Creates a metric to count (sum up) some 64 bit integer values, e.g., number of records inserted in a database.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
     @param dimension_name [optional] If specified, the metric gets an additional dimension. The value for that should
@@ -100,6 +104,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integercountermetric_crea
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added in version 1.5.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
     See @ref ex_metric_detail "the general metric API documentation" for a more detailed conceptual description.
 */
@@ -111,7 +117,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_integercountermetri
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatcountermetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to count (sum up) some double precision floating point values, e.g., liters pumped into a tank.
+/** @brief DEPRECATED. Creates a metric to count (sum up) some double precision floating point values, e.g., liters pumped into a tank.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
     @param dimension_name [optional] If specified, the metric gets an additional dimension. The value for that should
@@ -119,6 +125,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatcountermetric_create
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
     See @ref ex_metric_detail "the general metric API documentation" for a more detailed conceptual description.
 */
@@ -130,7 +138,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_floatcountermetric_
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integergaugemetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to sample (periodically measure) some 64 bit integer value, e.g., number of records in a database sampled every 30 minutes.
+/** @brief DEPRECATED. Creates a metric to sample (periodically measure) some 64 bit integer value, e.g., number of records in a database sampled every 30 minutes.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
     @param dimension_name [optional] If specified, the metric gets an additional dimension. The value for that should
@@ -138,6 +146,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integergaugemetric_create
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
     See @ref ex_metric_detail "the general metric API documentation" for a more detailed conceptual description.
 */
@@ -148,7 +158,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_integergaugemetric_
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatgaugemetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to sample (periodically measure) some double precision floating point value, e.g., number of liters in a tank, sampled every 30 minutes.
+/** @brief DEPRECATED. Creates a metric to sample (periodically measure) some double precision floating point value, e.g., number of liters in a tank, sampled every 30 minutes.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
     @param dimension_name [optional] If specified, the metric gets an additional dimension. The value for that should
@@ -156,6 +166,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatgaugemetric_create_p
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
     See @ref ex_metric_detail "the general metric API documentation" for a more detailed conceptual description.
 */
@@ -166,7 +178,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_floatgaugemetric_cr
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integerstatisticsmetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to track (measure on each change, event-driven) some 64 bit integer value, e.g., number of records in a database after each insert/delete/merge/etc.
+/** @brief DEPRECATED. Creates a metric to track (measure on each change, event-driven) some 64 bit integer value, e.g., number of records in a database after each insert/delete/merge/etc.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
     @param dimension_name [optional] If specified, the metric gets an additional dimension. The value for that should
@@ -174,6 +186,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_integerstatisticsmetric_c
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
     See @ref ex_metric_detail "the general metric API documentation" for a more detailed conceptual description.
 */
@@ -184,7 +198,7 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_integerstatisticsme
 /** @internal */
 ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatstatisticsmetric_create_p(onesdk_string_t const* metric_key, onesdk_string_t const* unit, onesdk_string_t const* dimension_name);
 
-/** @brief Creates a metric to track (measure on each change, event-driven) some double precision floating point value,
+/** @brief DEPRECATED. Creates a metric to track (measure on each change, event-driven) some double precision floating point value,
            e.g., number of liters in a tank after each refilling and (discrete) consumption.
     @param metric_key     An ASCII/UTF-8/UTF-16 string uniquely identifying the metric.
     @param unit           [optional] An informational string to describe the unit of the metric. Used for presentation purposes only.
@@ -193,6 +207,8 @@ ONESDK_DECLARE_FUNCTION(onesdk_metric_handle_t) onesdk_floatstatisticsmetric_cre
     @return A handle for the a metric instance or @ref ONESDK_INVALID_HANDLE. If you reused @p metric_key, the handle value is not guaranteed to be unique.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
  
   See @ref ex_metric_detail "the general metric API docs" for a more detailed conceptual description.
 */
@@ -203,13 +219,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(onesdk_metric_handle_t) onesdk_floatstatisticsmetr
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_integercountermetric_increase_by_p(onesdk_metric_handle_t metric_handle, onesdk_int64_t delta, onesdk_string_t const* dimension);
 
-/** @brief Increase the counter @p metric_handle for @p dimension by the given @p delta.
+/** @brief DEPRECATED. Increase the counter @p metric_handle for @p dimension by the given @p delta.
     @param metric_handle A valid integer counter metric handle, as returned by @ref onesdk_integercountermetric_create.
     @param delta         Value by which to increase the counter (the total change since the last time @ref onesdk_integercountermetric_increase_by was called).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integercountermetric_increase_by(onesdk_metric_handle_t metric_handle, onesdk_int64_t delta, onesdk_string_t dimension) {
     onesdk_integercountermetric_increase_by_p(metric_handle, delta, &dimension);
@@ -218,13 +236,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integercountermetric_increase_by(ones
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_floatcountermetric_increase_by_p(onesdk_metric_handle_t metric_handle, double delta, onesdk_string_t const* dimension);
 
-/** @brief Increase the counter @p metric_handle for @p dimension by the given @p delta.
+/** @brief DEPRECATED. Increase the counter @p metric_handle for @p dimension by the given @p delta.
     @param metric_handle A valid floating point counter metric handle, as returned by @ref onesdk_floatcountermetric_create.
     @param delta         Value by which to increase the counter (the total change since the last time @ref onesdk_floatcountermetric_increase_by was called).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_floatcountermetric_increase_by(onesdk_metric_handle_t metric_handle, double delta, onesdk_string_t dimension) {
     onesdk_floatcountermetric_increase_by_p(metric_handle, delta, &dimension);
@@ -233,13 +253,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_floatcountermetric_increase_by(onesdk
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_integergaugemetric_set_value_p(onesdk_metric_handle_t metric_handle, onesdk_int64_t value, onesdk_string_t const* dimension);
 
-/** @brief Set the last sampled value for the @p metric_handle for @p dimension to @p value.
+/** @brief DEPRECATED. Set the last sampled value for the @p metric_handle for @p dimension to @p value.
     @param metric_handle A valid integer gauge metric handle, as returned by @ref onesdk_integergaugemetric_create.
     @param value         Current value to which to set the gauge (usually comes from some periodically sampled measurement).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integergaugemetric_set_value(onesdk_metric_handle_t metric_handle, onesdk_int64_t value, onesdk_string_t dimension) {
     onesdk_integergaugemetric_set_value_p(metric_handle, value, &dimension);
@@ -248,13 +270,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integergaugemetric_set_value(onesdk_m
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_floatgaugemetric_set_value_p(onesdk_metric_handle_t metric_handle, double value, onesdk_string_t const* dimension);
 
-/** @brief Set the last sampled value for the @p metric_handle for @p dimension to @p value.
+/** @brief DEPRECATED. Set the last sampled value for the @p metric_handle for @p dimension to @p value.
     @param metric_handle A valid floating point gauge metric handle, as returned by @ref onesdk_floatgaugemetric_create.
     @param value         Current value to which to set the gauge (usually comes from some periodically sampled measurement).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_floatgaugemetric_set_value(onesdk_metric_handle_t metric_handle, double value, onesdk_string_t dimension) {
     onesdk_floatgaugemetric_set_value_p(metric_handle, value, &dimension);
@@ -263,13 +287,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_floatgaugemetric_set_value(onesdk_met
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_integerstatisticsmetric_add_value_p(onesdk_metric_handle_t metric_handle, onesdk_int64_t value, onesdk_string_t const* dimension);
 
-/** @brief Records the current value for the @p metric_handle for @p dimension to @p value.
+/** @brief DEPRECATED. Records the current value for the @p metric_handle for @p dimension to @p value.
     @param metric_handle A valid integer statistics metric handle, as returned by @ref onesdk_integerstatisticsmetric_create.
     @param value         Value to record in the statistic (usually comes from a measurement taken after a discrete event that indicates a change in the value).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integerstatisticsmetric_add_value(onesdk_metric_handle_t metric_handle, onesdk_int64_t value, onesdk_string_t dimension) {
     onesdk_integerstatisticsmetric_add_value_p(metric_handle, value, &dimension);
@@ -278,13 +304,15 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_integerstatisticsmetric_add_value(one
 /** @internal */
 ONESDK_DECLARE_FUNCTION(void) onesdk_floatstatisticsmetric_add_value_p(onesdk_metric_handle_t metric_handle, double value, onesdk_string_t const* dimension);
 
-/** @brief Records the current value for the @p metric_handle for @p dimension to @p value.
+/** @brief DEPRECATED. Records the current value for the @p metric_handle for @p dimension to @p value.
     @param metric_handle A valid floating point statistics metric handle, as returned by @ref onesdk_floatstatisticsmetric_create.
     @param value         Value to record in the statistic (usually comes from a measurement taken after a discrete event that indicates a change in the value).
     @param dimension     [optional] Dimension value for which to increase the counter.
                          Must be @ref onesdk_nullstr if no @p dimension_name was specified when creating the metric.
 
     @since This function was added experimentally in version 1.5.0.
+    @deprecated From 1.6 on, all metrics-related APIs are deprecated and will be removed in a future release.
+        Refer to https://github.com/Dynatrace/OneAgent-SDK-for-c#metrics for details.
 */
 ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_floatstatisticsmetric_add_value(onesdk_metric_handle_t metric_handle, double value, onesdk_string_t dimension) {
     onesdk_floatstatisticsmetric_add_value_p(metric_handle, value, &dimension);
