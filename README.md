@@ -30,7 +30,7 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
   * [Trace messaging](#trace-messaging)
   * [Trace custom service methods](#trace-custom-service-methods)
   * [Add custom request attributes](#add-custom-request-attributes)
-  * [Report metrics (preview feature)](#report-metrics-preview-feature)
+  * [Report metrics (deprecated)](#metrics)
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
 - [Requirements](#requirements)
@@ -728,9 +728,13 @@ This will add the custom request attributes to the currently traced service. If 
 <a name="report-metrics"></a>
 <a name="report-metrics-preview-feature"></a>
 
-### Report metrics (preview feature)
+### Report metrics (deprecated)
 
-**The metrics API is currently part of a preview program and will not work for users outside of the preview program. Visit [Dynatrace Help][previewhelp] for details.**
+> **Note**: The metrics API was part of a
+> [Dynatrace preview program](https://www.dynatrace.com/support/help/whats-new/preview-and-early-adopter-releases/)
+> that has been **discontinued**. All metrics-related APIs have been **deprecated** and will be removed in a future release.
+> The [Metric ingestion page][mint] provides further information on how to replace these APIs and how to report
+> metrics data from now on.
 
 You can report metrics (i.e., time series data) using the OneAgent SDK. Counters, gauges and statistic metrics for floating point and integer numbers with one or zero additional dimensions are supported. Make sure to read the [reference documentation][metricref] to find out which metric is right for your use case. To give you an example of an integer gauge with one additional dimensions:
 
@@ -748,17 +752,19 @@ You can report metrics (i.e., time series data) using the OneAgent SDK. Counters
     onesdk_metric_delete(mqsize_metric);
 ```
 
-In general you should try to use the same metric handle for the same metric instead of creating a new handle each time you report a value.
+In general, you should try to use the same metric handle for the same metric instead of creating a new handle each time you report a value.
 
 You will need to subscribe to the metric in Dynatrace to see it. If a metric is not subscribed the agent will efficiently discard it.
 
 Note that metrics will currently not work when the SDK is initialized in [forkable mode](#forking).
 
 > 📕 [Reference documentation for metrics][metricref]  
-> ➡️ [Dynatrace Help on preview features][previewhelp]
+> ➡️ [Dynatrace Help on preview features][previewhelp]  
+> ➡️ [Dynatrace Metric ingestion][mint]
 
 [metricref]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__ex__metrics.html
 [previewhelp]: https://www.dynatrace.com/support/help/shortlink/preview-and-early-adopter-releases
+[mint]: https://www.dynatrace.com/support/help/how-to-use-dynatrace/metrics/metric-ingestion/
 
 <a name="forking"></a>
 <a name="using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux"></a>
@@ -938,6 +944,7 @@ This will provide additional debug information in agent log file. (Alternatively
 
 |OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
 |:---------------------|:-----------------|:-------------|
+|1.6.1                 |>=1.179           |Supported     |
 |1.5.1                 |>=1.179           |Supported     |
 |1.4.1                 |>=1.161           |Supported     |
 |1.3.2                 |>=1.159           |Supported     |
@@ -996,6 +1003,7 @@ See also https://github.com/Dynatrace/OneAgent-SDK-for-C/releases.
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.6.1  |Deprecate metrics-related APIs. <br> Don't look for agent module in `PATH/LD_LIBRARY_PATH/...`, disallow relative `DT_HOME` on Windows (prevent DLL hijacking)   |
 |1.5.1  |Added metrics APIs (preview feature), improved logging callback APIs, new API to query fork state                       |
 |1.4.1  |Added custom service tracers and messaging tracers                                                                      |
 |1.3.2  |Support for Solaris SPARC                                                                                               |
