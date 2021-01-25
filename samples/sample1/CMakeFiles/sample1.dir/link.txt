@@ -1,0 +1,1 @@
+/opt/gcc-6.4.0/bin/g++  -m64 -m64 -O2 -gdwarf-2 -DNDEBUG   -static-libgcc -static-libstdc++ -pthread -Wl,--gc-sections -Wl,--no-undefined -Wl,-Bsymbolic -Wl,-z,now -Wl,-z,relro -gdwarf-2 CMakeFiles/sample1.dir/main.cpp.o  -o ../../bin/sample1 ../../lib/libonesdk_static.a ../../lib/libonesdkbase.a -ldl 

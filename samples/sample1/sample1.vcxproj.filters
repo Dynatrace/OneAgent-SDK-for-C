@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\config_database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\http_request.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\http_response.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\transformer_service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\transformer_service_client_proxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\transformer_service_dispatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\web_client.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\web_service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\web_service_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\billing_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\ws\224687760-212199345\.conan-short\e659f0\1\samples\sample1\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{244C8F4B-A921-3084-967A-4CDD871F13ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{56ECC37D-FC96-3238-8408-47C1A2E76580}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
