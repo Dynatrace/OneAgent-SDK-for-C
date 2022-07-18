@@ -30,9 +30,11 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
   * [Trace messaging](#trace-messaging)
   * [Trace custom service methods](#trace-custom-service-methods)
   * [Add custom request attributes](#add-custom-request-attributes)
-  * [Report metrics (deprecated)](#metrics)
+  * [Report metrics (deprecated)](#report-metrics-deprecated)
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
+  * [Problems with initializing the SDK](#problems-with-initializing-the-sdk)
+  * [Problems occuring after initialization](#problems-occuring-after-initialization)
 - [Requirements](#requirements)
   * [Version support and compatibility table](#version-support-and-compatibility-table)
 - [Help & Support](#help--support)
@@ -887,44 +889,87 @@ int worker_main() {
 }
 ```
 
+<a name="fork-trouble"></a>
+
+As the behavior of the SDK is sometimes complicated to understand with forking,
+the [`onesdk_agent_get_fork_state`][refd_agent_get_fork_state] function is provided
+which can help you examine the state the SDK currently is in regarding forking.
+Basic usage is shown in sample1. You may want to call it before and after an SDK operation
+that behaves/fails unexpectly if you use [`ONESDK_INIT_FLAG_FORKABLE`][refd_init_flag_forkable].
+
 > 📕 Reference documentation for:
 > * [initialization and shutdown](https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html)
-> * [`onesdk_agent_get_fork_state`](https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga77260efaf63455969962e05b6b170135)
+> * [`onesdk_agent_get_fork_state`][refd_agent_get_fork_state]
 
+[refd_agent_get_fork_state]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga77260efaf63455969962e05b6b170135
 [refd_initialize_2]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#gac0681af704ba7e6404c3f67f582ee4db
 [refd_init_flag_forkable]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga732bf07f0e190264baf29f3a1c22cc4a
-
 
 <a name="troubleshooting"></a>
 
 ## Troubleshooting
 
+This section describes two broad categories of problems and how to debug them. The SDK has extensive
+logging capabilites which will often point you quite directly at what the issue is.
+
+<a name="troubleshooting-init"></a>
+
+### Problems with initializing the SDK
+
+Main symptom: [`onesdk_initialize`][refd_initialize] / [`onesdk_initalize_2`][refd_initialize_2] returning an error code.
+
 If the SDK stub cannot load or initialize the agent module (see output of sample1), you can set the SDK stub's logging level to activate
-logging by either
-- calling [`onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_{LEVEL})`][refd_stub_set_logging_level]; or
-- setting the environment variable `DT_LOGLEVELSDK={level}`; or
+logging of what happengs during initialization by either
+
+- setting the environment variable `DT_LOGLEVELSDK=FINEST`; or
+- calling [`onesdk_stub_set_logging_level(ONESDK_LOGGING_LEVEL_FINEST)`][refd_stub_set_logging_level]; or
 - if your program passes command line arguments to the SDK (see [`onesdk_stub_process_cmdline_args`][refd_process_cmdline_args]), you can
-  use the command line argument `--dt_loglevelsdk={level}`.
+  use the command line argument `--dt_loglevelsdk=FINEST`.
+
+Whichever method you choose (usually setting the environment variable is the easiest), make sure to apply it _before_ calling [`onesdk_initialize`][refd_initialize] / [`onesdk_initalize_2`][refd_initialize_2].
 
 Once you have enabled logging, log output of the stub will be written to `stderr` by default. Refer to the [documentation for
 `onesdk_stub_set_logging_callback`][refd_stub_set_logging_callback] if you need to process stub log messages in another way.
 
-If the SDK agent is active, but no paths are shown in the UI, check any messages from the agent logging callbacks: see
+If initialization fails, [`ONESDK_ERROR_LOAD_AGENT`][refd_error_load_agent] (numerical code 2952658951, -1342308345 or 0xaffe0007,
+error message "Could not load agent.").
+is the most common error code. These are the two most common causes we have observed for this issue:
+
+1. The OneAgent is not installed on the host where the program runs. Install the OneAgent and restart the program.
+2. The program being run is started with a debugger.
+   The OneAgent will not inject in that case. Start the program without debugger.
+   You may still attach the debugger later, once the program is running.
+
+[refd_error_load_agent]: https://dynatrace.github.io/OneAgent-SDK-for-C/onesdk__common_8h.html#aa120990f128eb02bce1e88a489a7f398
+
+<a name="troubleshooting-postinit"></a>
+
+### Problems occuring after initialization
+
+For any problems you encounter after successful initialization
+(for example, no paths are shown in the UI, or you wonder why a function returns `ONESDK_INVALID_HANDLE` or another error code),
+it is best to check for messages from the agent logging callbacks: see
 [`onesdk_agent_set_warning_callback`][refd_agent_set_warning_callback] and
 [`onesdk_agent_set_verbose_callback`][refd_agent_set_verbose_callback] in the reference documentation or in sample1.
 
 You can also check the agent log files (see the Dynatrace documentation for where to find them, e.g., on
 [Linux](https://www.dynatrace.com/support/help/shortlink/oneagent-files-linux#log-files) or
-[Windows](https://www.dynatrace.com/support/help/shortlink/oneagent-files-windows#log-files).
+[Windows](https://www.dynatrace.com/support/help/shortlink/oneagent-files-windows#log-files)).
 You can increase the agent log level by setting the environment variable `DT_LOGLEVELFILE={level}` or passing the command line argument `--dt_loglevelfile={level}` to the SDK.
 This will provide additional debug information in agent log file. (Alternatively you can use `DT_LOGLEVELCON={level}` or `--dt_loglevelcon={level}` if you want to receive agent log output via `stderr`.)
+
+Lastly, in some situations, the [`onesdk_agent_get_current_state`][refd_agent_get_current_state] function may provide additional insights. See sample1 for a usage example.
+
+Special situations can arise when forking is involved, see [the section on forking](#forking).
 
 [refd_stub_set_logging_level]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga85b610bcd0d771fe641a1cd1ef03fd13
 [refd_stub_set_logging_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__init.html#ga68fd905f95b1fdc05b7d45e5a419934d
 [refd_agent_set_warning_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga31c7f418f4b3515097434f8df6810cad
 [refd_agent_set_verbose_callback]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#ga1324a8c95a407255e838641e8a8f03a9
+[refd_agent_get_current_state]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__misc.html#gab45441c798009a1bad93480e8476a1e4
 
 <a name="requirements"></a>
+
 ## Requirements
 
 - Dynatrace OneAgent needs to be installed on the system that is to be monitored (required versions see below)
@@ -956,8 +1001,8 @@ This will provide additional debug information in agent log file. (Alternatively
 Note that this table only states the support status of the mentioned OneAgent SDK for C/C++ version,
 not the OneAgent itself.
 
-<a name="help" />
-<a name="help--support" />
+<a name="help"></a>
+<a name="help--support"></a>
 
 ## Help & Support
 
@@ -966,7 +1011,7 @@ support and compatibility table](#version-support-and-compatibility-table). For 
 help](https://github.com/Dynatrace/OneAgent-SDK#help).
 
 
-<a name="read-the-manual" />
+<a name="read-the-manual"></a>
 
 ### Read the manual
 
@@ -974,28 +1019,28 @@ help](https://github.com/Dynatrace/OneAgent-SDK#help).
 * A high level documentation/description of OneAgent SDK concepts is available at https://github.com/Dynatrace/OneAgent-SDK/.
 * Of course, this README also contains lots of useful information.
 
-<a name="let-us-help-you" />
+<a name="let-us-help-you"></a>
 
 ### Let us help you
 
 **Get Help**
-* Ask a question in the <a href="https://answers.dynatrace.com/spaces/482/view.html" target="_blank">product forums</a>
-* Read the <a href="https://www.dynatrace.com/support/help/" target="_blank">product documentation</a>
+* Ask a question in the [product forums](https://community.dynatrace.com/t5/Using-Dynatrace/ct-p/UsingDynatrace)
+* Read the [product documentation](https://www.dynatrace.com/support/help/)
 
-**Open a <a href="https://github.com/Dynatrace/OneAgent-SDK-for-C/issues">GitHub issue</a> to:**
-* Report minor defects, minor items or typos
+**Open a [GitHub issue](https://github.com/Dynatrace/OneAgent-SDK-for-C/issues) to:**
+* Report minor defects like typos
 * Ask for improvements or changes in the SDK API
 * Ask any questions related to the community effort
 
-SLAs don't apply for GitHub tickets
+SLAs don't apply for GitHub tickets.
 
-**Customers can open a ticket on the <a href="https://support.dynatrace.com/supportportal/" target="_blank">Dynatrace support portal</a> to:**
+**Customers can open a ticket on the [Dynatrace support portal](https://one.dynatrace.com/hc/) to:**
 * Get support from the Dynatrace technical support engineering team
 * Manage and resolve product related technical issues
 
 SLAs apply according to the customer's support level.
 
-<a name="release-notes" />
+<a name="release-notes"></a>
 
 ## Release Notes
 
