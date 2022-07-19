@@ -50,6 +50,7 @@ void perform_cleanup(message_queue& queue, onesdk_messagingsysteminfo_handle_t q
 void poll_process_messages(message_queue& queue, onesdk_messagingsysteminfo_handle_t queue_info);
 void on_billing_message(message_queue::queue_message& msg, onesdk_messagingsysteminfo_handle_t queue_info);
 char const* agent_state_to_string(onesdk_int32_t agent_state);
+char const* fork_state_to_string(onesdk_int32_t fork_state);
 void ONESDK_CALL onesdk_agent_warning_callback(char const* message);
 void ONESDK_CALL onesdk_agent_verbose_callback(char const* message);
 onesdk_result_t checkresult(onesdk_result_t r, char const* message);
@@ -114,6 +115,8 @@ int main(int argc, char** argv)
     printf("ONESDK agent load info:\n");
     printf("    agent was found: %s\n", agent_found ? "yes" : "no");
     printf("    agent is compatible: %s\n", agent_compatible ? "yes" : "no");
+    printf("ONESDK fork state: %s\n", fork_state_to_string(onesdk_agent_get_fork_state()));
+    printf("ONESDK agent state: %s\n", agent_state_to_string(onesdk_agent_get_current_state()));
 
 
     // Run the main service loop.
@@ -311,6 +314,23 @@ char const* agent_state_to_string(onesdk_int32_t agent_state) {
 
     default:
         return "(unknown state value)";
+    }
+}
+
+char const* fork_state_to_string(onesdk_int32_t fork_state) {
+    switch (fork_state) {
+    case ONESDK_AGENT_FORK_STATE_NOT_FORKABLE:
+        return "not_forkable";
+    case ONESDK_AGENT_FORK_STATE_ERROR:
+        return "error";
+    case ONESDK_AGENT_FORK_STATE_PARENT_INITIALIZED:
+        return "parent_initialized";
+    case ONESDK_AGENT_FORK_STATE_PRE_INITIALIZED:
+        return "pre_initialized";
+    case ONESDK_AGENT_FORK_STATE_FULLY_INITIALIZED:
+        return "fully_initialized";
+    default:
+        return "(unknown  state value)";
     }
 }
 
