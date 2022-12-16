@@ -71,6 +71,8 @@ typedef struct onesdk_stub_version {
 #define ONESDK_ERROR_INTERFACE_NOT_SUPPORTED        ((onesdk_result_t)(ONESDK_ERROR_BASE + 12))
 /** @hideinitializer @brief The operation failed because this is the child process of a fork that occurred while the SDK was initialized. */
 #define ONESDK_ERROR_FORK_CHILD                     ((onesdk_result_t)(ONESDK_ERROR_BASE + 13))
+/** @hideinitializer @brief The operation completed without error, but there was no data to return (this just has ERROR in the name for consistency). */
+#define ONESDK_ERROR_NO_DATA                        ((onesdk_result_t)(ONESDK_ERROR_BASE + 14))
 /* NOTE: Extend get_onesdk_specific_error_message() when adding error codes. */
 
 /** @hideinitializer @brief The operation completed successfully. */
@@ -468,6 +470,13 @@ typedef onesdk_handle_t onesdk_messagingsysteminfo_handle_t; /**< @brief A handl
 
 /** @} */
 /** @} */
+
+/** @ingroup tracecontext */
+/** @{ */
+#define ONESDK_TRACE_ID_BUFFER_SIZE 33       /**< @brief Required size for trace ID buffer (including null termiator). */
+#define ONESDK_SPAN_ID_BUFFER_SIZE 17        /**< @brief Required size for span ID buffer (including null termiator). */
+/** @} */
+
 
 /** @ingroup ex_metrics */
 /** @{ */

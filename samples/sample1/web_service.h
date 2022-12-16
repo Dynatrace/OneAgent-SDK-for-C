@@ -25,6 +25,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <stdio.h>
 
 #include "onesdk/onesdk_agent.h"
 #include "onesdk/onesdk_string.h"
@@ -68,6 +69,17 @@ public:
 
             // Start tracer (starts time measurement).
             onesdk_tracer_start(tracer);
+            
+            char trace_id[ONESDK_TRACE_ID_BUFFER_SIZE];
+            char span_id[ONESDK_SPAN_ID_BUFFER_SIZE];
+
+            // Note: If you need to, you can check the result code to determine if there was a trace context available & if it is valid,
+            // but if there is no active context or an error occurs, any (info) logging callback is also invoked, and
+            // a well-formed trace & span ID is always returned (it will be the all-zero ID if nothing is available or an eror occured).
+            //
+            // See https://www.dynatrace.com/support/help/shortlink/log-monitoring-log-enrichment for the format used here.
+            onesdk_tracecontext_get_current(trace_id, sizeof(trace_id), span_id, sizeof(span_id));
+            fprintf(stderr, "[!dt dt.trace_id=%s,dt.span_id=%s] Handling request.\n", trace_id, span_id);
 
             // Process the request, build response.
             response.body = m_impl.get_response_body(request.body);

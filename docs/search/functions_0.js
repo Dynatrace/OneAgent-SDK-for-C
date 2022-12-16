@@ -72,6 +72,7 @@ var searchData=
   ['onesdk_5fstub_5fset_5fvariable',['onesdk_stub_set_variable',['../group__init.html#ga1271327bb21c71ed5f8d92de0629ebfc',1,'onesdk_init.h']]],
   ['onesdk_5fstub_5fstrip_5fsdk_5fcmdline_5fargs',['onesdk_stub_strip_sdk_cmdline_args',['../group__init.html#ga6a8fc76f55f653df1662be1cdb761486',1,'onesdk_init.h']]],
   ['onesdk_5fstub_5fxstrerror',['onesdk_stub_xstrerror',['../group__init.html#gad9f783e4270eadfd618bf81d090985cf',1,'onesdk_init.h']]],
+  ['onesdk_5ftracecontext_5fget_5fcurrent',['onesdk_tracecontext_get_current',['../group__tracecontext.html#ga6f1683703917fc4cc90df893b7df50ed',1,'onesdk_agent.h']]],
   ['onesdk_5ftracer_5fend',['onesdk_tracer_end',['../group__tracers.html#ga0c17143ce1e5f49b2a365e02223a6d1f',1,'onesdk_agent.h']]],
   ['onesdk_5ftracer_5ferror',['onesdk_tracer_error',['../group__tracers.html#gacffee0c9c4b78bdbbe32b66eb2f32666',1,'onesdk_agent.h']]],
   ['onesdk_5ftracer_5fget_5foutgoing_5fdynatrace_5fbyte_5ftag',['onesdk_tracer_get_outgoing_dynatrace_byte_tag',['../group__tracers.html#ga7ae547cfdab36ab9464f82708fe9d414',1,'onesdk_agent.h']]],

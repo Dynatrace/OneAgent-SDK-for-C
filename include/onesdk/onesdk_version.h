@@ -26,7 +26,7 @@
 */
 
 #define ONESDK_STUB_VERSION_MAJOR		1       /**< @brief Major version number of the SDK stub. */
-#define ONESDK_STUB_VERSION_MINOR		6       /**< @brief Minor version number of the SDK stub. */
+#define ONESDK_STUB_VERSION_MINOR		7       /**< @brief Minor version number of the SDK stub. */
 #define ONESDK_STUB_VERSION_PATCH		1       /**< @brief Patch version number of the SDK stub. */
 
 #endif // ONESDK_VERSION_H_INCLUDED
