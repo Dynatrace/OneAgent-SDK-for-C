@@ -1114,4 +1114,51 @@ ONESDK_DEFINE_INLINE_FUNCTION(void) onesdk_incomingmessageprocesstracer_set_corr
 
 /*========================================================================================================================================*/
 
+/** @defgroup tracecontext W3C Trace Context
+    @brief Retrieve the current W3C Trace Context (trace + span ID).
+    @{
+*/
+
+/** @brief Retrieves the current W3C trace context's span and trace ID.
+    @param[out] trace_id_buffer                 [optional] Pointer to a buffer into which the W3C trace ID string shall be copied.
+    @param trace_id_buffer_size                 Size of the buffer pointed to by @p buffer in bytes.
+                                                Must be zero if @p buffer is `NULL`. Otherwise, exactly @ref ONESDK_TRACE_ID_BUFFER_SIZE bytes are required.
+    @param[out] span_id_buffer                  [optional] Pointer to a buffer into which the W3C trace ID string shall be copied.
+    @param span_id_buffer_size                  Size of the buffer pointed to by @p buffer in bytes.
+                                                Must be zero if @p buffer is `NULL`. Otherwise, exactly @ref ONESDK_SPAN_ID_BUFFER_SIZE bytes are required.
+
+    @return @ref ONESDK_SUCCESS or @ref ONESDK_ERROR_NO_DATA if successful, another SDK stub error code otherwise.
+
+    @warning This function is only meant for use cases like log enrichment (https://www.dynatrace.com/support/help/shortlink/log-monitoring-log-enrichment)
+             This function cannot be used to create traceparent headers for linking or similar purposes.
+             For these purposes, use @ref onesdk_tracer_get_outgoing_dynatrace_string_tag or @ref onesdk_tracer_get_outgoing_dynatrace_byte_tag.
+
+    If a buffer pointer is not `NULL` and the respective buffer size big enough, this function will copy the string representation into the provided buffer.
+    Providing a larger buffer than required is allowed but useless. Use the null-terminator to determine the length of the received string then.
+
+    This function will always make sure that, if the application provides a non-`NULL` buffer with a buffer_size >= 1, @p buffer will
+    always be null-terminated. I.e. if the string representation cannot be stored because @p buffer_size is too small, a null character will
+    be written into @p buffer[0].
+
+    The strings copied into the buffers use ASCII encoding and will conform to the W3C trace ID specification
+    (i.e., consist only of lowercase hex characters), see https://www.w3.org/TR/trace-context-1/#traceparent-header-field-values.
+
+    If there is no data available (return value @ref ONESDK_ERROR_NO_DATA)
+    or an error occurs (any other return value other than @ref ONESDK_SUCCESS) all provided buffers will
+    contain the "invalid" trace and span IDs, i.e. an ID with the usual length consisting only with ASCII digit zero
+    (followed, as always, by a null-terminator). The only exception is, naturally, if the provided buffers are too
+    small. In these cases, only a null-terminator (i.e., empty string) will be written (provided the buffer size allows that).
+    
+    This means that you usually don't need to check the return value of the function, since the usual logging callback mechanism
+    can still be used if diagnostics information is needed. However, if you want to know if you got a valid trace context,
+    checking whether the function returns @ref ONESDK_SUCCESS is faster than manually checking the IDs for zeroes.
+*/
+ONESDK_DECLARE_FUNCTION(onesdk_result_t) onesdk_tracecontext_get_current(
+    char* trace_id_buffer, onesdk_size_t trace_id_buffer_size, char* span_id_buffer, onesdk_size_t span_id_buffer_size);
+
+
+/** @} */
+
+/*========================================================================================================================================*/
+
 #endif /* ONESDK_AGENT_H_INCLUDED */

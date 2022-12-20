@@ -54,4 +54,5 @@ var menudata={children:[
 {text:"l",url:"globals_defs.html#index_l"},
 {text:"m",url:"globals_defs.html#index_m"},
 {text:"s",url:"globals_defs.html#index_s"},
+{text:"t",url:"globals_defs.html#index_t"},
 {text:"x",url:"globals_defs.html#index_x"}]}]}]}]}

@@ -30,7 +30,7 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
   * [Trace messaging](#trace-messaging)
   * [Trace custom service methods](#trace-custom-service-methods)
   * [Add custom request attributes](#add-custom-request-attributes)
-  * [Report metrics (deprecated)](#report-metrics-deprecated)
+  * [Retrieve a W3C trace context](#retrieve-a-w3c-trace-context)
 - [Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)](#using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux)
 - [Troubleshooting](#troubleshooting)
   * [Problems with initializing the SDK](#problems-with-initializing-the-sdk)
@@ -725,52 +725,54 @@ This will add the custom request attributes to the currently traced service. If 
 
 > 📕 [Reference documentation for custom request attributes](https://dynatrace.github.io/OneAgent-SDK-for-C/group__custom__request__attributes.html)
 
-
-<a name="metrics"></a>
-<a name="report-metrics"></a>
-<a name="report-metrics-preview-feature"></a>
-
-### Report metrics (deprecated)
-
-> **Note**: The metrics API was part of a
-> [Dynatrace preview program](https://www.dynatrace.com/support/help/whats-new/preview-and-early-adopter-releases/)
-> that has been **discontinued**. All metrics-related APIs have been **deprecated** and will be removed in a future release.
-> The [Metric ingestion page][mint] provides further information on how to replace these APIs and how to report
-> metrics data from now on.
-
-You can report metrics (i.e., time series data) using the OneAgent SDK. Counters, gauges and statistic metrics for floating point and integer numbers with one or zero additional dimensions are supported. Make sure to read the [reference documentation][metricref] to find out which metric is right for your use case. To give you an example of an integer gauge with one additional dimensions:
-
-```C
-    /* Create a metric handle somewhere in your initialization logic (after initializing the SDK) */
-    onesdk_metric_handle_t const mqsize_metric = onesdk_integergaugemetric_create(
-        /*key=*/ onesdk_asciistr("message_queue.size"),
-        /*unit=*/ onesdk_asciistr("count"),
-        /*dimension_name=*/onesdk_asciistr("queue_name"));
-
-    /* Periodically update the gauge with the current value (use a statistic instead, if you update event-based) */
-    onesdk_integergaugemetric_set_value(mqsize_metric, get_my_queue_size(), onesdk_asciistr("myqueuename"));
-
-    /* Somewhere before shutting down the SDK: */
-    onesdk_metric_delete(mqsize_metric);
-```
-
-In general, you should try to use the same metric handle for the same metric instead of creating a new handle each time you report a value.
-
-You will need to subscribe to the metric in Dynatrace to see it. If a metric is not subscribed the agent will efficiently discard it.
-
-Note that metrics will currently not work when the SDK is initialized in [forkable mode](#forking).
-
-> 📕 [Reference documentation for metrics][metricref]  
-> ➡️ [Dynatrace Help on preview features][previewhelp]  
-> ➡️ [Dynatrace Metric ingestion][mint]
-
-[metricref]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__ex__metrics.html
-[previewhelp]: https://www.dynatrace.com/support/help/shortlink/preview-and-early-adopter-releases
-[mint]: https://www.dynatrace.com/support/help/how-to-use-dynatrace/metrics/metric-ingestion/
-
 <a name="forking"></a>
 <a name="using-the-dynatrace-oneagent-sdk-with-forked-child-processes-only-available-on-linux"></a>
 <a name="using-the-dynatrace-oneagent-sdk-with-forked-child-processes-not-available-on-windows"></a>
+
+
+
+<a name="retrieve-a-w3c-trace-context"></a>
+
+### Retrieve a W3C trace context
+
+This feature allows you to retrieve a W3C TraceContext trace ID and span ID referencing the current PurePath node,
+as defined in <https://www.w3.org/TR/trace-context>.
+
+This trace ID and span ID information is not intended for tagging and
+context-propagation scenarios and primarily designed for log-enrichment use
+cases. Use
+[`onesdk_tracer_get_outgoing_dynatrace_string_tag`][refd_tracer_get_outgoing_dynatrace_string_tag],
+[`onesdk_tracer_set_incoming_dynatrace_string_tag`][refd_tracer_set_incoming_dynatrace_string_tag],
+[`onesdk_tracer_get_outgoing_dynatrace_byte_tag`][refd_tracer_get_outgoing_dynatrace_byte_tag],
+[`onesdk_tracer_set_incoming_dynatrace_byte_tag`][refd_tracer_set_incoming_dynatrace_byte_tag]
+for tagging traces (see the usage examples elsewhere in this document).
+
+The following example shows how to print the current trace & span ID to stdout
+in a format that works well with Dynatrace Log Monitoring
+(see <https://www.dynatrace.com/support/help/shortlink/log-monitoring-log-enrichment> for more):
+
+```c
+/* The context of the active tracer will be printed, so one should be active.
+   You can copy & paste from any other sample that starts a tracer. */
+onesdk_tracer_start(tracer);
+
+char trace_id[ONESDK_TRACE_ID_BUFFER_SIZE];
+char span_id[ONESDK_SPAN_ID_BUFFER_SIZE];
+
+/* A result code is returned, if and only if it is != ONESDK_SUCCESS, both IDs will consist of ASCII zeros only. */
+onesdk_tracecontext_get_current(trace_id, sizeof(trace_id), span_id, sizeof(span_id));
+fprintf(stderr, "[!dt dt.trace_id=%s,dt.span_id=%s] Some important log info.\n", trace_id, span_id);
+```
+
+
+> 📕 [Reference documentation for tracecontext][tcref]
+
+[tcref]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracecontext.html
+
+[refd_tracer_get_outgoing_dynatrace_string_tag]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracers.html#gad1a200fc7591163158458bb9938f4b29
+[refd_tracer_get_outgoing_dynatrace_byte_tag]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracers.html#ga7ae547cfdab36ab9464f82708fe9d414
+[refd_tracer_set_incoming_dynatrace_string_tag]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracers.html#ga332fb9c487786fb521f19d899079d0a6
+[refd_tracer_set_incoming_dynatrace_byte_tag]: https://dynatrace.github.io/OneAgent-SDK-for-C/group__tracers.html#ga7a2c9b92ca453b575a1aa11cf5ab7ac8
 
 ## Using the Dynatrace OneAgent SDK with forked child processes (only available on Linux)
 
@@ -980,26 +982,32 @@ Special situations can arise when forking is involved, see [the section on forki
       Support for this platform is new since version 1.3.2 of the SDK.
 
   Refer to https://www.dynatrace.com/support/help/shortlink/supported-technologies#operating-systems for the exact versions supported by
-  OneAgent. Note that only the subset of operating systems and processor architectures explicitly listed above in this README are supported
-  by the SDK.
+  OneAgent. Note that only the subset of operating systems and processor architectures explicitly listed both in this README and the link
+  are supported by the SDK.
 
 <a name="compatibility-of-dynatrace-oneagent-sdk-for-cc-releases-with-oneagent-releases"></a>
 <a name="version-support-and-compatibility-table"></a>
+
 ### Version support and compatibility table
 
-|OneAgent SDK for C/C++|Dynatrace OneAgent|Support status|
+|OneAgent SDK for C/C++|Dynatrace OneAgent|Support status or EOL date|
 |:---------------------|:-----------------|:-------------|
+|1.7.1                 |>=1.251           |Supported     |
 |1.6.1                 |>=1.179           |Supported     |
-|1.5.1                 |>=1.179           |Supported     |
-|1.4.1                 |>=1.161           |Supported     |
-|1.3.2                 |>=1.159           |Supported     |
-|1.3.1                 |>=1.151           |Supported     |
-|1.2.0                 |>=1.147           |Supported     |
-|1.1.0                 |>=1.141           |Supported     |
-|1.0.0                 |>=1.133           |Supported     |
+|1.5.1                 |>=1.179           |Deprecated with support ending 2023-07-01 |
+|1.4.1                 |>=1.161           |Deprecated with support ending 2023-07-01 |
+|1.3.2                 |>=1.159           |Deprecated with support ending 2023-07-01 |
+|1.3.1                 |>=1.151           |Deprecated with support ending 2023-07-01 |
+|1.2.0                 |>=1.147           |Deprecated with support ending 2023-07-01 |
+|1.1.0                 |>=1.141           |Deprecated with support ending 2023-07-01 |
+|1.0.0                 |>=1.133           |Deprecated with support ending 2023-07-01 |
 
 Note that this table only states the support status of the mentioned OneAgent SDK for C/C++ version,
 not the OneAgent itself.
+
+You should always try to update to the latest version if possible, as it may contain reliability or security
+improvements (see respective release notes). This is especially true if an end of support date for your version
+is announced.
 
 <a name="help"></a>
 <a name="help--support"></a>
@@ -1029,7 +1037,6 @@ help](https://github.com/Dynatrace/OneAgent-SDK#help).
 
 **Open a [GitHub issue](https://github.com/Dynatrace/OneAgent-SDK-for-C/issues) to:**
 * Report minor defects like typos
-* Ask for improvements or changes in the SDK API
 * Ask any questions related to the community effort
 
 SLAs don't apply for GitHub tickets.
@@ -1044,10 +1051,11 @@ SLAs apply according to the customer's support level.
 
 ## Release Notes
 
-See also https://github.com/Dynatrace/OneAgent-SDK-for-C/releases.
+See also <https://github.com/Dynatrace/OneAgent-SDK-for-C/releases>.
 
 |Version|Description                                                                                                             |
 |:------|:-----------------------------------------------------------------------------------------------------------------------|
+|1.7.1  |Add W3C trace context support for log enrichment (not for tagging/linking). <br> Announce deprecation of versions < 1.6.1 |
 |1.6.1  |Deprecate metrics-related APIs. <br> Don't look for agent module in `PATH/LD_LIBRARY_PATH/...`, disallow relative `DT_HOME` on Windows (prevent DLL hijacking)   |
 |1.5.1  |Added metrics APIs (preview feature), improved logging callback APIs, new API to query fork state                       |
 |1.4.1  |Added custom service tracers and messaging tracers                                                                      |
