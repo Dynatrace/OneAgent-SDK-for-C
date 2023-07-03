@@ -22,6 +22,7 @@ This is the official C/C++ implementation of the [Dynatrace OneAgent SDK](https:
   * [Initializing the Dynatrace OneAgent SDK](#initializing-the-dynatrace-oneagent-sdk)
     + [Special considerations for Solaris SPARC](#special-considerations-for-solaris-sparc)
 - [How to instrument your application](#how-to-instrument-your-application)
+  * [General notes](#general-notes)
   * [Trace remote calls](#trace-remote-calls)
   * [Trace SQL based database calls](#trace-sql-based-database-calls)
   * [Trace incoming web requests](#trace-incoming-web-requests)
@@ -233,6 +234,31 @@ stderr (see also [Troubleshooting](#troubleshooting)).
 
 This section gives samples of how to instrument your application for each supported feature. Refer to the [documentation](#documentation)
 for more details.
+
+### General notes
+
+The core API for instrumenting your application is the "tracer". Depending on the kind of operation you want to trace,
+you use one of the `onesdk_*tracer_create` functions to create a tracer, then potentially set additional information using
+setter functions before you start the tracer using `onesdk_tracer_start`. If an error or exception happens, you can capture it
+using `onesdk_tracer_error`. Finally, you need to call `onesdk_tracer_end` to signal the end of the operation and also free up
+any resources allocated for the tracer.
+
+Whenever you start a tracer (i.e., call `onesdk_tracer_start`), the tracer becomes a child of the previously active tracer
+on this thread and the new tracer then becomes the active tracer. You may only end the active tracer.
+If you do, the tracer that was active before it (its parent) becomes active again.
+Put another way, tracers must be ended in reverse order of starting them
+(you can think of this being like HTML tags where you must also close the child tag before you can close the parent tag).
+
+While the tracer's automatic parent-child relationship works very intuitively in most cases,
+it does not work with **asynchronous patterns**, where the same thread handles multiple logically
+separate operations in an interleaved way on the same thread. If you need to instrument
+such patterns with the SDK, you need to end your tracer before the thread is potentially reused
+by any other operation (e.g., before yielding to the event loop). To later continue the trace,
+capture an in-process link before and later resume using the in-process link tracer, as explained in
+[Trace asynchronous activities](#trace-asynchronous-activities). This approach is rather awkward and
+may lead to complex and difficult to interpret traces. If your application makes extensive use of
+asynchronous patterns of the kind that is difficult to instrument with the SDK, consider using
+the [OpenTelemetry support of Dynatrace](https://www.dynatrace.com/support/help/shortlink/opent-cpp) instead.
 
 > See also:
 >
